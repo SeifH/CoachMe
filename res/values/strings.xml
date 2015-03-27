@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">CoachMe</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title">Coach Me</string>
+    <string name="main_formations">Formations</string>
+    <string name="main_directory">Player Directory</string>
+    <string name="main_statistics">Game Statistics</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_display_formations">DisplayFormationsActivity</string>
+    <string name="title_activity_main2">MainActivity</string>
+
+</resources>

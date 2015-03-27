@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#2C3539"
+     android:id="@+id/mainLayout"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin" >
+
+    <TableLayout
+        android:id="@+id/TableLayout01"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="0"
+        android:weightSum="3" >
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:gravity="center_horizontal"
+            android:padding="5dp" >
+
+            <ImageButton
+                android:id="@+id/settings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:scaleType="fitStart"
+                android:src="@drawable/setting" />
+
+            <ImageButton
+                android:id="@+id/help"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:scaleType="fitEnd"
+                android:src="@drawable/help" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-42dp"
+            android:layout_weight="0.3"
+            android:gravity="center_horizontal"
+            
+            android:paddingLeft="70dp"
+            android:paddingRight="70dp" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:adjustViewBounds="true"
+                android:background="@drawable/title"
+                android:focusable="false"
+                android:maxHeight="32dp"
+                android:maxWidth="12dp"
+                android:scaleType="fitCenter" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:gravity="center_horizontal"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+            android:paddingLeft="75dp"
+            android:paddingRight="75dp" >
+
+            <Button
+                android:id="@+id/formations"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                       android:background="@drawable/round_button"
+                android:text="@string/main_formations" 
+               />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:gravity="center_horizontal"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+            android:paddingLeft="75dp"
+            android:paddingRight="75dp" >
+
+            <Button
+                android:id="@+id/player_directory"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="#FFFFFF"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="@string/main_directory" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:gravity="center_horizontal"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+            android:paddingLeft="75dp"
+            android:paddingRight="75dp" >
+
+            <Button
+                android:id="@+id/game_statistics"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="#FFFFFF"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="@string/main_statistics" />
+        </TableRow>
+    </TableLayout>
+
+</LinearLayout>
