@@ -32,6 +32,10 @@ public class MainActivity extends Activity implements OnClickListener{
 		
         formationsButton = (Button) findViewById(R.id.formations);
         formationsButton.setOnClickListener(this);
+
+        statisticsButton = (Button) findViewById(R.id.game_statistics);
+        statisticsButton.setOnClickListener(this);
+        
         
 	}
 
@@ -64,8 +68,21 @@ public class MainActivity extends Activity implements OnClickListener{
 
 				Intent intent = new Intent(context, FormationsActivity.class);
 				startActivity(intent);
+				
 			}
+			
+			
 
+		});
+		statisticsButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(context,StatisticsActivity.class);
+				startActivity(intent);
+				
+			}
 		});
 
 	}

@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import android.widget.RelativeLayout.LayoutParams;
 import android.widget.Toast;
 import android.content.ClipData;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.Typeface;
 import android.view.DragEvent;
 import android.view.MotionEvent;
@@ -34,6 +36,7 @@ public class FormationsActivity extends Activity implements OnClickListener {
 	private DrawingView drawView;
 	private ImageButton draw, eraser, refresh, ball;
 	private static final String BALL_TAG = "Soccer Ball";
+	private int ballDropNum;
 //	private LayoutParams layoutParams;
 //	   private android.widget.RelativeLayout.LayoutParams layoutParams;
 
@@ -47,6 +50,8 @@ public class FormationsActivity extends Activity implements OnClickListener {
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		setContentView(R.layout.formations);
+		
+		ballDropNum = 0;
 
 		drawView = (DrawingView) findViewById(R.id.drawing);
 
@@ -136,22 +141,11 @@ public class FormationsActivity extends Activity implements OnClickListener {
 
 			// signal for the start of a drag and drop operation.
 			case DragEvent.ACTION_DRAG_STARTED:
-				// get layout parameters 
-//				layoutParams=(RelativeLayout.LayoutParams) v.getLayoutParams();
-				 
-//				 if (event.getClipDescription().hasMimeType(
-//				 ClipDescription.MIMETYPE_TEXT_PLAIN)) {
-				 // indicates where it can be dropped
-				 // ((ImageView) v).setColorFilter(Color.BLUE);
-				//
-				//}
+
 				break;
 
 			// the drag point has entered the bounding box of the View
 			case DragEvent.ACTION_DRAG_ENTERED:
-				// get the coordinates
-//				int x_cord = (int) event.getX();
-//				int y_cord = (int) event.getY();
 
 				break;
 
@@ -160,18 +154,10 @@ public class FormationsActivity extends Activity implements OnClickListener {
 			// View
 			case DragEvent.ACTION_DRAG_EXITED:
 				 
-//				 v.setLayoutParams(layoutParams);
-//				x_cord = (int) event.getX();
-//				y_cord = (int) event.getY();
-//				layoutParams.leftMargin = x_cord;
-//				 layoutParams.topMargin = x_cord;
 				break;
 
 			case DragEvent.ACTION_DRAG_LOCATION:
-//			x_cord = (int) event.getX();
-//			y_cord = (int) event.getY();
-			// ignore the event
-			// return(true);
+
 			break;
 
 			// drag shadow has been released,the drag point is within the
@@ -181,20 +167,30 @@ public class FormationsActivity extends Activity implements OnClickListener {
 //				// get location coordinates of touch
 				float x_cord = event.getX();
 				float y_cord = event.getY();
-				// if the view is the bottomlinear, we accept the drag item
+
 				if (v == findViewById(R.id.FrameLayout1)) {
 					View view = (View) event.getLocalState();
-					View view2 = findViewById(R.id.RelativeLayout01);
+				View view2 = (View) (findViewById(R.id.FrameLayout1));
 					ViewGroup viewgroup = (ViewGroup) view.getParent();
 					viewgroup.removeView(view);
+					
+							
 					FrameLayout containView = (FrameLayout) v;
 					containView.addView(view);		
-					Log.d("msg", "" + view2.getWidth() + " " + view2.getHeight()  );
-					view.setX(x_cord - (view.getWidth() / 2));
-					view.setY(y_cord - (view.getHeight() / 2));
-//					view.setX(x_cord);
-//					view.setY(y_cord);
+//					Log.d("msg", "" + view.getWidth() + " " + view.getHeight()  );
+//					Log.d("event3", "" + event.getX() + " " + event.getY()   );
+//					float x = ball.getX();
+//					float y = ball.getY();
+//					Log.d("event", "" + x_cord + " " + y_cord  );
+//					Log.d("event2", "" + x + " " + y  );
+//					Log.d("view", "" + view2.getWidth() + " " + view2.getHeight()  );
+
+
+					view.setX(adjustXCoord(x_cord) - (view.getWidth() / 2));
+					view.setY(y_cord - (view2.getHeight() / 2));
+
 					view.setVisibility(View.VISIBLE);
+
 				} else {
 					View view = (View) event.getLocalState();
 					view.setVisibility(View.VISIBLE);
@@ -216,6 +212,23 @@ public class FormationsActivity extends Activity implements OnClickListener {
 			return true;
 		}
 
+	}
+	
+	private float adjustXCoord (float x){
+		
+		// get screen dimensions
+		Display display = getWindowManager().getDefaultDisplay();
+		Point size = new Point();
+		display.getSize(size);
+		
+		if (ballDropNum == 0){
+			float adjustedValue = (size.x/800)*163;
+			ballDropNum++;
+			return x + adjustedValue;
+		}else
+			return x;
+		
+		
 	}
 
 	private final class LongClickListener implements OnLongClickListener {
