@@ -35,5 +35,17 @@
     <string name="stats_awayShotsMinus">Away Shots Minus</string>
     <string name="stats_numAwayShots">0</string>
     <string name="stats_awayShotsPlus">Away Shots Plus</string>
+     <string name="stats_homeGoalsMinus">Home Goals Minus</string>
+    <string name="stats_numHomeGoals">0</string>
+    <string name="stats_homeGoalsPlus">Home Goals Plus</string>
+    <string name="stats_awayGoalsMinus">Away Goals Minus</string>
+    <string name="stats_numAwayGoals">0</string>
+    <string name="stats_awayGoalsPlus">Away Goals Plus</string>
+    <string name="stats_awayRedCard">Away Red Card</string>
+    <string name="stats_awayYellowCard">Away Yellow Card</string>
+    <string name="stats_awayrefresh">Away Refresh</string>
+    <string name="stats_homeRedCard">Home Red Card</string>
+    <string name="stats_homeYellowCard">Home Yellow Card</string>
+    <string name="stats_homerefresh">Home Refresh</string> 
 
 </resources>
