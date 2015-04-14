@@ -29,6 +29,7 @@
     <string name="stats_goals">Goals</string>
     <string name="stats_penalties">Penalties</string>
     <string name="stats_pause">Pause</string>
+    <string name="stats_play">Play</string>
     <string name="stats_homeShotsMinus">Home Shots Minus</string>
     <string name="stats_numHomeShots">0</string>
     <string name="stats_homeShotsPlus">Home Shots Plus</string>

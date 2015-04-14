@@ -36,6 +36,7 @@
 
                 <ImageButton
                     android:id="@+id/save"
+                    android:tag="imageButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/newGame"
@@ -62,18 +63,28 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:layout_marginRight="10dp"
-                    android:format="MM:SS"
                     android:text="@string/stats_timer"
                     android:textSize="20dp" />
 
                 <ImageButton
                     android:id="@+id/pause"
+                    android:tag="imageButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/timer"
                     android:background="#FFFFFF"
                     android:src="@drawable/pause"
                     android:text="@string/stats_pause" />
+                <ImageButton
+                    android:id="@+id/play"
+                    android:tag="imageButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/timer"
+                    android:background="#FFFFFF"
+                    android:src="@drawable/play"
+                    android:text="@string/stats_play"
+                    android:visibility="invisible" />
             </RelativeLayout>
         </TableRow>
 
@@ -138,6 +149,7 @@
 
                 <ImageButton
                     android:id="@+id/homeShotsMinus"
+                    android:tag="imageButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@+id/shots"
@@ -157,6 +169,7 @@
 
                 <ImageButton
                     android:id="@+id/homeShotsPlus"
+                    android:tag="imageButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@+id/numHomeShots"
@@ -166,6 +179,7 @@
 
                 <ImageButton
                     android:id="@+id/awayShotsMinus"
+                    android:tag="imageButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/numAwayShots"
@@ -184,6 +198,7 @@
 
                 <ImageButton
                     android:id="@+id/awayShotsPlus"
+                    android:tag="imageButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/shots"
@@ -214,6 +229,7 @@
 
                 <ImageButton
                     android:id="@+id/homeGoalsMinus"
+                    android:tag="imageButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@+id/goals"
@@ -232,6 +248,7 @@
 
                 <ImageButton
                     android:id="@+id/homeGoalsPlus"
+                    android:tag="imageButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@+id/numHomeGoals"
@@ -241,6 +258,7 @@
 
                 <ImageButton
                     android:id="@+id/awayGoalsMinus"
+                    android:tag="imageButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/numAwayGoals"
@@ -259,6 +277,7 @@
 
                 <ImageButton
                     android:id="@+id/awayGoalsPlus"
+                    android:tag="imageButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/goals"
@@ -320,6 +339,7 @@
 
                 <ImageButton
                     android:id="@+id/home_refresh"
+                   android:tag="imageButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@+id/home_yellowcard"
@@ -329,6 +349,7 @@
 
                 <ImageButton
                     android:id="@+id/away_refresh"
+                    android:tag="imageButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/penalties"
