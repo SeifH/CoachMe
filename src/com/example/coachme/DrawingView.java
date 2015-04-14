@@ -31,10 +31,10 @@ public class DrawingView extends View {
 		else drawPaint.setXfermode(null);
 		
 		if (isErase==true){
-			drawPaint.setStrokeWidth(50);
+			drawPaint.setStrokeWidth(25);
 
 		}else
-			drawPaint.setStrokeWidth(20);
+			drawPaint.setStrokeWidth(10);
 		}
 	
 	public DrawingView(Context context, AttributeSet attrs) {
