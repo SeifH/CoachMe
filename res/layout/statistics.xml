@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFCCCCCC"
+    android:background="#605f5f"
     android:orientation="horizontal"
     tools:context=".StatisticsActivity" >
 
@@ -18,7 +18,8 @@
             android:id="@+id/tableRow1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="25dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="10dp"
             android:layout_weight="0.3"
             android:gravity="center_horizontal" >
 
@@ -30,7 +31,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:layout_marginRight="30dp"
-                    android:background="#FFFFFF"
+                    android:background="@drawable/round_btn"
                     android:text="@string/stats_newGame" />
 
                 <ImageButton
@@ -39,6 +40,8 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/newGame"
                     android:contentDescription="@string/save"
+                    android:background="#605f5f"
+                    android:layout_marginTop="14dp"
                     android:src="@drawable/save" />
             </RelativeLayout>
         </TableRow>
@@ -59,9 +62,9 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:layout_marginRight="10dp"
-                    android:background="#FFFFFF"
                     android:format="MM:SS"
-                    android:text="@string/stats_timer" />
+                    android:text="@string/stats_timer"
+                    android:textSize="20dp" />
 
                 <ImageButton
                     android:id="@+id/pause"
@@ -94,7 +97,6 @@
                     android:layout_centerInParent="true"
                     android:layout_marginLeft="73dp"
                     android:layout_marginRight="73dp"
-                    android:background="#FFFFFF"
                     android:text="@string/stats_posession" />
 
                 <Button
@@ -102,7 +104,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@+id/posession"
-                    android:background="#FFFFFF"
+                    android:background="@drawable/round_btn2"
                     android:text="@string/stats_home" />
 
                 <Button
@@ -110,7 +112,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/posession"
-                    android:background="#FFFFFF"
+                    android:background="@drawable/round_btn2"
                     android:text="@string/stats_away" />
             </RelativeLayout>
         </TableRow>
@@ -132,7 +134,6 @@
                     android:layout_centerInParent="true"
                     android:layout_marginLeft="85dp"
                     android:layout_marginRight="85dp"
-                    android:background="#FFFFFF"
                     android:text="@string/stats_shots" />
 
                 <ImageButton
@@ -151,7 +152,7 @@
                     android:layout_marginLeft="25dp"
                     android:layout_marginRight="25dp"
                     android:layout_toLeftOf="@+id/homeShotsMinus"
-                    android:background="#FFFFFF"
+                    android:inputType="number"
                     android:text="@string/stats_numHomeShots" />
 
                 <ImageButton
@@ -179,7 +180,6 @@
                     android:layout_marginLeft="25dp"
                     android:layout_marginRight="25dp"
                     android:layout_toRightOf="@+id/awayShotsPlus"
-                    android:background="#FFFFFF"
                     android:text="@string/stats_numAwayShots" />
 
                 <ImageButton
@@ -210,7 +210,6 @@
                     android:layout_centerInParent="true"
                     android:layout_marginLeft="85dp"
                     android:layout_marginRight="85dp"
-                    android:background="#FFFFFF"
                     android:text="@string/stats_goals" />
 
                 <ImageButton
@@ -229,7 +228,6 @@
                     android:layout_marginLeft="25dp"
                     android:layout_marginRight="25dp"
                     android:layout_toLeftOf="@+id/homeGoalsMinus"
-                    android:background="#FFFFFF"
                     android:text="@string/stats_numHomeGoals" />
 
                 <ImageButton
@@ -257,7 +255,6 @@
                     android:layout_marginLeft="25dp"
                     android:layout_marginRight="25dp"
                     android:layout_toRightOf="@+id/awayGoalsPlus"
-                    android:background="#FFFFFF"
                     android:text="@string/stats_numAwayGoals" />
 
                 <ImageButton
@@ -288,27 +285,37 @@
                     android:layout_centerInParent="true"
                     android:layout_marginLeft="76dp"
                     android:layout_marginRight="76dp"
-                    android:background="#FFFFFF"
                     android:text="@string/stats_penalties" />
 
-                <ImageButton
+                <!--
+                     ImageButton
                     android:id="@+id/home_redcard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@+id/penalties"
                     android:background="#FFFFFF"
                     android:src="@drawable/red_card"
+                    android:text="@string/stats_homeRedCard" /
+                -->
+
+                <Button
+                    android:id="@+id/home_redcard"
+                    android:layout_width="22dp"
+                    android:layout_height="33dp"
+                    android:layout_toLeftOf="@+id/penalties"
+                    android:background="@drawable/redcard_btn"
+                    android:inputType="number"
                     android:text="@string/stats_homeRedCard" />
 
-                <ImageButton
+                <Button
                     android:id="@+id/home_yellowcard"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="22dp"
+                    android:layout_height="33dp"
                     android:layout_marginLeft="25dp"
                     android:layout_marginRight="25dp"
                     android:layout_toLeftOf="@+id/home_redcard"
-                    android:background="#FFFFFF"
-                    android:src="@drawable/yellow_card"
+                    android:background="@drawable/yellowcard_btn"
+                    android:inputType="number"
                     android:text="@string/stats_homeYellowCard" />
 
                 <ImageButton
@@ -329,6 +336,7 @@
                     android:src="@drawable/refresh"
                     android:text="@string/stats_awayrefresh" />
 
+                <!--  
                 <ImageButton
                     android:id="@+id/away_yellowcard"
                     android:layout_width="wrap_content"
@@ -348,6 +356,26 @@
                     android:background="#FFFFFF"
                     android:src="@drawable/red_card"
                     android:text="@string/stats_awayRedCard" />
+                -->
+                <Button
+                    android:id="@+id/away_redcard"
+                    android:layout_width="22dp"
+                    android:layout_height="33dp"
+                    android:layout_toRightOf="@+id/away_refresh"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:background="@drawable/redcard_btn"
+                    android:inputType="number"
+                    android:text="@string/stats_awayRedCard" />
+
+                <Button
+                    android:id="@+id/away_yellowcard"
+                    android:layout_width="22dp"
+                    android:layout_height="33dp"
+                    android:layout_toRightOf="@+id/away_redcard"
+                    android:background="@drawable/yellowcard_btn"
+                    android:inputType="number"
+                    android:text="@string/stats_awayYellowCard" />
             </RelativeLayout>
         </TableRow>
     </TableLayout>

@@ -58,45 +58,25 @@ public class MainActivity extends Activity implements OnClickListener{
 		return super.onOptionsItemSelected(item);
 	}
 
-	public void addListenerOnButton() {
 
-		final Context context = this;
-		
-		formationsButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-
-				Intent intent = new Intent(context, FormationsActivity.class);
-				startActivity(intent);
-				
-			}
-			
-			
-
-		});
-		statisticsButton.setOnClickListener(new OnClickListener() {
-			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Intent intent = new Intent(context,StatisticsActivity.class);
-				startActivity(intent);
+				Button b = (Button)v;
 				
+				if (b.getId()==R.id.formations){
+
+					Intent intent = new Intent(this, FormationsActivity.class);
+					startActivity(intent);
+				}else if (b.getId()==R.id.game_statistics){
+					
+					Intent intent = new Intent(this,StatisticsActivity.class);
+					startActivity(intent);
+					
+				}
+
+
 			}
-		});
-
-	}
-
-	@Override
-	public void onClick(View v) {
-		Button b = (Button)v;
-    	
-    	if (b.getText().equals("Formations")){
-    		Intent intent = new Intent(this, FormationsActivity.class);
-    		startActivity(intent);
-    	}
-    	
-
-	}
+			
+			
 
 }
