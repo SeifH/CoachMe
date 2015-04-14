@@ -31,6 +31,13 @@
             android:name=".FormationsActivity" >
 
         </activity>
+        <activity
+            android:configChanges="orientation|screenSize"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape" 
+            android:name=".StatisticsActivity" >
+
+        </activity>
     </application>
 
 </manifest>

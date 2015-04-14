@@ -32,6 +32,10 @@ public class MainActivity extends Activity implements OnClickListener{
 		
         formationsButton = (Button) findViewById(R.id.formations);
         formationsButton.setOnClickListener(this);
+
+        statisticsButton = (Button) findViewById(R.id.game_statistics);
+        statisticsButton.setOnClickListener(this);
+        
         
 	}
 
@@ -54,32 +58,25 @@ public class MainActivity extends Activity implements OnClickListener{
 		return super.onOptionsItemSelected(item);
 	}
 
-	public void addListenerOnButton() {
 
-		final Context context = this;
-		
-		formationsButton.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View arg0) {
+			public void onClick(View v) {
+				Button b = (Button)v;
+				
+				if (b.getId()==R.id.formations){
 
-				Intent intent = new Intent(context, FormationsActivity.class);
-				startActivity(intent);
+					Intent intent = new Intent(this, FormationsActivity.class);
+					startActivity(intent);
+				}else if (b.getId()==R.id.game_statistics){
+					
+					Intent intent = new Intent(this,StatisticsActivity.class);
+					startActivity(intent);
+					
+				}
+
+
 			}
-
-		});
-
-	}
-
-	@Override
-	public void onClick(View v) {
-		Button b = (Button)v;
-    	
-    	if (b.getText().equals("Formations")){
-    		Intent intent = new Intent(this, FormationsActivity.class);
-    		startActivity(intent);
-    	}
-    	
-
-	}
+			
+			
 
 }

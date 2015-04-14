@@ -12,14 +12,41 @@
     <string name="title_activity_main2">MainActivity</string>
     
     <string name="refresh">Refresh</string>
-	<string name="brush">Brush</string>
-	<string name="erase">Erase</string>
-	<string name="save">Save</string>
-	<string name="paint">Paint</string>
-	<string name="b_player">Black Player</string>
-	<string name="r_player">Red Player</string>
-	<string name="ball">Ball</string>
-		
-	
+    <string name="brush">Brush</string>
+    <string name="erase">Erase</string>
+    <string name="save">Save</string>
+    <string name="paint">Paint</string>
+    <string name="b_player">Black Player</string>
+    <string name="r_player">Red Player</string>
+    <string name="ball">Ball</string>
+    
+    <string name="stats_newGame">New Game</string>
+    <string name="stats_home">Home</string>
+    <string name="stats_away">Away</string>
+    <string name="stats_timer">Timer</string>
+    <string name="stats_posession">Possession</string>
+    <string name="stats_shots">Shots</string>
+    <string name="stats_goals">Goals</string>
+    <string name="stats_penalties">Penalties</string>
+    <string name="stats_pause">Pause</string>
+    <string name="stats_play">Play</string>
+    <string name="stats_homeShotsMinus">Home Shots Minus</string>
+    <string name="stats_numHomeShots">0</string>
+    <string name="stats_homeShotsPlus">Home Shots Plus</string>
+    <string name="stats_awayShotsMinus">Away Shots Minus</string>
+    <string name="stats_numAwayShots">0</string>
+    <string name="stats_awayShotsPlus">Away Shots Plus</string>
+     <string name="stats_homeGoalsMinus">Home Goals Minus</string>
+    <string name="stats_numHomeGoals">0</string>
+    <string name="stats_homeGoalsPlus">Home Goals Plus</string>
+    <string name="stats_awayGoalsMinus">Away Goals Minus</string>
+    <string name="stats_numAwayGoals">0</string>
+    <string name="stats_awayGoalsPlus">Away Goals Plus</string>
+    <string name="stats_awayRedCard">0</string>
+    <string name="stats_awayYellowCard">0</string>
+    <string name="stats_awayrefresh">Away Refresh</string>
+    <string name="stats_homeRedCard">0</string>
+    <string name="stats_homeYellowCard">0</string>
+    <string name="stats_homerefresh">Home Refresh</string> 
 
 </resources>
