@@ -22,7 +22,9 @@
     
     <string name="stats_newGame">New Game</string>
     <string name="stats_home">Home</string>
+    <string name="stats_home_percent">0%</string>
     <string name="stats_away">Away</string>
+    <string name="stats_away_percent">0%</string>
     <string name="stats_timer">Timer</string>
     <string name="stats_posession">Possession</string>
     <string name="stats_shots">Shots</string>

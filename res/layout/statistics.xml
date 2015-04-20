@@ -74,7 +74,8 @@
                     android:layout_toRightOf="@+id/timer"
                     android:background="#FFFFFF"
                     android:src="@drawable/pause"
-                    android:text="@string/stats_pause" />
+                    android:text="@string/stats_pause" 
+                    android:visibility="invisible"/>
                 <ImageButton
                     android:id="@+id/play"
                     android:tag="imageButton"
@@ -83,8 +84,7 @@
                     android:layout_toRightOf="@+id/timer"
                     android:background="#FFFFFF"
                     android:src="@drawable/play"
-                    android:text="@string/stats_play"
-                    android:visibility="invisible" />
+                    android:text="@string/stats_play" />
             </RelativeLayout>
         </TableRow>
 
@@ -117,6 +117,12 @@
                     android:layout_toLeftOf="@+id/posession"
                     android:background="@drawable/round_btn2"
                     android:text="@string/stats_home" />
+                <TextView  
+                    android:id="@+id/home_percent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/home"
+                    android:text="@string/stats_home_percent"/>
 
                 <Button
                     android:id="@+id/away"
@@ -125,6 +131,12 @@
                     android:layout_toRightOf="@+id/posession"
                     android:background="@drawable/round_btn2"
                     android:text="@string/stats_away" />
+                <TextView  
+                    android:id="@+id/away_percent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/away"
+                    android:text="@string/stats_away_percent"/>
             </RelativeLayout>
         </TableRow>
 
@@ -382,9 +394,7 @@
                     android:id="@+id/away_redcard"
                     android:layout_width="22dp"
                     android:layout_height="33dp"
-                    android:layout_toRightOf="@+id/away_refresh"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginRight="25dp"
+                    android:layout_toRightOf="@+id/away_yellowcard"
                     android:background="@drawable/redcard_btn"
                     android:inputType="number"
                     android:text="@string/stats_awayRedCard" />
@@ -393,7 +403,9 @@
                     android:id="@+id/away_yellowcard"
                     android:layout_width="22dp"
                     android:layout_height="33dp"
-                    android:layout_toRightOf="@+id/away_redcard"
+                    android:layout_toRightOf="@+id/away_refresh"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
                     android:background="@drawable/yellowcard_btn"
                     android:inputType="number"
                     android:text="@string/stats_awayYellowCard" />
