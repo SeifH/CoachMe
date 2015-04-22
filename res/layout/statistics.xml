@@ -36,14 +36,14 @@
 
                 <ImageButton
                     android:id="@+id/save"
-                    android:tag="imageButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/newGame"
-                    android:contentDescription="@string/save"
-                    android:background="#605f5f"
                     android:layout_marginTop="14dp"
-                    android:src="@drawable/save" />
+                    android:layout_toRightOf="@+id/newGame"
+                    android:background="#605f5f"
+                    android:contentDescription="@string/save"
+                    android:src="@drawable/save"
+                    android:tag="imageButton" />
             </RelativeLayout>
         </TableRow>
 
@@ -68,22 +68,23 @@
 
                 <ImageButton
                     android:id="@+id/pause"
-                    android:tag="imageButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/timer"
                     android:background="#FFFFFF"
                     android:src="@drawable/pause"
-                    android:text="@string/stats_pause" 
-                    android:visibility="invisible"/>
+                    android:tag="imageButton"
+                    android:text="@string/stats_pause"
+                    android:visibility="invisible" />
+
                 <ImageButton
                     android:id="@+id/play"
-                    android:tag="imageButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/timer"
                     android:background="#FFFFFF"
                     android:src="@drawable/play"
+                    android:tag="imageButton"
                     android:text="@string/stats_play" />
             </RelativeLayout>
         </TableRow>
@@ -106,37 +107,45 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:layout_marginLeft="73dp"
-                    android:layout_marginRight="73dp"
                     android:text="@string/stats_posession" />
 
                 <Button
                     android:id="@+id/home"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@+id/posession"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="73dp"
                     android:background="@drawable/round_btn2"
                     android:text="@string/stats_home" />
-                <TextView  
+
+                <TextView
                     android:id="@+id/home_percent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="11dp"
+                    android:layout_toLeftOf="@+id/posession"
                     android:layout_toRightOf="@+id/home"
-                    android:text="@string/stats_home_percent"/>
+                    android:gravity="center"
+                    android:text="@string/stats_home_percent" />
 
                 <Button
                     android:id="@+id/away"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/posession"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="71dp"
                     android:background="@drawable/round_btn2"
                     android:text="@string/stats_away" />
-                <TextView  
+
+                <TextView
                     android:id="@+id/away_percent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="11dp"
                     android:layout_toLeftOf="@+id/away"
-                    android:text="@string/stats_away_percent"/>
+                    android:layout_toRightOf="@+id/posession"
+                    android:gravity="center"
+                    android:text="@string/stats_away_percent" />
             </RelativeLayout>
         </TableRow>
 
@@ -159,64 +168,79 @@
                     android:layout_marginRight="85dp"
                     android:text="@string/stats_shots" />
 
-                <ImageButton
+                <Button
                     android:id="@+id/homeShotsMinus"
-                    android:tag="imageButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_toLeftOf="@+id/shots"
-                    android:background="#FFFFFF"
-                    android:src="@drawable/minus"
-                    android:text="@string/stats_homeShotsMinus" />
+                    android:background="@drawable/round_btn"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:padding="0dp"
+                    android:text="@string/stats_minus"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/homeShotsPlus"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="45dp"
+                    android:background="@drawable/round_btn"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:padding="0dp"
+                    android:text="@string/stats_plus"
+                    android:textAlignment="gravity"
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/numHomeShots"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginRight="25dp"
                     android:layout_toLeftOf="@+id/homeShotsMinus"
-                    android:inputType="number"
-                    android:text="@string/stats_numHomeShots" />
+                    android:layout_toRightOf="@+id/homeShotsPlus"
+                    android:gravity="center"
+                    android:padding="0dp"
+                    android:text="@string/stats_zeroed" />
 
-                <ImageButton
-                    android:id="@+id/homeShotsPlus"
-                    android:tag="imageButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@+id/numHomeShots"
-                    android:background="#FFFFFF"
-                    android:src="@drawable/plus"
-                    android:text="@string/stats_homeShotsPlus" />
-
-                <ImageButton
+                <Button
                     android:id="@+id/awayShotsMinus"
-                    android:tag="imageButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/numAwayShots"
-                    android:background="#FFFFFF"
-                    android:src="@drawable/minus"
-                    android:text="@string/stats_awayShotsMinus" />
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="45dp"
+                    android:background="@drawable/round_btn"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:padding="0dp"
+                    android:text="@string/stats_minus"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/awayShotsPlus"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_toRightOf="@+id/shots"
+                    android:background="@drawable/round_btn"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:padding="0dp"
+                    android:text="@string/stats_plus"
+                    android:textAlignment="gravity"
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/numAwayShots"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginRight="25dp"
+                    android:layout_toLeftOf="@+id/awayShotsMinus"
                     android:layout_toRightOf="@+id/awayShotsPlus"
-                    android:text="@string/stats_numAwayShots" />
-
-                <ImageButton
-                    android:id="@+id/awayShotsPlus"
-                    android:tag="imageButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/shots"
-                    android:background="#FFFFFF"
-                    android:src="@drawable/plus"
-                    android:text="@string/stats_awayShotsPlus" />
+                    android:gravity="center"
+                    android:padding="0dp"
+                    android:text="@string/stats_zeroed" />
             </RelativeLayout>
         </TableRow>
 
@@ -239,63 +263,77 @@
                     android:layout_marginRight="85dp"
                     android:text="@string/stats_goals" />
 
-                <ImageButton
+                <Button
                     android:id="@+id/homeGoalsMinus"
-                    android:tag="imageButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_toLeftOf="@+id/goals"
-                    android:background="#FFFFFF"
-                    android:src="@drawable/minus"
-                    android:text="@string/stats_homeGoalsMinus" />
+                    android:background="@drawable/round_btn"
+                    android:includeFontPadding="false"
+                    android:padding="0dp"
+                    android:text="@string/stats_minus"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/homeGoalsPlus"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="45dp"
+                    android:background="@drawable/round_btn"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:padding="0dp"
+                    android:text="@string/stats_plus"
+                    android:textAlignment="gravity"
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/numHomeGoals"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginRight="25dp"
                     android:layout_toLeftOf="@+id/homeGoalsMinus"
-                    android:text="@string/stats_numHomeGoals" />
+                    android:layout_toRightOf="@+id/homeGoalsPlus"
+                    android:gravity="center"
+                    android:padding="0dp"
+                    android:text="@string/stats_zeroed" />
 
-                <ImageButton
-                    android:id="@+id/homeGoalsPlus"
-                    android:tag="imageButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@+id/numHomeGoals"
-                    android:background="#FFFFFF"
-                    android:src="@drawable/plus"
-                    android:text="@string/stats_homeGoalsPlus" />
-
-                <ImageButton
+                <Button
                     android:id="@+id/awayGoalsMinus"
-                    android:tag="imageButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/numAwayGoals"
-                    android:background="#FFFFFF"
-                    android:src="@drawable/minus"
-                    android:text="@string/stats_awayGoalsMinus" />
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="45dp"
+                    android:background="@drawable/round_btn"
+                    android:includeFontPadding="false"
+                    android:padding="0dp"
+                    android:text="@string/stats_minus"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/awayGoalsPlus"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_toRightOf="@+id/goals"
+                    android:background="@drawable/round_btn"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:padding="0dp"
+                    android:text="@string/stats_plus"
+                    android:textAlignment="gravity"
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/numAwayGoals"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginRight="25dp"
+                    android:layout_toLeftOf="@+id/awayGoalsMinus"
                     android:layout_toRightOf="@+id/awayGoalsPlus"
-                    android:text="@string/stats_numAwayGoals" />
-
-                <ImageButton
-                    android:id="@+id/awayGoalsPlus"
-                    android:tag="imageButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/goals"
-                    android:background="#FFFFFF"
-                    android:src="@drawable/plus"
-                    android:text="@string/stats_awayGoalsPlus" />
+                    android:gravity="center"
+                    android:padding="0dp"
+                    android:text="@string/stats_zeroed" />
             </RelativeLayout>
         </TableRow>
 
@@ -318,25 +356,15 @@
                     android:layout_marginRight="76dp"
                     android:text="@string/stats_penalties" />
 
-                <!--
-                     ImageButton
-                    android:id="@+id/home_redcard"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@+id/penalties"
-                    android:background="#FFFFFF"
-                    android:src="@drawable/red_card"
-                    android:text="@string/stats_homeRedCard" /
-                -->
-
                 <Button
                     android:id="@+id/home_redcard"
                     android:layout_width="22dp"
                     android:layout_height="33dp"
                     android:layout_toLeftOf="@+id/penalties"
                     android:background="@drawable/redcard_btn"
+                    android:includeFontPadding="false"
                     android:inputType="number"
-                    android:text="@string/stats_homeRedCard" />
+                    android:text="@string/stats_zeroed" />
 
                 <Button
                     android:id="@+id/home_yellowcard"
@@ -346,69 +374,51 @@
                     android:layout_marginRight="25dp"
                     android:layout_toLeftOf="@+id/home_redcard"
                     android:background="@drawable/yellowcard_btn"
+                    android:includeFontPadding="false"
                     android:inputType="number"
-                    android:text="@string/stats_homeYellowCard" />
+                    android:text="@string/stats_zeroed" />
 
                 <ImageButton
                     android:id="@+id/home_refresh"
-                   android:tag="imageButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@+id/home_yellowcard"
                     android:background="#FFFFFF"
                     android:src="@drawable/refresh"
+                    android:tag="imageButton"
                     android:text="@string/stats_homerefresh" />
 
                 <ImageButton
                     android:id="@+id/away_refresh"
-                    android:tag="imageButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/penalties"
                     android:background="#FFFFFF"
                     android:src="@drawable/refresh"
+                    android:tag="imageButton"
                     android:text="@string/stats_awayrefresh" />
 
-                <!--  
-                <ImageButton
-                    android:id="@+id/away_yellowcard"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginRight="25dp"
-                    android:layout_toRightOf="@+id/away_refresh"
-                    android:background="#FFFFFF"
-                    android:src="@drawable/yellow_card"
-                    android:text="@string/stats_awayYellowCard" />
-
-                <ImageButton
-                    android:id="@+id/away_redcard"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/away_yellowcard"
-                    android:background="#FFFFFF"
-                    android:src="@drawable/red_card"
-                    android:text="@string/stats_awayRedCard" />
-                -->
                 <Button
                     android:id="@+id/away_redcard"
                     android:layout_width="22dp"
                     android:layout_height="33dp"
                     android:layout_toRightOf="@+id/away_yellowcard"
                     android:background="@drawable/redcard_btn"
+                    android:includeFontPadding="false"
                     android:inputType="number"
-                    android:text="@string/stats_awayRedCard" />
+                    android:text="@string/stats_zeroed" />
 
                 <Button
                     android:id="@+id/away_yellowcard"
                     android:layout_width="22dp"
                     android:layout_height="33dp"
-                    android:layout_toRightOf="@+id/away_refresh"
                     android:layout_marginLeft="25dp"
                     android:layout_marginRight="25dp"
+                    android:layout_toRightOf="@+id/away_refresh"
                     android:background="@drawable/yellowcard_btn"
+                    android:includeFontPadding="false"
                     android:inputType="number"
-                    android:text="@string/stats_awayYellowCard" />
+                    android:text="@string/stats_zeroed" />
             </RelativeLayout>
         </TableRow>
     </TableLayout>

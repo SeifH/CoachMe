@@ -14,117 +14,106 @@
         android:id="@+id/TableLayout01"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:stretchColumns="0"
-        android:weightSum="3" >
+        android:stretchColumns="0" >
 
         <TableRow
             android:id="@+id/tableRow1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.3"
-            android:gravity="center_horizontal" >
+            android:layout_height="wrap_content" >
 
             <ImageButton
                 android:id="@+id/settings"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginRight="370dp"
+                android:layout_marginRight="380dp"
                 android:background="@null"
                 android:gravity="center"
-                android:padding="0dp"
                 android:scaleType="fitStart"
-                android:src="@drawable/setting" />
+                android:src="@drawable/ic_action_settings" />
 
             <ImageButton
                 android:id="@+id/help"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:layout_marginRight="0dp"
                 android:background="@null"
                 android:gravity="center"
-                android:padding="0dp"
                 android:scaleType="fitEnd"
-                android:src="@drawable/help" />
+                android:src="@drawable/ic_action_help" />
         </TableRow>
 
         <TableRow
             android:id="@+id/tableRow2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-30dp"
-            android:layout_weight="0.3"
-            android:gravity="center_horizontal"
-            android:paddingLeft="70dp"
-            android:paddingRight="70dp" >
+            android:layout_marginTop="-5dp"
+            android:gravity="center_horizontal" >
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
                 android:adjustViewBounds="true"
-                android:background="@drawable/title"
-                android:focusable="false"
-                android:scaleType="fitXY" />
+                android:scaleType="fitXY"
+                android:src="@drawable/title" />
         </TableRow>
 
         <TableRow
             android:id="@+id/tableRow3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="75dp"
-            android:layout_marginRight="75dp"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
             android:layout_marginTop="20dp"
-            android:layout_weight="0.3"
             android:gravity="center_horizontal"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp" >
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp" >
 
             <Button
                 android:id="@+id/formations"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#FFFFFF"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="70dp"
+                android:layout_marginRight="70dp"
+                android:background="@drawable/rounded_corner_btn"
+                android:gravity="center"
                 android:text="@string/main_formations" />
         </TableRow>
 
         <TableRow
             android:id="@+id/tableRow4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="75dp"
-            android:layout_marginRight="75dp"
-            android:layout_weight="0.3"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
             android:gravity="center_horizontal"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp" >
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp" >
 
             <Button
                 android:id="@+id/player_directory"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#FFFFFF"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
+                android:layout_marginLeft="70dp"
+                android:layout_marginRight="70dp"
+                android:background="@drawable/rounded_corner_btn"
+                android:gravity="center"
                 android:text="@string/main_directory" />
         </TableRow>
 
         <TableRow
             android:id="@+id/tableRow5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="75dp"
-            android:layout_marginRight="75dp"
-            android:layout_weight="0.3"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
             android:gravity="center_horizontal"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp" >
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp" >
 
             <Button
                 android:id="@+id/game_statistics"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#FFFFFF"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
+                android:layout_marginLeft="70dp"
+                android:layout_marginRight="70dp"
+                android:background="@drawable/rounded_corner_btn"
+                android:gravity="center"
                 android:text="@string/main_statistics" />
         </TableRow>
     </TableLayout>

@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
@@ -47,6 +48,7 @@ public class FormationsActivity extends Activity implements OnClickListener {
 
 	// keep track of number of drags for each button
 	private int ballDragNum, rPlayerDragNum, bPlayerDragNum;
+	private int helpNum;
 	private ArrayList<ImageButton> imageDuplicates;
 	private ArrayList<ImageButton> imageDisable;
 	private String dragTag;
@@ -70,6 +72,7 @@ public class FormationsActivity extends Activity implements OnClickListener {
 		ballDragNum = 0;
 		rPlayerDragNum = 0;
 		bPlayerDragNum = 0;
+		helpNum = 0;
 
 		drawView = (DrawingView) findViewById(R.id.drawing);
 
@@ -85,17 +88,20 @@ public class FormationsActivity extends Activity implements OnClickListener {
 		ball = (ImageButton) findViewById(R.id.ball);
 		// set the tag
 		ball.setTag(BALL_TAG);
-		ball.setOnLongClickListener(new LongClickListener());
+		ball.setOnTouchListener(new TouchListener());
+		//ball.setOnLongClickListener(new LongClickListener());
 
 		bPlayer = (ImageButton) findViewById(R.id.bPlayer);
 		// set the tag
 		bPlayer.setTag(BLACK_PLAYER_TAG);
-		bPlayer.setOnLongClickListener(new LongClickListener());
+		bPlayer.setOnTouchListener(new TouchListener());
+		//bPlayer.setOnLongClickListener(new LongClickListener());
 
 		rPlayer = (ImageButton) findViewById(R.id.rPlayer);
 		// set the tag
 		rPlayer.setTag(RED_PLAYER_TAG);
-		rPlayer.setOnLongClickListener(new LongClickListener());
+		rPlayer.setOnTouchListener(new TouchListener());
+		//rPlayer.setOnLongClickListener(new LongClickListener());
 
 		findViewById(R.id.RelativeLayout01).setOnDragListener(
 				new DragListener());
@@ -124,7 +130,7 @@ public class FormationsActivity extends Activity implements OnClickListener {
 			newDialog.setPositiveButton("Yes",
 					new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int which) {
-							resetDrawingField ();
+							resetDrawingField();
 							dialog.dismiss();
 						}
 					});
@@ -192,8 +198,9 @@ public class FormationsActivity extends Activity implements OnClickListener {
 					ImageButton newImgButton = new ImageButton(
 							getApplicationContext());
 					newImgButton.setImageDrawable(oldImgButton.getDrawable());
-					newImgButton
-							.setOnLongClickListener(new LongClickListener());
+				//	newImgButton
+				//			.setOnLongClickListener(new LongClickListener());
+					newImgButton.setOnTouchListener(new TouchListener());
 					newImgButton.setTag("Duplicate");
 					newImgButton.getBackground().setAlpha(0);
 
@@ -202,8 +209,8 @@ public class FormationsActivity extends Activity implements OnClickListener {
 					// containView.addView(view);
 
 					// set the coordinates of the new Image Button
-//					newImgButton.setX(x_cord - (view.getWidth() / 2));
-//					newImgButton.setY(y_cord - (view.getHeight() / 2)+25);
+					// newImgButton.setX(x_cord - (view.getWidth() / 2));
+					// newImgButton.setY(y_cord - (view.getHeight() / 2)+25);
 
 					// set the width and height of the new Image Button
 					Drawable d = (oldImgButton.getDrawable());
@@ -213,12 +220,12 @@ public class FormationsActivity extends Activity implements OnClickListener {
 					FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
 							new LayoutParams(width, height));
 					newImgButton.setLayoutParams(params);
-					
+
 					newImgButton.setX(x_cord - (view.getWidth() / 2));
-					if (oldImgButton.getTag().equals("Duplicate")){
+					if (oldImgButton.getTag().equals("Duplicate")) {
 						newImgButton.setY(y_cord - (view.getHeight() / 2));
-					}else
-					newImgButton.setY(y_cord - (view.getHeight() / 2)+15);
+					} else
+						newImgButton.setY(y_cord - (view.getHeight() / 2) + 15);
 
 					// newView.setY(y_cord - (view2.getWidth() / 2));
 					// newView.setY(y_cord - (view2.getHeight() / 2));
@@ -236,14 +243,14 @@ public class FormationsActivity extends Activity implements OnClickListener {
 					} else if (oldImgButton.getTag().toString()
 							.equals(RED_PLAYER_TAG)) {
 						rPlayerDragNum++;
-						
-						if (rPlayerDragNum == 11) 
+
+						if (rPlayerDragNum == 11)
 							finalDrop(oldImgButton);
-						
+
 					} else if (oldImgButton.getTag().toString()
 							.equals(BLACK_PLAYER_TAG)) {
 						bPlayerDragNum++;
-						
+
 						if (bPlayerDragNum == 11)
 							finalDrop(oldImgButton);
 					}
@@ -273,74 +280,63 @@ public class FormationsActivity extends Activity implements OnClickListener {
 
 	}
 
-	private float adjustXCoord(float x) {
 
-		// get screen dimensions
-		Display display = getWindowManager().getDefaultDisplay();
-		Point size = new Point();
-		display.getSize(size);
+	/**
+	 * TouchListener will handle touch events on draggable views
+	 *
+	 */
+	private final class TouchListener implements OnTouchListener {
+		public boolean onTouch(View view, MotionEvent motionEvent) {
+			
+			ImageButton btn = (ImageButton) view;
+			
+			if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+				// TODO Auto-generated method stub
+				if (!btn.getTag().equals("Duplicate")&& helpNum == 0){
+					Toast toast = Toast.makeText(getApplicationContext(), "Drag onto field",
+							   Toast.LENGTH_SHORT);
+					toast.setGravity(Gravity.BOTTOM|Gravity.CENTER, 0, 0);
+					toast.show();
+					helpNum ++;
 
-		if (dragTag.equals(BALL_TAG)) {
-			if (ballDragNum == 0) {
-				float adjustedValue = (size.x / 800) * 145;
-				ballDragNum++;
-				return x + adjustedValue;
-			}
-		} else if (dragTag.equals(RED_PLAYER_TAG)) {
-			if (rPlayerDragNum == 0) {
-				float adjustedValue = (size.x / 800) * 80;
-				rPlayerDragNum++;
-				return x + adjustedValue;
-			}
-		} else if (dragTag.equals(BLACK_PLAYER_TAG)) {
-			if (bPlayerDragNum == 0) {
-				float adjustedValue = (size.x / 800) * 25;
-				bPlayerDragNum++;
-				return x + adjustedValue;
+				}
+
+				// get tag of dragged item
+				dragTag = view.getTag().toString();
+
+				// create it from the object's tag
+				ClipData.Item item = new ClipData.Item(
+						(CharSequence) view.getTag());
+
+				//clip data passes data as part of drag
+				String[] mimeTypes = { ClipDescription.MIMETYPE_TEXT_PLAIN };
+				ClipData data = new ClipData(view.getTag().toString(),
+						mimeTypes, item);
+				DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(
+						view);
+
+				// Start the drag shadow builder
+				view.startDrag(data, // data to be dragged
+						shadowBuilder, // drag shadow
+						view, // local data about the drag and drop operation
+						0 // no needed flags
+				);
+
+				return true;
+			} else {
+				return false;
 			}
 		}
-
-		return x;
-
 	}
 
-	private final class LongClickListener implements OnLongClickListener {
-
-		// called when the item is long-clicked
-		@Override
-		public boolean onLongClick(View view) {
-			// TODO Auto-generated method stub
-
-			// get tag of dragged item
-			dragTag = view.getTag().toString();
-
-			// create it from the object's tag
-			ClipData.Item item = new ClipData.Item((CharSequence) view.getTag());
-
-			String[] mimeTypes = { ClipDescription.MIMETYPE_TEXT_PLAIN };
-			ClipData data = new ClipData(view.getTag().toString(), mimeTypes,
-					item);
-			DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
-
-			// Initiates the drag shadow builder
-			view.startDrag(data, // data to be dragged
-					shadowBuilder, // drag shadow
-					view, // local data about the drag and drop operation
-					0 // no needed flags
-			);
-
-			return true;
-		}
-	}
-	
-	private void resetDrawingField (){
+	private void resetDrawingField() {
 		drawView.clearCanvas();
 		drawView.setErase(false);
-		
+
 		for (ImageButton btn : imageDuplicates) {
 			btn.setVisibility(View.INVISIBLE);
 		}
-		
+
 		for (ImageButton btn : imageDisable) {
 			btn.setEnabled(true);
 			float alpha = 1f;
@@ -348,17 +344,17 @@ public class FormationsActivity extends Activity implements OnClickListener {
 			alphaUp.setFillAfter(true);
 			btn.startAnimation(alphaUp);
 		}
-		
+
 		imageDisable.clear();
 		imageDuplicates.clear();
-		
+
 		ballDragNum = 0;
 		rPlayerDragNum = 0;
 		bPlayerDragNum = 0;
 	}
-	
-	private void finalDrop (ImageButton ImgButton){
-		
+
+	private void finalDrop(ImageButton ImgButton) {
+
 		ImgButton.setEnabled(false);
 		imageDisable.add(ImgButton);
 
@@ -367,6 +363,5 @@ public class FormationsActivity extends Activity implements OnClickListener {
 		alphaUp.setFillAfter(true);
 		ImgButton.startAnimation(alphaUp);
 	}
-
 
 }

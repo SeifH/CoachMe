@@ -24,6 +24,9 @@ public class DrawingView extends View {
 	private Bitmap canvasBitmap;
 	private boolean erase=false;
 	
+	private final int MARKER_STROKE_WIDTH = 10;
+	private final int ERASER_STROKE_WIDTH = 25;
+	
 	public void setErase(boolean isErase){
 		//set erase true or false  
 		erase = isErase;
@@ -31,10 +34,10 @@ public class DrawingView extends View {
 		else drawPaint.setXfermode(null);
 		
 		if (isErase==true){
-			drawPaint.setStrokeWidth(25);
+			drawPaint.setStrokeWidth(ERASER_STROKE_WIDTH);
 
 		}else
-			drawPaint.setStrokeWidth(10);
+			drawPaint.setStrokeWidth(MARKER_STROKE_WIDTH);
 		}
 	
 	public DrawingView(Context context, AttributeSet attrs) {
@@ -56,7 +59,7 @@ public class DrawingView extends View {
 		drawPaint.setColor(paintColor);
 		//setproperties
 		drawPaint.setAntiAlias(true);
-		drawPaint.setStrokeWidth(20);
+		drawPaint.setStrokeWidth(MARKER_STROKE_WIDTH);
 		drawPaint.setStyle(Paint.Style.STROKE);
 		drawPaint.setStrokeJoin(Paint.Join.ROUND);
 		drawPaint.setStrokeCap(Paint.Cap.ROUND);

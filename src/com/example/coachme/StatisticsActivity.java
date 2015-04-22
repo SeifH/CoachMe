@@ -17,15 +17,15 @@ import android.widget.TextView;
 public class StatisticsActivity extends Activity implements OnClickListener {
 
 	private Button newGameButton, homePosession, awayPosession, homeRed,
-			homeYellow, awayRed, awayYellow;
-	private ImageButton save, pause, homeShotsPlus, homeShotsMinus,
-			awayShotsPlus, awayShotsMinus, homeGoalsPlus, homeGoalsMinus,
-			awayGoalsPlus, awayGoalsMinus, awayRefresh, homeRefresh, play;
+			awayShotsMinus, homeGoalsMinus, awayGoalsMinus, homeYellow,
+			awayRed, awayYellow, awayGoalsPlus, homeShotsPlus, homeGoalsPlus,
+			homeShotsMinus, awayShotsPlus;
+	private ImageButton save, pause, awayRefresh, homeRefresh, play;
 	private Chronometer timer;
 	private TextView homeShots, awayShots, homeGoals, awayGoals, homePercent,
 			awayPercent;
 	private long lastPause;
-	private int lastPosession; //minutes passed at last possession
+	private int lastPosession; // minutes passed at last possession
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public class StatisticsActivity extends Activity implements OnClickListener {
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		setContentView(R.layout.statistics);
-		
+
 		lastPosession = 0;
 
 		newGameButton = (Button) findViewById(R.id.newGame);
@@ -45,13 +45,13 @@ public class StatisticsActivity extends Activity implements OnClickListener {
 
 		save = (ImageButton) findViewById(R.id.save);
 		save.setOnClickListener(this);
-		
+
 		homePosession = (Button) findViewById(R.id.home);
 		homePosession.setOnClickListener(this);
 
 		awayPosession = (Button) findViewById(R.id.away);
 		awayPosession.setOnClickListener(this);
-		
+
 		homeRed = (Button) findViewById(R.id.home_redcard);
 		homeRed.setOnClickListener(this);
 
@@ -64,28 +64,28 @@ public class StatisticsActivity extends Activity implements OnClickListener {
 		awayYellow = (Button) findViewById(R.id.away_yellowcard);
 		awayYellow.setOnClickListener(this);
 
-		homeShotsPlus = (ImageButton) findViewById(R.id.homeShotsPlus);
+		homeShotsPlus = (Button) findViewById(R.id.homeShotsPlus);
 		homeShotsPlus.setOnClickListener(this);
 
-		homeShotsMinus = (ImageButton) findViewById(R.id.homeShotsMinus);
+		homeShotsMinus = (Button) findViewById(R.id.homeShotsMinus);
 		homeShotsMinus.setOnClickListener(this);
 
-		awayShotsPlus = (ImageButton) findViewById(R.id.awayShotsPlus);
+		awayShotsPlus = (Button) findViewById(R.id.awayShotsPlus);
 		awayShotsPlus.setOnClickListener(this);
 
-		awayShotsMinus = (ImageButton) findViewById(R.id.awayShotsMinus);
+		awayShotsMinus = (Button) findViewById(R.id.awayShotsMinus);
 		awayShotsMinus.setOnClickListener(this);
 
-		homeGoalsPlus = (ImageButton) findViewById(R.id.homeGoalsPlus);
+		homeGoalsPlus = (Button) findViewById(R.id.homeGoalsPlus);
 		homeGoalsPlus.setOnClickListener(this);
 
-		homeGoalsMinus = (ImageButton) findViewById(R.id.homeGoalsMinus);
+		homeGoalsMinus = (Button) findViewById(R.id.homeGoalsMinus);
 		homeGoalsMinus.setOnClickListener(this);
 
-		awayGoalsPlus = (ImageButton) findViewById(R.id.awayGoalsPlus);
+		awayGoalsPlus = (Button) findViewById(R.id.awayGoalsPlus);
 		awayGoalsPlus.setOnClickListener(this);
 
-		awayGoalsMinus = (ImageButton) findViewById(R.id.awayGoalsMinus);
+		awayGoalsMinus = (Button) findViewById(R.id.awayGoalsMinus);
 		awayGoalsMinus.setOnClickListener(this);
 
 		awayRefresh = (ImageButton) findViewById(R.id.away_refresh);
@@ -94,9 +94,9 @@ public class StatisticsActivity extends Activity implements OnClickListener {
 		homeRefresh = (ImageButton) findViewById(R.id.home_refresh);
 		homeRefresh.setOnClickListener(this);
 
-		homePercent= (TextView) findViewById(R.id.home_percent);
-		awayPercent= (TextView) findViewById(R.id.away_percent);
-		
+		homePercent = (TextView) findViewById(R.id.home_percent);
+		awayPercent = (TextView) findViewById(R.id.away_percent);
+
 		homeShots = (TextView) findViewById(R.id.numHomeShots);
 		awayShots = (TextView) findViewById(R.id.numAwayShots);
 		homeGoals = (TextView) findViewById(R.id.numHomeGoals);
@@ -146,67 +146,6 @@ public class StatisticsActivity extends Activity implements OnClickListener {
 			} else if (b.getId() == R.id.away_redcard) {
 
 				increaseCardNum(b);
-			} else if (b.getId() == R.id.newGame) {
-				// timer.setBase(SystemClock.elapsedRealtime());
-				// timer.start();
-				// System.out.println("timer started");
-				timer.stop();
-				timer.setBase(SystemClock.elapsedRealtime());
-				lastPause = SystemClock.elapsedRealtime();
-				pause.setVisibility(View.INVISIBLE);
-				play.setVisibility(View.VISIBLE);
-
-				homeShots.setText("0");
-				awayShots.setText("0");
-				homeGoals.setText("0");
-				awayGoals.setText("0");
-				homePercent.setText("0%");
-				awayPercent.setText("0%");
-				homeRed.setText("0");
-				homeYellow.setText("0");
-				awayRed.setText("0");
-				awayYellow.setText("0");
-				
-
-			} else if (b.getId() == R.id.home) {
-				
-				//System.out.println(timer.getText());//format 00:00 or 00:00:00
-				
-				String time = (String) timer.getText();
-				
-				if(time.length()==5)
-				{
-					//System.out.println(timer.getText());
-					int hrs = 0;
-					int mins = Integer.parseInt(time.substring(0, 1));
-					int secs = Integer.parseInt(time.substring(3, 4));
-				}
-				else //an hour has passed
-				{
-					int hrs = Integer.parseInt(time.substring(0, 1));
-					int mins = Integer.parseInt(time.substring(3, 4));
-					int secs = Integer.parseInt(time.substring(6, 7));
-				}
-				
-				
-
-			} else if (b.getId() == R.id.away) {
-
-			}
-
-		} else if (v.getTag().equals("imageButton")) {
-			// System.out.println("clicked image button");
-
-			ImageButton b = (ImageButton) v;
-
-			if (b.getId() == R.id.away_refresh) {
-
-				resetCardNum(awayRed);
-				resetCardNum(awayYellow);
-			} else if (b.getId() == R.id.home_refresh) {
-
-				resetCardNum(homeRed);
-				resetCardNum(homeYellow);
 			} else if (b.getId() == R.id.homeShotsPlus) {
 
 				increaseNum(homeShots);
@@ -231,6 +170,63 @@ public class StatisticsActivity extends Activity implements OnClickListener {
 			} else if (b.getId() == R.id.awayGoalsMinus) {
 
 				decreaseNum(awayGoals);
+			} else if (b.getId() == R.id.newGame) {
+				// timer.setBase(SystemClock.elapsedRealtime());
+				// timer.start();
+				// System.out.println("timer started");
+				timer.stop();
+				timer.setBase(SystemClock.elapsedRealtime());
+				lastPause = SystemClock.elapsedRealtime();
+				pause.setVisibility(View.INVISIBLE);
+				play.setVisibility(View.VISIBLE);
+
+				homeShots.setText("0");
+				awayShots.setText("0");
+				homeGoals.setText("0");
+				awayGoals.setText("0");
+				homePercent.setText("0%");
+				awayPercent.setText("0%");
+				homeRed.setText("0");
+				homeYellow.setText("0");
+				awayRed.setText("0");
+				awayYellow.setText("0");
+
+			} else if (b.getId() == R.id.home) {
+
+				// System.out.println(timer.getText());//format 00:00 or
+				// 00:00:00
+
+				String time = (String) timer.getText();
+
+				if (time.length() == 5) {
+					// System.out.println(timer.getText());
+					int hrs = 0;
+					int mins = Integer.parseInt(time.substring(0, 1));
+					int secs = Integer.parseInt(time.substring(3, 4));
+				} else // an hour has passed
+				{
+					int hrs = Integer.parseInt(time.substring(0, 1));
+					int mins = Integer.parseInt(time.substring(3, 4));
+					int secs = Integer.parseInt(time.substring(6, 7));
+				}
+
+			} else if (b.getId() == R.id.away) {
+
+			}
+
+		} else if (v.getTag().equals("imageButton")) {
+			// System.out.println("clicked image button");
+
+			ImageButton b = (ImageButton) v;
+
+			if (b.getId() == R.id.away_refresh) {
+
+				resetCardNum(awayRed);
+				resetCardNum(awayYellow);
+			} else if (b.getId() == R.id.home_refresh) {
+
+				resetCardNum(homeRed);
+				resetCardNum(homeYellow);
 			} else if (b.getId() == R.id.pause) {
 
 				lastPause = SystemClock.elapsedRealtime();

@@ -17,8 +17,7 @@
         android:layout_marginTop="20dp"
         android:orientation="horizontal" >
 
-
-     <ImageButton
+        <ImageButton
             android:id="@+id/bPlayer"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
@@ -27,16 +26,6 @@
             android:background="@null"
             android:contentDescription="@string/b_player"
             android:src="@drawable/b_player" />
-   
-        <ImageButton
-            android:id="@+id/rPlayer"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_marginRight="165dp"
-            android:layout_toLeftOf="@+id/refresh"
-            android:background="@null"
-            android:contentDescription="@string/r_player"
-            android:src="@drawable/r_player" />
 
         <ImageButton
             android:id="@+id/ball"
@@ -49,12 +38,23 @@
             android:src="@drawable/ball" />
 
         <ImageButton
+            android:id="@+id/rPlayer"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/ball"
+            android:layout_toRightOf="@+id/bPlayer"
+            android:background="@null"
+            android:contentDescription="@string/r_player"
+            android:src="@drawable/r_player" />
+
+        <ImageButton
             android:id="@+id/refresh"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_toLeftOf="@+id/draw"
             android:contentDescription="@string/refresh"
-            android:src="@drawable/refresh" />
+            android:src="@drawable/ic_action_new_picture" />
 
         <ImageButton
             android:id="@+id/draw"
