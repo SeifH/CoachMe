@@ -32,6 +32,7 @@
             android:layout_marginRight="140dp"
             android:background="@drawable/round_btn2"
             android:text="+"
+            android:textAlignment="center"
             android:textColor="#20fa48" />
 
         <!-- @string/plus -->
@@ -41,8 +42,9 @@
     <ListView
         android:id="@+id/listView"
         android:layout_width="wrap_content"
-        android:layout_height="200dp"
-        android:padding="20dp" >
+        android:layout_height="240dp"
+        android:layout_margin="20dp"
+        android:background="#000000" >
     </ListView>
 
     <LinearLayout

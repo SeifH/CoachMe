@@ -36,6 +36,9 @@ public class MainActivity extends Activity implements OnClickListener{
         statisticsButton = (Button) findViewById(R.id.game_statistics);
         statisticsButton.setOnClickListener(this);
         
+        directoryButton = (Button) findViewById(R.id.player_directory);
+        directoryButton.setOnClickListener(this);
+        
         
 	}
 
@@ -70,6 +73,11 @@ public class MainActivity extends Activity implements OnClickListener{
 				}else if (b.getId()==R.id.game_statistics){
 					
 					Intent intent = new Intent(this,StatisticsActivity.class);
+					startActivity(intent);
+					
+				}else if (b.getId()==R.id.player_directory){
+					
+					Intent intent = new Intent(this,DirectoryActivity.class);
 					startActivity(intent);
 					
 				}
