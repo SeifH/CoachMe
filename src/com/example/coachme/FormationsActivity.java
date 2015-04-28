@@ -1,6 +1,9 @@
 package com.example.coachme;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -8,6 +11,8 @@ import android.content.ClipDescription;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
@@ -18,6 +23,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -28,6 +34,8 @@ import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.content.ClipData;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -44,7 +52,7 @@ import android.view.animation.AlphaAnimation;
 public class FormationsActivity extends Activity implements OnClickListener {
 
 	private DrawingView drawView;
-	private ImageButton draw, eraser, refresh, ball, bPlayer, rPlayer;
+	private ImageButton draw, eraser, refresh, ball, bPlayer, rPlayer, save;
 
 	// keep track of number of drags for each button
 	private int ballDragNum, rPlayerDragNum, bPlayerDragNum;
@@ -85,23 +93,26 @@ public class FormationsActivity extends Activity implements OnClickListener {
 		refresh = (ImageButton) findViewById(R.id.refresh);
 		refresh.setOnClickListener(this);
 
+		save = (ImageButton) findViewById(R.id.save);
+		save.setOnClickListener(this);
+
 		ball = (ImageButton) findViewById(R.id.ball);
 		// set the tag
 		ball.setTag(BALL_TAG);
 		ball.setOnTouchListener(new TouchListener());
-		//ball.setOnLongClickListener(new LongClickListener());
+		// ball.setOnLongClickListener(new LongClickListener());
 
 		bPlayer = (ImageButton) findViewById(R.id.bPlayer);
 		// set the tag
 		bPlayer.setTag(BLACK_PLAYER_TAG);
 		bPlayer.setOnTouchListener(new TouchListener());
-		//bPlayer.setOnLongClickListener(new LongClickListener());
+		// bPlayer.setOnLongClickListener(new LongClickListener());
 
 		rPlayer = (ImageButton) findViewById(R.id.rPlayer);
 		// set the tag
 		rPlayer.setTag(RED_PLAYER_TAG);
 		rPlayer.setOnTouchListener(new TouchListener());
-		//rPlayer.setOnLongClickListener(new LongClickListener());
+		// rPlayer.setOnLongClickListener(new LongClickListener());
 
 		findViewById(R.id.RelativeLayout01).setOnDragListener(
 				new DragListener());
@@ -118,6 +129,9 @@ public class FormationsActivity extends Activity implements OnClickListener {
 		if (view.getId() == R.id.draw) {
 			// draw button clicked
 			drawView.setErase(false);
+		} else if (view.getId() == R.id.save) {
+			// save drawing
+			saveDrawing();
 		} else if (view.getId() == R.id.erase) {
 			// switch to eraser
 			drawView.setErase(true);
@@ -198,8 +212,8 @@ public class FormationsActivity extends Activity implements OnClickListener {
 					ImageButton newImgButton = new ImageButton(
 							getApplicationContext());
 					newImgButton.setImageDrawable(oldImgButton.getDrawable());
-				//	newImgButton
-				//			.setOnLongClickListener(new LongClickListener());
+					// newImgButton
+					// .setOnLongClickListener(new LongClickListener());
 					newImgButton.setOnTouchListener(new TouchListener());
 					newImgButton.setTag("Duplicate");
 					newImgButton.getBackground().setAlpha(0);
@@ -280,24 +294,23 @@ public class FormationsActivity extends Activity implements OnClickListener {
 
 	}
 
-
 	/**
 	 * TouchListener will handle touch events on draggable views
 	 *
 	 */
 	private final class TouchListener implements OnTouchListener {
 		public boolean onTouch(View view, MotionEvent motionEvent) {
-			
+
 			ImageButton btn = (ImageButton) view;
-			
+
 			if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
 				// TODO Auto-generated method stub
-				if (!btn.getTag().equals("Duplicate")&& helpNum == 0){
-					Toast toast = Toast.makeText(getApplicationContext(), "Drag onto field",
-							   Toast.LENGTH_SHORT);
-					toast.setGravity(Gravity.BOTTOM|Gravity.CENTER, 0, 0);
+				if (!btn.getTag().equals("Duplicate") && helpNum == 0) {
+					Toast toast = Toast.makeText(getApplicationContext(),
+							"Drag onto field", Toast.LENGTH_SHORT);
+					toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 0);
 					toast.show();
-					helpNum ++;
+					helpNum++;
 
 				}
 
@@ -308,7 +321,7 @@ public class FormationsActivity extends Activity implements OnClickListener {
 				ClipData.Item item = new ClipData.Item(
 						(CharSequence) view.getTag());
 
-				//clip data passes data as part of drag
+				// clip data passes data as part of drag
 				String[] mimeTypes = { ClipDescription.MIMETYPE_TEXT_PLAIN };
 				ClipData data = new ClipData(view.getTag().toString(),
 						mimeTypes, item);
@@ -362,6 +375,72 @@ public class FormationsActivity extends Activity implements OnClickListener {
 		AlphaAnimation alphaUp = new AlphaAnimation(alpha, alpha);
 		alphaUp.setFillAfter(true);
 		ImgButton.startAnimation(alphaUp);
+	}
+
+	private void saveDrawing() {
+
+		AlertDialog.Builder saveDialog = new AlertDialog.Builder(this);
+		saveDialog.setTitle("Save Formation");
+		saveDialog.setMessage("Save formation to device?");
+
+		// Setup an EditText view to get user input
+		final EditText input = new EditText(this);
+		input.setText("Name");
+
+		saveDialog.setView(input);
+		saveDialog.setPositiveButton("Yes",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which)
+
+					{
+						
+						if (UserDrawings.fileExists(input.getText().toString())){
+							// user feedback - save success
+							Toast HII = Toast.makeText(
+									getApplicationContext(),
+									"exists!",
+									Toast.LENGTH_SHORT);
+							HII.show();
+						}
+						
+						// save drawing
+						FrameLayout saveView = (FrameLayout) findViewById(R.id.FrameLayout1);
+						saveView.setDrawingCacheEnabled(true);
+						saveView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+
+						Bitmap bitmap = saveView.getDrawingCache();
+
+						// attempt to save
+						if (UserDrawings.saveToFile(input.getText().toString(),
+								bitmap)) {
+							// user feedback - save success
+							Toast savedToast = Toast.makeText(
+									getApplicationContext(),
+									"Formation saved!",
+									Toast.LENGTH_SHORT);
+							savedToast.show();
+						} else {
+
+							// user feedback - save failed
+							Toast unsavedToast = Toast.makeText(
+									getApplicationContext(),
+									"Failed to save!",
+									Toast.LENGTH_SHORT);
+							unsavedToast.show();
+						}
+
+						saveView.destroyDrawingCache();
+
+					}
+
+				});
+		saveDialog.setNegativeButton("Cancel",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.cancel();
+					}
+				});
+		saveDialog.show();
 	}
 
 }
