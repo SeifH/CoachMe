@@ -25,7 +25,8 @@ public class StatisticsActivity extends Activity implements OnClickListener {
 	private TextView homeShots, awayShots, homeGoals, awayGoals, homePercent,
 			awayPercent;
 	private long lastPause;
-	private int lastPosession; // minutes passed at last possession
+	private int lastPosession; // seconds passed at last possession
+	private int homeSec, awaySec; // total number of seconds with possession
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,8 @@ public class StatisticsActivity extends Activity implements OnClickListener {
 		setContentView(R.layout.statistics);
 
 		lastPosession = 0;
+		homeSec = 0;
+		awaySec = 0;
 
 		newGameButton = (Button) findViewById(R.id.newGame);
 		newGameButton.setOnClickListener(this);
@@ -193,24 +196,56 @@ public class StatisticsActivity extends Activity implements OnClickListener {
 
 			} else if (b.getId() == R.id.home) {
 
-				// System.out.println(timer.getText());//format 00:00 or
-				// 00:00:00
+				// total time passed in seconds
+				int totalTime = secondsPassed();
+//				System.out.println("Total Time:" + totalTime);
 
-				String time = (String) timer.getText();
+				if (totalTime != 0) {
+					int timeWithPossession = totalTime - lastPosession;
+//					System.out.println("Time with posession:"+ timeWithPossession);
 
-				if (time.length() == 5) {
-					// System.out.println(timer.getText());
-					int hrs = 0;
-					int mins = Integer.parseInt(time.substring(0, 1));
-					int secs = Integer.parseInt(time.substring(3, 4));
-				} else // an hour has passed
-				{
-					int hrs = Integer.parseInt(time.substring(0, 1));
-					int mins = Integer.parseInt(time.substring(3, 4));
-					int secs = Integer.parseInt(time.substring(6, 7));
+					homeSec += timeWithPossession;
+//					System.out.println("Homesec:" + homeSec);
+
+					int homePercent = (int) Math
+							.round(((double) homeSec / (double) totalTime) * 100);
+//					System.out.println("homepercent:" + homePercent);
+					int awayPercent = (int) Math
+							.round(((double) awaySec / (double) totalTime) * 100);
+//					System.out.println("awaypercent:" + awayPercent);
+
+					lastPosession = totalTime;
+//					System.out.println("Last possession:" + lastPosession);
+
+					this.homePercent.setText(homePercent + "%");
+					this.awayPercent.setText(awayPercent + "%");
 				}
-
 			} else if (b.getId() == R.id.away) {
+				// total time passed in seconds
+				int totalTime = secondsPassed();
+				if (totalTime != 0) {
+//					System.out.println("Total Time:" + totalTime);
+
+					int timeWithPossession = totalTime - lastPosession;
+//					System.out.println("Time with posession:"+ timeWithPossession);
+
+					awaySec += timeWithPossession;
+
+//					System.out.println("Awaysec:" + awaySec);
+
+					int homePercent = (int) Math
+							.round(((double) homeSec / (double) totalTime) * 100);
+//					System.out.println("homepercent:" + homePercent);
+					int awayPercent = (int) Math
+							.round(((double) awaySec / (double) totalTime) * 100);
+//					System.out.println("awaypercent:" + awayPercent);
+
+					lastPosession = totalTime;
+//					System.out.println("Last possession:" + lastPosession);
+
+					this.homePercent.setText(homePercent + "%");
+					this.awayPercent.setText(awayPercent + "%");
+				}
 
 			}
 
@@ -275,6 +310,38 @@ public class StatisticsActivity extends Activity implements OnClickListener {
 			t.setText(num);
 
 		}
+
+	}
+
+	private int secondsPassed() {
+
+		// System.out.println(timer.getText());//format 00:00 or
+		// 00:00:00
+
+		String time = (String) timer.getText();
+		int secPassed = 0;
+		int hrs, mins, secs;
+
+		if (time.length() == 5) {
+			// System.out.println(timer.getText());
+			hrs = 0;
+			mins = Integer.parseInt(time.substring(0, 2));
+			secs = Integer.parseInt(time.substring(3, 5));
+		} else // an hour has passed
+		{
+			hrs = Integer.parseInt(time.substring(0, 2));
+			mins = Integer.parseInt(time.substring(3, 5));
+			secs = Integer.parseInt(time.substring(6, 8));
+		}
+
+//		System.out.println("Hours:" + hrs);
+//		System.out.println("Mins:" + mins);
+//		System.out.println("Secs:" + secs);
+
+		secPassed = secs + (60 * mins) + (3600 * hrs);
+//		System.out.println(secPassed);
+
+		return secPassed;
 
 	}
 

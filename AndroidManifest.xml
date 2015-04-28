@@ -38,6 +38,13 @@
             android:label="@string/app_name"
             android:screenOrientation="landscape" >
         </activity>
+        <activity
+            android:configChanges="orientation|screenSize"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape" 
+            android:name=".DirectoryActivity" >
+
+        </activity>
     </application>
 
 </manifest>
