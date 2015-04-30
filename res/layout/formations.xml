@@ -21,9 +21,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:layout_marginTop ="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
             android:background="@null"
-            android:contentDescription="something"
             android:src="@drawable/ic_drawer" />
 
         <RelativeLayout
@@ -32,7 +32,7 @@
             android:layout_height="60dp"
             android:layout_marginLeft="61dp"
             android:layout_marginRight="61dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="0dp"
             android:orientation="horizontal" >
 
             <ImageButton
@@ -127,8 +127,8 @@
                 android:layout_marginTop="5dp"
                 android:padding="0dp" />
         </FrameLayout>
-    </LinearLayout>    
-    
+    </LinearLayout>
+
     <ListView
         android:id="@+id/right_drawer"
         android:layout_width="240dp"
