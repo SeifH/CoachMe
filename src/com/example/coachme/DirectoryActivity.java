@@ -18,6 +18,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -43,6 +44,10 @@ import android.view.animation.AlphaAnimation;
 
 public class DirectoryActivity extends Activity implements OnClickListener{
 
+	private Button newPlayer,sendEmail;
+	
+	private String playerName, playerEmail;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -53,6 +58,12 @@ public class DirectoryActivity extends Activity implements OnClickListener{
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		setContentView(R.layout.directory);
+		
+		newPlayer = (Button) findViewById(R.id.newPlayer);
+        newPlayer.setOnClickListener(this);
+        
+        sendEmail = (Button) findViewById(R.id.sendEmail);
+        sendEmail.setOnClickListener(this);
 	}
 	
 	@Override
@@ -69,7 +80,46 @@ public class DirectoryActivity extends Activity implements OnClickListener{
 	
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
+		Button b = (Button)v;
+		
+		if (b.getId()==R.id.newPlayer){
+			
+			AlertDialog.Builder alert = new AlertDialog.Builder(this);
+			
+			alert.setTitle("New Player");
+			
+//			LinearLayout layout = new LinearLayout(this);
+//			layout.setOrientation(LinearLayout);
+			
+			
+			alert.setMessage("Player's information: ");
+			
+			//edit text for user input
+			final EditText input = new EditText(this);
+			alert.setView(input);
+			
+			alert.setPositiveButton("Next", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					playerName = input.getText().toString();
+					
+				}
+			});
+			
+			alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					//cancelled
+					
+				}
+			});
+			
+			alert.show();
+			
+			
+		}
 		
 	}
 
