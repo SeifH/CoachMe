@@ -45,6 +45,7 @@ import android.view.View.DragShadowBuilder;
 import android.view.View.OnDragListener;
 import android.view.View.OnTouchListener;
 import android.view.animation.AlphaAnimation;
+import android.view.inputmethod.InputMethodManager;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
@@ -159,6 +160,7 @@ public class FormationsActivity extends Activity implements OnClickListener,
 		savedList.setSelector(android.R.color.holo_blue_dark);
 		savedDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 		savedList.setOnItemClickListener(this);
+		
 
 	}
 
@@ -169,14 +171,14 @@ public class FormationsActivity extends Activity implements OnClickListener,
 
 		Log.e("sel", sel_item);
 
-//		BitmapDrawable ob = new BitmapDrawable(getResources(),
-//				UserDrawings.loadFromFile(sel_item));
-//		ImageView layout = (ImageView) findViewById(R.id.drawing_field);
-//		layout.setImageDrawable(ob);
+		BitmapDrawable ob = new BitmapDrawable(getResources(),
+				UserDrawings.loadFromFile(sel_item));
+		ImageView layout = (ImageView) findViewById(R.id.drawing_field);
+		layout.setImageDrawable(ob);
 
 		savedDrawer.closeDrawers();
 		Bundle args = new Bundle();
-		args.putString("Menu", formationNamesMenu.get(position));
+		args.putString("Menu", formationNamesMenu.get(position - 1));
 		Fragment detail = new FormationsFragment();
 		detail.setArguments(args);
 		FragmentManager fragmentManager = getFragmentManager();
@@ -305,10 +307,12 @@ public class FormationsActivity extends Activity implements OnClickListener,
 				newImgButton.setLayoutParams(params);
 
 				newImgButton.setX(x_cord - (view.getWidth() / 2));
-				if (oldImgButton.getTag().equals("Duplicate")) {
-					newImgButton.setY(y_cord - (view.getHeight() / 2));
-				} else
-					newImgButton.setY(y_cord - (view.getHeight() / 2) + 15);
+				newImgButton.setY(y_cord - (view.getHeight() / 2));
+
+				if (oldImgButton.getTag().equals(BLACK_PLAYER_TAG))
+					newImgButton.setY(y_cord - (view.getHeight() / 2) + 10);
+				else if (oldImgButton.getTag().equals(RED_PLAYER_TAG))
+					newImgButton.setX(x_cord - (view.getWidth() / 2) + 55);
 
 				// newView.setY(y_cord - (view2.getWidth() / 2));
 				// newView.setY(y_cord - (view2.getHeight() / 2));
@@ -409,6 +413,10 @@ public class FormationsActivity extends Activity implements OnClickListener,
 	}
 
 	private void resetDrawingField() {
+
+		ImageView field = (ImageView) findViewById(R.id.drawing_field);
+		field.setImageResource(R.drawable.field);
+
 		drawView.clearCanvas();
 		drawView.setErase(false);
 
@@ -451,7 +459,7 @@ public class FormationsActivity extends Activity implements OnClickListener,
 
 		// Setup an EditText view to get user input
 		final EditText input = new EditText(this);
-		input.setText("Name");
+		input.setHint("Name");
 
 		saveDialog.setView(input);
 		saveDialog.setPositiveButton("Yes",
@@ -459,16 +467,21 @@ public class FormationsActivity extends Activity implements OnClickListener,
 					public void onClick(DialogInterface dialog, int which)
 
 					{
-							// save drawing
-							FrameLayout saveView = (FrameLayout) findViewById(R.id.FrameLayout1);
-							saveView.setDrawingCacheEnabled(true);
-							saveView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+						// save drawing
+						FrameLayout saveView = (FrameLayout) findViewById(R.id.FrameLayout1);
+						saveView.setDrawingCacheEnabled(true);
+						saveView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
 
-							Bitmap bitmap = saveView.getDrawingCache();
-							UserDrawings.saveDrawings(FormationsActivity.this,
-									bitmap, input.getText().toString());
+						Bitmap bitmap = saveView.getDrawingCache();
+						UserDrawings.saveDrawings(FormationsActivity.this,
+								bitmap, input.getText().toString());
 
-							saveView.destroyDrawingCache();
+						saveView.destroyDrawingCache();
+
+						// hide keyboard after use
+						InputMethodManager key = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+						key.hideSoftInputFromWindow(input.getWindowToken(),
+								key.HIDE_IMPLICIT_ONLY);
 
 					}
 
@@ -476,7 +489,12 @@ public class FormationsActivity extends Activity implements OnClickListener,
 		saveDialog.setNegativeButton("Cancel",
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
+						// hide keyboard after use
+						InputMethodManager key = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+						key.hideSoftInputFromWindow(input.getWindowToken(),
+								key.HIDE_IMPLICIT_ONLY);
 						dialog.cancel();
+						
 					}
 				});
 		saveDialog.show();

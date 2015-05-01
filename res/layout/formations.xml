@@ -49,7 +49,7 @@
                 android:id="@+id/ball"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:layout_marginRight="440dp"
+                android:layout_marginRight= "390dp"
                 android:layout_toLeftOf="@+id/refresh"
                 android:background="@null"
                 android:contentDescription="@string/ball"

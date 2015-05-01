@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.content.ClipDescription;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
@@ -88,21 +89,31 @@ public class DirectoryActivity extends Activity implements OnClickListener{
 			
 			alert.setTitle("New Player");
 			
-//			LinearLayout layout = new LinearLayout(this);
-//			layout.setOrientation(LinearLayout);
+			LinearLayout layout = new LinearLayout(this);
+			layout.setOrientation(LinearLayout.VERTICAL);
 			
+			final EditText inputName = new EditText(this);
+			inputName.setHint("Player's name");
+			layout.addView(inputName);
 			
-			alert.setMessage("Player's information: ");
+			final EditText inputEmail = new EditText(this);
+			inputEmail.setHint("Player's email");
+			layout.addView(inputEmail);
 			
-			//edit text for user input
-			final EditText input = new EditText(this);
-			alert.setView(input);
+			alert.setView(layout);
 			
-			alert.setPositiveButton("Next", new DialogInterface.OnClickListener() {
+//			alert.setMessage("Player's information: ");
+//			
+//			//edit text for user input
+//			final EditText input = new EditText(this);
+//			alert.setView(input);
+			
+			alert.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
 				
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					playerName = input.getText().toString();
+					playerName = inputName.getText().toString();
+					playerEmail = inputEmail.getText().toString();
 					
 				}
 			});
@@ -121,6 +132,22 @@ public class DirectoryActivity extends Activity implements OnClickListener{
 			
 		}
 		
+	}
+	
+	public void sendEmail()
+	{
+//		Alert Dialog?
+//		
+//		Intent i = new Intent(Intent.ACTION_SEND);
+//		i.setType("message/rfc822");
+//		i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"email"});
+//		i.putExtra(Intent.EXTRA_SUBJECT, "subject of email");
+//		i.putExtra(Intent.EXTRA_TEXT   , "body of email");
+//		try {
+//		    startActivity(Intent.createChooser(i, "Send mail..."));
+//		} catch (android.content.ActivityNotFoundException ex) {
+//		    Toast.makeText(MyActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+//		}
 	}
 
 }
