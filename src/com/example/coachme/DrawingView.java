@@ -121,5 +121,13 @@ public class DrawingView extends View {
 		return true;
 
 	}
+	
+	public void disableDrawing (){
+		drawPaint.setColor(Color.TRANSPARENT);
+	}
+	
+	public void enableDrawing (){
+		drawPaint.setColor(paintColor);
+	}
 
 }
