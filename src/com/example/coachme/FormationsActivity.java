@@ -382,7 +382,6 @@ public class FormationsActivity extends Activity implements OnClickListener,
 				else if (oldImgButton.getTag().equals(RED_PLAYER_TAG)) {
 					newImgButton.setX(x_cord - (view.getWidth() / 2) + 55);
 					newImgButton.setY(y_cord - (view.getHeight() / 2) + 10);
-
 				} else if (oldImgButton.getTag().equals(BALL_TAG)) {
 					newImgButton.setY(y_cord - (view.getHeight() / 2) + 10);
 
