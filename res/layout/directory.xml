@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#605f5f"
+    android:background="#FFCCCCCC"
     android:orientation="horizontal"
     tools:context=".DirectoryActivity" >
 
@@ -44,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="240dp"
         android:layout_margin="20dp"
-        android:background="#000000" >
+        android:background="#ffffff" >
     </ListView>
 
     <LinearLayout
@@ -65,5 +65,4 @@
         <!-- @string/send_email -->
 
     </LinearLayout>
-
 </TableLayout>

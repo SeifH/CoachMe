@@ -5,11 +5,11 @@ public class Player {
 	private String name;
 	private boolean selected = false;
 
-	public Player(String name, String email, boolean selected) {
+	public Player(String n, String e, boolean s) {
 		super();
-		this.email = email;
-		this.name = name;
-		this.selected = selected;
+		this.email = n;
+		this.name = e;
+		this.selected = s;
 	}
 
 	public String getEmail() {

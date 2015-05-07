@@ -379,8 +379,14 @@ public class FormationsActivity extends Activity implements OnClickListener,
 
 				if (oldImgButton.getTag().equals(BLACK_PLAYER_TAG))
 					newImgButton.setY(y_cord - (view.getHeight() / 2) + 10);
-				else if (oldImgButton.getTag().equals(RED_PLAYER_TAG))
+				else if (oldImgButton.getTag().equals(RED_PLAYER_TAG)) {
 					newImgButton.setX(x_cord - (view.getWidth() / 2) + 55);
+					newImgButton.setY(y_cord - (view.getHeight() / 2) + 10);
+
+				} else if (oldImgButton.getTag().equals(BALL_TAG)) {
+					newImgButton.setY(y_cord - (view.getHeight() / 2) + 10);
+
+				}
 
 				// newView.setY(y_cord - (view2.getWidth() / 2));
 				// newView.setY(y_cord - (view2.getHeight() / 2));
@@ -530,7 +536,7 @@ public class FormationsActivity extends Activity implements OnClickListener,
 		input.setTextSize(20);
 
 		InputFilter[] FilterArray = new InputFilter[1];
-		FilterArray[0] = new InputFilter.LengthFilter(14);
+		FilterArray[0] = new InputFilter.LengthFilter(25);
 		input.setFilters(FilterArray);
 
 		// Specify the type of input expected; this, for example, sets the input
