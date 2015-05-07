@@ -26,78 +26,129 @@
             android:background="@null"
             android:src="@drawable/ic_drawer" />
 
-        <RelativeLayout
-            android:id="@+id/RelativeLayout01"
+        <FrameLayout
+            android:id="@+id/FrameHeader"
             android:layout_width="wrap_content"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="61dp"
             android:layout_marginRight="61dp"
-            android:layout_marginTop="0dp"
-            android:orientation="horizontal" >
+            android:layout_marginTop="0dp" >
 
-            <ImageButton
-                android:id="@+id/bPlayer"
+            <RelativeLayout
+                android:id="@+id/DrawingHeader01"
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="0dp"
-                android:background="@null"
-                android:contentDescription="@string/b_player"
-                android:src="@drawable/b_player" />
+                android:layout_height="60dp"
+                android:layout_marginTop="0dp"
+                android:orientation="horizontal" >
 
-            <ImageButton
-                android:id="@+id/ball"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_marginRight="440dp"
-                android:layout_toLeftOf="@+id/refresh"
-                android:background="@null"
-                android:contentDescription="@string/ball"
-                android:src="@drawable/ball" />
+                <ImageButton
+                    android:id="@+id/bPlayer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="0dp"
+                    android:background="@null"
+                    android:contentDescription="@string/b_player"
+                    android:src="@drawable/b_player" />
 
-            <ImageButton
-                android:id="@+id/rPlayer"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/ball"
-                android:layout_toRightOf="@+id/bPlayer"
-                android:background="@null"
-                android:contentDescription="@string/r_player"
-                android:src="@drawable/r_player" />
+                <ImageButton
+                    android:id="@+id/ball"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_marginRight="390dp"
+                    android:layout_toLeftOf="@+id/refresh"
+                    android:background="@null"
+                    android:contentDescription="@string/ball"
+                    android:src="@drawable/ball" />
 
-            <ImageButton
-                android:id="@+id/refresh"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_toLeftOf="@+id/draw"
-                android:contentDescription="@string/refresh"
-                android:src="@drawable/ic_action_new_picture" />
+                <ImageButton
+                    android:id="@+id/rPlayer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/ball"
+                    android:layout_toRightOf="@+id/bPlayer"
+                    android:background="@null"
+                    android:contentDescription="@string/r_player"
+                    android:src="@drawable/r_player" />
 
-            <ImageButton
-                android:id="@+id/draw"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_toLeftOf="@+id/erase"
-                android:contentDescription="@string/brush"
-                android:src="@drawable/marker" />
+                <ImageButton
+                    android:id="@+id/refresh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_toLeftOf="@+id/draw"
+                    android:contentDescription="@string/refresh"
+                    android:src="@drawable/ic_action_new_picture" />
 
-            <ImageButton
-                android:id="@+id/erase"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_toLeftOf="@+id/save"
-                android:contentDescription="@string/erase"
-                android:src="@drawable/eraser" />
+                <ImageButton
+                    android:id="@+id/draw"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_toLeftOf="@+id/erase"
+                    android:contentDescription="@string/brush"
+                    android:src="@drawable/marker" />
 
-            <ImageButton
-                android:id="@+id/save"
+                <ImageButton
+                    android:id="@+id/erase"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_toLeftOf="@+id/save"
+                    android:contentDescription="@string/erase"
+                    android:src="@drawable/eraser" />
+
+                <ImageButton
+                    android:id="@+id/save"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_alignParentRight="true"
+                    android:contentDescription="@string/save"
+                    android:src="@drawable/save" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/SaveHeader01"
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_alignParentRight="true"
-                android:contentDescription="@string/save"
-                android:src="@drawable/save" />
-        </RelativeLayout>
+                android:layout_height="60dp"
+                android:layout_marginTop="0dp"
+                android:orientation="horizontal"
+                android:visibility="invisible" >
+
+                <Button
+                    android:id="@+id/drawingReturnBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="0dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="@string/back" />
+
+                <TextView
+                    android:id="@+id/nameHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/removeBtn"
+                    android:layout_alignTop="@+id/removeBtn"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@+id/removeBtn"
+                    android:layout_toRightOf="@+id/drawingReturnBtn"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:textSize="35sp"
+                    android:typeface="monospace" />
+
+                <ImageButton
+                    android:id="@+id/removeBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_action_discard" />
+            </RelativeLayout>
+        </FrameLayout>
 
         <FrameLayout
             android:id="@+id/FrameLayout1"

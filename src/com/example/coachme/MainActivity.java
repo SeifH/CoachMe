@@ -37,8 +37,7 @@ public class MainActivity extends Activity implements OnClickListener{
         statisticsButton.setOnClickListener(this);
         
         directoryButton = (Button) findViewById(R.id.player_directory);
-        directoryButton.setOnClickListener(this);
-        
+        directoryButton.setOnClickListener(this);        
         
 	}
 

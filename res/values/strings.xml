@@ -11,6 +11,7 @@
     <string name="title_activity_display_formations">DisplayFormationsActivity</string>
     <string name="title_activity_main2">MainActivity</string>
     
+    
     <string name="refresh">Refresh</string>
     <string name="brush">Brush</string>
     <string name="erase">Erase</string>
@@ -19,6 +20,8 @@
     <string name="b_player">Black Player</string>
     <string name="r_player">Red Player</string>
     <string name="ball">Ball</string>
+    <string name="back">Back</string>
+    
     
     <string name="stats_newGame">New Game</string>
     <string name="stats_home">Home</string>
@@ -36,6 +39,6 @@
     <string name="stats_plus">+</string>
     <string name="stats_minus">-</string>
     <string name="stats_awayrefresh">Away Refresh</string>
-    <string name="stats_homerefresh">Home Refresh</string> 
+    <string name="stats_homerefresh">Home Refresh</string>
 
 </resources>

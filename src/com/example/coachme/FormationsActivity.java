@@ -11,10 +11,16 @@ import android.app.AlertDialog;
 import android.content.ClipDescription;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.opengl.Visibility;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
@@ -27,6 +33,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +52,7 @@ import android.view.View.DragShadowBuilder;
 import android.view.View.OnDragListener;
 import android.view.View.OnTouchListener;
 import android.view.animation.AlphaAnimation;
+import android.view.inputmethod.InputMethodManager;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
@@ -59,7 +67,8 @@ public class FormationsActivity extends Activity implements OnClickListener,
 
 	private DrawingView drawView;
 	private ImageButton draw, eraser, refresh, ball, bPlayer, rPlayer, save,
-			drawerBtn;
+			drawerBtn, deleteFile;
+	private Button savedReturn;
 	private TextView listHeader;
 
 	// keep track of number of drags for each button
@@ -113,6 +122,12 @@ public class FormationsActivity extends Activity implements OnClickListener,
 		save = (ImageButton) findViewById(R.id.save);
 		save.setOnClickListener(this);
 
+		deleteFile = (ImageButton) findViewById(R.id.removeBtn);
+		deleteFile.setOnClickListener(this);
+
+		savedReturn = (Button) findViewById(R.id.drawingReturnBtn);
+		savedReturn.setOnClickListener(this);
+
 		ball = (ImageButton) findViewById(R.id.ball);
 		// set the tag
 		ball.setTag(BALL_TAG);
@@ -131,7 +146,7 @@ public class FormationsActivity extends Activity implements OnClickListener,
 		rPlayer.setOnTouchListener(new TouchListener());
 		// rPlayer.setOnLongClickListener(new LongClickListener());
 
-		findViewById(R.id.RelativeLayout01).setOnDragListener(this);
+		findViewById(R.id.DrawingHeader01).setOnDragListener(this);
 		findViewById(R.id.FrameLayout1).setOnDragListener(this);
 
 		imageDuplicates = new ArrayList<ImageButton>();
@@ -146,8 +161,7 @@ public class FormationsActivity extends Activity implements OnClickListener,
 		listHeader.setPadding(0, 5, 0, 5);
 
 		formationNamesMenu = new ArrayList<String>();
-		// UserDrawings.loadFileNames();
-		// formationNamesMenu = UserDrawings.getFileNames();
+
 		savedDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 		savedList = (ListView) findViewById(R.id.right_drawer);
 		savedList.addHeaderView(listHeader, null, false);
@@ -169,14 +183,27 @@ public class FormationsActivity extends Activity implements OnClickListener,
 
 		Log.e("sel", sel_item);
 
-//		BitmapDrawable ob = new BitmapDrawable(getResources(),
-//				UserDrawings.loadFromFile(sel_item));
-//		ImageView layout = (ImageView) findViewById(R.id.drawing_field);
-//		layout.setImageDrawable(ob);
+		resetDrawingField();
+		drawView.disableDrawing();
+
+		BitmapDrawable ob = new BitmapDrawable(getResources(),
+				UserDrawings.loadFromFile(sel_item));
+		ImageView layout = (ImageView) findViewById(R.id.drawing_field);
+		layout.setImageDrawable(ob);
+
+		RelativeLayout headerLayout = (RelativeLayout) findViewById(R.id.DrawingHeader01);
+		headerLayout.setVisibility(view.INVISIBLE);
+
+		headerLayout = (RelativeLayout) findViewById(R.id.SaveHeader01);
+		headerLayout.setVisibility(view.VISIBLE);
+
+		TextView savedTitle = (TextView) findViewById(R.id.nameHeader);
+		savedTitle.setText(sel_item);
 
 		savedDrawer.closeDrawers();
+
 		Bundle args = new Bundle();
-		args.putString("Menu", formationNamesMenu.get(position));
+		args.putString("Menu", formationNamesMenu.get(position - 1));
 		Fragment detail = new FormationsFragment();
 		detail.setArguments(args);
 		FragmentManager fragmentManager = getFragmentManager();
@@ -227,6 +254,49 @@ public class FormationsActivity extends Activity implements OnClickListener,
 			savedList.setAdapter(adapter);
 
 			savedDrawer.openDrawer(Gravity.RIGHT);
+		} else if (view.getId() == R.id.removeBtn) {
+
+			AlertDialog.Builder newDialog = new AlertDialog.Builder(this);
+			newDialog.setTitle("Delete File");
+			newDialog
+					.setMessage("Are you sure you want to delete this formation?");
+			newDialog.setPositiveButton("Yes",
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int which) {
+
+							TextView savedTitle = (TextView) findViewById(R.id.nameHeader);
+
+							UserDrawings.deleteFile(savedTitle.getText()
+									.toString());
+
+							drawView.enableDrawing();
+							resetDrawingField();
+
+							RelativeLayout headerLayout = (RelativeLayout) findViewById(R.id.DrawingHeader01);
+							headerLayout.setVisibility(View.VISIBLE);
+
+							headerLayout = (RelativeLayout) findViewById(R.id.SaveHeader01);
+							headerLayout.setVisibility(View.INVISIBLE);
+							dialog.dismiss();
+						}
+					});
+			newDialog.setNegativeButton("Cancel",
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.cancel();
+						}
+					});
+			newDialog.show();
+
+		} else if (view.getId() == R.id.drawingReturnBtn) {
+			drawView.enableDrawing();
+			resetDrawingField();
+
+			RelativeLayout headerLayout = (RelativeLayout) findViewById(R.id.DrawingHeader01);
+			headerLayout.setVisibility(view.VISIBLE);
+
+			headerLayout = (RelativeLayout) findViewById(R.id.SaveHeader01);
+			headerLayout.setVisibility(view.INVISIBLE);
 		}
 
 	}
@@ -305,10 +375,12 @@ public class FormationsActivity extends Activity implements OnClickListener,
 				newImgButton.setLayoutParams(params);
 
 				newImgButton.setX(x_cord - (view.getWidth() / 2));
-				if (oldImgButton.getTag().equals("Duplicate")) {
-					newImgButton.setY(y_cord - (view.getHeight() / 2));
-				} else
-					newImgButton.setY(y_cord - (view.getHeight() / 2) + 15);
+				newImgButton.setY(y_cord - (view.getHeight() / 2));
+
+				if (oldImgButton.getTag().equals(BLACK_PLAYER_TAG))
+					newImgButton.setY(y_cord - (view.getHeight() / 2) + 10);
+				else if (oldImgButton.getTag().equals(RED_PLAYER_TAG))
+					newImgButton.setX(x_cord - (view.getWidth() / 2) + 55);
 
 				// newView.setY(y_cord - (view2.getWidth() / 2));
 				// newView.setY(y_cord - (view2.getHeight() / 2));
@@ -409,6 +481,10 @@ public class FormationsActivity extends Activity implements OnClickListener,
 	}
 
 	private void resetDrawingField() {
+
+		ImageView field = (ImageView) findViewById(R.id.drawing_field);
+		field.setImageResource(R.drawable.field);
+
 		drawView.clearCanvas();
 		drawView.setErase(false);
 
@@ -444,42 +520,90 @@ public class FormationsActivity extends Activity implements OnClickListener,
 	}
 
 	private void saveDrawing() {
-
 		AlertDialog.Builder saveDialog = new AlertDialog.Builder(this);
 		saveDialog.setTitle("Save Formation");
 		saveDialog.setMessage("Save formation to device?");
 
-		// Setup an EditText view to get user input
+		// Set up the input
 		final EditText input = new EditText(this);
-		input.setText("Name");
+		input.setHint("Name");
+		input.setTextSize(20);
 
+		InputFilter[] FilterArray = new InputFilter[1];
+		FilterArray[0] = new InputFilter.LengthFilter(14);
+		input.setFilters(FilterArray);
+
+		// Specify the type of input expected; this, for example, sets the input
+		// as a password, and will mask the text
+		input.setInputType(InputType.TYPE_CLASS_TEXT
+				| InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
 		saveDialog.setView(input);
-		saveDialog.setPositiveButton("Yes",
+
+		// Set up the buttons
+		saveDialog.setPositiveButton("Save",
 				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which)
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
 
-					{
-							// save drawing
-							FrameLayout saveView = (FrameLayout) findViewById(R.id.FrameLayout1);
-							saveView.setDrawingCacheEnabled(true);
-							saveView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+						// save drawing
+						FrameLayout saveView = (FrameLayout) findViewById(R.id.FrameLayout1);
+						saveView.setDrawingCacheEnabled(true);
+						saveView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
 
-							Bitmap bitmap = saveView.getDrawingCache();
-							UserDrawings.saveDrawings(FormationsActivity.this,
-									bitmap, input.getText().toString());
+						Bitmap bitmap = saveView.getDrawingCache();
+						UserDrawings.saveDrawings(FormationsActivity.this,
+								bitmap, input.getText().toString());
 
-							saveView.destroyDrawingCache();
+						saveView.destroyDrawingCache();
 
+						// hide keyboard after use
+						InputMethodManager key = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+						key.hideSoftInputFromWindow(input.getWindowToken(),
+								key.HIDE_IMPLICIT_ONLY);
 					}
-
 				});
 		saveDialog.setNegativeButton("Cancel",
 				new DialogInterface.OnClickListener() {
+					@Override
 					public void onClick(DialogInterface dialog, int which) {
+						// hide keyboard after use
+						InputMethodManager key = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+						key.hideSoftInputFromWindow(input.getWindowToken(),
+								key.HIDE_IMPLICIT_ONLY);
 						dialog.cancel();
 					}
 				});
-		saveDialog.show();
+
+		final AlertDialog alertDialog = saveDialog.show();
+		alertDialog.setCanceledOnTouchOutside(true);
+		final Button button = alertDialog
+				.getButton(AlertDialog.BUTTON_POSITIVE);
+		button.setEnabled(false);
+
+		input.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+				// my validation condition
+				if (input.getText().length() > 0
+						&& !input.getText().toString().trim().equals("")) {
+					button.setEnabled(true);
+				} else {
+					button.setEnabled(false);
+				}
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 	}
 
 }
