@@ -39,7 +39,7 @@ public class DrawingView extends View {
 			drawPaint.setXfermode(null);
 
 		if (isErase == true) {
-			drawPaint.setStrokeWidth(ERASER_STROKE_WIDTH);
+			drawPaint.setStrokeWidth(ERASER_STROKE_WIDTH); 
 		} else
 			drawPaint.setStrokeWidth(MARKER_STROKE_WIDTH);
 	}
