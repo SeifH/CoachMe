@@ -32,14 +32,33 @@ public class CustomAdapter extends ArrayAdapter<Player> {
 		
 		CheckBox cb = (CheckBox) convertView.findViewById(R.id.checkBox);
 		
+		convertView.setTag(new PlayerViewHolder(name,cb));
 		
 		name.setText(playersList[position].getName());
+	
 		
+		Player p = (Player)this.getItem(position);
 		
-		if (playersList[position].isSelected())
-			cb.setChecked(true);
-		else
-			cb.setChecked(false);
+		cb.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				CheckBox cb = (CheckBox) v;
+				
+				Player p = (Player) cb.getTag();
+				
+				p.setSelected(cb.isChecked());
+			}
+		});
+		
+		cb.setTag(p);
+		cb.setChecked(p.isSelected());
+		
+//		if (playersList[position].isSelected())
+//			cb.setChecked(true);
+//		else
+//			cb.setChecked(false);
 		return convertView;
 	}
 
