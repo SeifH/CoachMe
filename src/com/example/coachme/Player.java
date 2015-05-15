@@ -7,8 +7,8 @@ public class Player {
 
 	public Player(String n, String e, boolean s) {
 		super();
-		this.email = n;
-		this.name = e;
+		this.email = e;
+		this.name = n;
 		this.selected = s;
 	}
 
@@ -34,6 +34,12 @@ public class Player {
 
 	public void setSelected(boolean selected) {
 		this.selected = selected;
+	}
+
+	public void toggleChecked() {
+		// TODO Auto-generated method stub
+		selected = !selected;
+		
 	}
 
 }
