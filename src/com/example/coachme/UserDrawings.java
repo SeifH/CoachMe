@@ -34,6 +34,10 @@ public class UserDrawings {
 	private static String name;
 	private static Bitmap bmpFile;
 	
+	private static double startTime;
+
+	private static double endTime;
+	
 
 	/**
 	 * Gets the path to which the image will be saved
@@ -188,7 +192,12 @@ public class UserDrawings {
 			}
 			
 			//sort names alphabetically
+			startTime = System.nanoTime();
 			Collections.sort(fileNames);
+			endTime = System.nanoTime();
+			
+			Log.e("time comparison", "" + (endTime - startTime));
+
 			
 		}
 		
