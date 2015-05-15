@@ -23,6 +23,7 @@
 
             <ImageButton
                 android:id="@+id/settings"
+                android:tag="image"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginRight="380dp"
@@ -33,6 +34,7 @@
 
             <ImageButton
                 android:id="@+id/help"
+                android:tag="image"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginRight="0dp"
@@ -70,6 +72,7 @@
 
             <Button
                 android:id="@+id/formations"
+                
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="70dp"

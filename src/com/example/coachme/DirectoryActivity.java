@@ -167,12 +167,16 @@ public class DirectoryActivity extends Activity implements OnClickListener {
 		// fill the arraylist
 		playersList = readFiletoArray(contacts);
 
-		// convert to array
-		playersArray = new Player[playersList.size()];
-		playersArray = playersList.toArray(playersArray);
+		if(playersList != null)
+		{
+			// convert to array
+			playersArray = new Player[playersList.size()];
+			playersArray = playersList.toArray(playersArray);
 
-		CustomAdapter adapter = new CustomAdapter(this, playersArray);
-		lv.setAdapter(adapter);
+			CustomAdapter adapter = new CustomAdapter(this, playersArray);
+			lv.setAdapter(adapter);
+		}
+		
 	}
 
 	private ArrayList<Player> readFiletoArray(File f) {
@@ -229,23 +233,24 @@ public class DirectoryActivity extends Activity implements OnClickListener {
 			// You'll need to add proper error handling here
 		}
 		return null;
+		
+		// private void readFile(File f) {
+		//
+		// // String fileName = "core-sample/src/main/resources/data.txt";
+		//
+		// try {
+		// List<String> lines = Files.readAllLines(Paths.get(path),
+		// Charset.defaultCharset());
+		// for (String line : lines) {
+		// System.out.println(line);
+		// }
+		// } catch (IOException e) {
+		// e.printStackTrace();
+		// }
+		//
+		// }
+		
 	}
-
-	// private void readFile(File f) {
-	//
-	// // String fileName = "core-sample/src/main/resources/data.txt";
-	//
-	// try {
-	// List<String> lines = Files.readAllLines(Paths.get(path),
-	// Charset.defaultCharset());
-	// for (String line : lines) {
-	// System.out.println(line);
-	// }
-	// } catch (IOException e) {
-	// e.printStackTrace();
-	// }
-	//
-	// }
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -375,7 +380,7 @@ public class DirectoryActivity extends Activity implements OnClickListener {
 
 	}
 
-	public void sendEmail(ArrayList list) {
+	public void sendEmail(ArrayList<Player> list) {
 		
 		Player p;
 		final String[] emails = new String[list.size()];
