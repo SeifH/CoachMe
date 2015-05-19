@@ -486,7 +486,7 @@ public class FormationsActivity extends Activity implements OnClickListener,
 
 		// the drag and drop operation has concluded.
 		case DragEvent.ACTION_DRAG_ENDED:
-			break;
+		break;
 
 		default:
 			break;
@@ -530,7 +530,8 @@ public class FormationsActivity extends Activity implements OnClickListener,
 						view);
 
 				// Start the drag shadow builder
-				view.startDrag(data, // data to be dragged
+				view.startDrag(data, // data to be dragged.
+						
 						shadowBuilder, // drag shadow
 						view, // local data about the drag and drop operation
 						0 // no needed flags

@@ -12,7 +12,7 @@
     <item android:state_pressed="false"><shape android:shape="rectangle">
             <corners android:radius="100dp" />
 
-            <solid android:color="#B7B7B7" />
+            <solid android:color="#959595" />
 
             <size android:height="30dp" android:width="80dp" />
 
