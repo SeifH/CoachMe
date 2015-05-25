@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import android.app.Activity;
@@ -66,7 +67,7 @@ import android.view.animation.AlphaAnimation;
 
 public class DirectoryActivity extends Activity implements OnClickListener {
 
-	private Button newPlayer, sendEmail;
+	private Button newPlayer, sendEmail, delete;
 	private File contacts;
 	private String playerName, playerEmail, path, subject, message;
 	private ListView lv;
@@ -91,6 +92,9 @@ public class DirectoryActivity extends Activity implements OnClickListener {
 
 		sendEmail = (Button) findViewById(R.id.sendEmail);
 		sendEmail.setOnClickListener(this);
+
+		delete = (Button) findViewById(R.id.delete);
+		delete.setOnClickListener(this);
 
 		// String path = this.getFilesDir().getAbsolutePath();
 		contacts = new File(this.getFilesDir(), "contacts");
@@ -166,9 +170,9 @@ public class DirectoryActivity extends Activity implements OnClickListener {
 		playersList = new ArrayList<Player>();
 		// fill the arraylist
 		playersList = readFiletoArray(contacts);
+		Collections.sort(playersList);
 
-		if(playersList != null)
-		{
+		if (playersList != null) {
 			// convert to array
 			playersArray = new Player[playersList.size()];
 			playersArray = playersList.toArray(playersArray);
@@ -176,7 +180,7 @@ public class DirectoryActivity extends Activity implements OnClickListener {
 			CustomAdapter adapter = new CustomAdapter(this, playersArray);
 			lv.setAdapter(adapter);
 		}
-		
+
 	}
 
 	private ArrayList<Player> readFiletoArray(File f) {
@@ -188,19 +192,19 @@ public class DirectoryActivity extends Activity implements OnClickListener {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(f));
 			String line;
-			//the first line was blank
+			// the first line was blank
 			line = br.readLine();
-			
+
 			while ((line = br.readLine()) != null) {
-				//first line has name
+				// first line has name
 				name = line;
-				//next line has email
+				// next line has email
 				line = br.readLine();
 				email = line;
 
 				System.out.println("name: " + name);
 				System.out.println("Email: " + email);
-				
+
 				newPlayersList.add(new Player(name, email, false));
 			}
 			br.close();
@@ -233,7 +237,7 @@ public class DirectoryActivity extends Activity implements OnClickListener {
 			// You'll need to add proper error handling here
 		}
 		return null;
-		
+
 		// private void readFile(File f) {
 		//
 		// // String fileName = "core-sample/src/main/resources/data.txt";
@@ -249,7 +253,7 @@ public class DirectoryActivity extends Activity implements OnClickListener {
 		// }
 		//
 		// }
-		
+
 	}
 
 	@Override
@@ -279,12 +283,12 @@ public class DirectoryActivity extends Activity implements OnClickListener {
 
 			final EditText inputName = new EditText(this);
 			inputName.setHint("Player's name");
+			inputName.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
 			layout.addView(inputName);
 
 			final EditText inputEmail = new EditText(this);
 			inputEmail.setHint("Player's email");
-			inputEmail
-					.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+			inputEmail.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
 			layout.addView(inputEmail);
 
 			alert.setView(layout);
@@ -367,34 +371,118 @@ public class DirectoryActivity extends Activity implements OnClickListener {
 			// }
 			// }
 
-//			System.out.println("Selected: " + selectedPlayers.toString());
-//			
-//			for(int i = 0; i< selectedPlayers.size(); i++)
-//			{
-//				System.out.println(selectedPlayers.get(i).getName());
-//			}
-			
+			// System.out.println("Selected: " + selectedPlayers.toString());
+			//
+			// for(int i = 0; i< selectedPlayers.size(); i++)
+			// {
+			// System.out.println(selectedPlayers.get(i).getName());
+			// }
+
 			sendEmail(selectedPlayers);
+
+		} else if (b.getId() == R.id.delete) {
+			
+			//warning message
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+			builder.setTitle("Delete");
+			builder.setMessage("Are you sure you want to delete the selected players?");
+
+			builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+					
+					//get the players that are not selected
+					ArrayList<Player> notSelectedPlayers = new ArrayList<Player>();
+
+					for (int i = 0; i < playersList.size(); i++) {
+						if (playersList.get(i).isSelected() == false) {
+							notSelectedPlayers.add(playersList.get(i));
+						}
+					}
+
+					// clear the file
+					String string = "";
+					FileOutputStream outputStream;
+
+					try {
+						outputStream = openFileOutput("contacts", Context.MODE_PRIVATE);
+						outputStream.write(string.getBytes());
+						outputStream.close();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					
+					//write the remaining players to the file
+					for (int i = 0; i < notSelectedPlayers.size(); i++) {
+						playerName = "\n"+notSelectedPlayers.get(i).getName();
+						playerEmail = "\n"+notSelectedPlayers.get(i).getEmail();
+						
+//						System.out.println("name"+playerName);
+//						System.out.println("Email"+playerEmail);
+
+						try {
+							outputStream = openFileOutput("contacts",
+									Context.MODE_APPEND);
+							outputStream.write(playerName.getBytes());
+							outputStream.close();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						try {
+							outputStream = openFileOutput("contacts",
+									Context.MODE_APPEND);
+							outputStream.write(playerEmail.getBytes());
+							outputStream.close();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						//show the new list on UI
+						fillList();
+
+					}
+					
+				}
+
+			});
+			
+			builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+					//do nothing
+				}
+			});
+			
+			
+				
+
+			AlertDialog dialog = builder.create();
+
+			dialog.show();
 			
 		}
+
+			
 
 	}
 
 	public void sendEmail(ArrayList<Player> list) {
-		
+
 		Player p;
 		final String[] emails = new String[list.size()];
-		
-		for (int i = 0; i< list.size(); i++)
-		{
-			
-			p = (Player)list.get(i);
+
+		for (int i = 0; i < list.size(); i++) {
+
+			p = (Player) list.get(i);
 			System.out.println(p.getName() + "\n" + p.getEmail());
 			emails[i] = p.getEmail();
-			//System.out.println(emails[i]);
+			// System.out.println(emails[i]);
 		}
-		
-		
+
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
 		alert.setTitle("Send Email");
@@ -418,32 +506,32 @@ public class DirectoryActivity extends Activity implements OnClickListener {
 		// final EditText input = new EditText(this);
 		// alert.setView(input);
 
-		alert.setPositiveButton("Send",
-				new DialogInterface.OnClickListener() {
+		alert.setPositiveButton("Send", new DialogInterface.OnClickListener() {
 
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						subject = inputSubject.getText().toString();
-						message = inputMessage.getText().toString();
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				subject = inputSubject.getText().toString();
+				message = inputMessage.getText().toString();
 
-						 Intent i = new Intent(Intent.ACTION_SEND);
-							 i.setType("message/rfc822");
-							 i.putExtra(Intent.EXTRA_EMAIL , emails);
-							 i.putExtra(Intent.EXTRA_SUBJECT, subject);
-							 i.putExtra(Intent.EXTRA_TEXT , message);
-							 try {
-							 startActivity(Intent.createChooser(i, "Send mail..."));
-							 } catch (android.content.ActivityNotFoundException ex) {
-							 Toast.makeText(DirectoryActivity.this,
-							 "There are no email clients installed.", Toast.LENGTH_SHORT).show();
-							 }
-							 System.out.println(emails.toString());
-							 System.out.println(subject);
-							 System.out.println(message);
-						
-					}
+				Intent i = new Intent(Intent.ACTION_SEND);
+				i.setType("message/rfc822");
+				i.putExtra(Intent.EXTRA_EMAIL, emails);
+				i.putExtra(Intent.EXTRA_SUBJECT, subject);
+				i.putExtra(Intent.EXTRA_TEXT, message);
+				try {
+					startActivity(Intent.createChooser(i, "Send mail..."));
+				} catch (android.content.ActivityNotFoundException ex) {
+					Toast.makeText(DirectoryActivity.this,
+							"There are no email clients installed.",
+							Toast.LENGTH_SHORT).show();
+				}
+				System.out.println(emails.toString());
+				System.out.println(subject);
+				System.out.println(message);
 
-				});
+			}
+
+		});
 
 		alert.setNegativeButton("Cancel",
 				new DialogInterface.OnClickListener() {
@@ -456,7 +544,7 @@ public class DirectoryActivity extends Activity implements OnClickListener {
 				});
 
 		alert.show();
-		
+
 	}
 
 	// @Override

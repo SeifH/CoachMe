@@ -22,18 +22,21 @@
             android:gravity="center"
             android:text="Player Directory"
             android:textAlignment="center"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceLarge" />
         <!-- @string/directory_title -->
 
         <Button
             android:id="@+id/newPlayer"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginRight="140dp"
             android:background="@drawable/round_btn2"
             android:text="+"
             android:textAlignment="center"
-            android:textColor="#20fa48" />
+            android:includeFontPadding="false"
+            android:gravity="center"
+            android:textColor="#ff0000"
+            android:textSize="34dp" />
 
         <!-- @string/plus -->
 
@@ -42,7 +45,7 @@
     <ListView
         android:id="@+id/listView"
         android:layout_width="wrap_content"
-        android:layout_height="240dp"
+        android:layout_height="400dp"
         android:layout_margin="20dp"
         android:background="#ffffff" >
     </ListView>
@@ -60,6 +63,14 @@
             android:layout_height="wrap_content"
             android:background="@drawable/round_btn"
             android:text="Send Email"
+            android:textColor="#ff0000" />
+        <Button
+            android:id="@+id/delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_btn"
+            android:layout_marginLeft="50dp"
+            android:text="Delete"
             android:textColor="#000000" />
 
         <!-- @string/send_email -->

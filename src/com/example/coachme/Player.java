@@ -1,6 +1,6 @@
 package com.example.coachme;
 
-public class Player {
+public class Player implements Comparable<Player>{
 	private String email;
 	private String name;
 	private boolean selected = false;
@@ -39,6 +39,14 @@ public class Player {
 	public void toggleChecked() {
 		// TODO Auto-generated method stub
 		selected = !selected;
+		
+	}
+
+
+	@Override
+	public int compareTo(Player another) {
+		
+		return this.getName().compareTo(another.getName());
 		
 	}
 
