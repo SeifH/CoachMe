@@ -271,25 +271,28 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 
 				homePosession.setSelected(false);
 				awayPosession.setSelected(false);
-				
+
 				homePosession.setEnabled(false);
 				awayPosession.setEnabled(false);
-				
-			posessionSide = -1;
-			//	updateSelected();
+
+				posessionSide = -1;
+				lastPosession = 0;
+				homeSec = 0;
+				awaySec = 0;
+				// updateSelected();
 				resetValues();
 
 			} else if (b.getId() == R.id.home) {
 				posessionSide = HOME_SIDE;
 				homePosession.setSelected(true);
 				awayPosession.setSelected(false);
-				//updateSelected();
+				// updateSelected();
 
 			} else if (b.getId() == R.id.away) {
 				posessionSide = AWAY_SIDE;
 				awayPosession.setSelected(true);
 				homePosession.setSelected(false);
-				//updateSelected();
+				// updateSelected();
 
 			}
 
@@ -328,7 +331,7 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 				timer.start();
 				play.setVisibility(View.INVISIBLE);
 				pause.setVisibility(View.VISIBLE);
-				
+
 				homePosession.setEnabled(true);
 				awayPosession.setEnabled(true);
 			} else if (b.getId() == R.id.statsDrawerBtn) {
@@ -465,7 +468,7 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 
 			Log.e("msg", getPossesionSide() + "");
 
-			// System.out.println("Homesec:" + homeSec);
+			System.out.println("total:" + totalTime);
 
 			int homePercent = (int) Math
 					.round(((double) homeSec / (double) totalTime) * 100);
@@ -481,7 +484,7 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 
 			System.out.println(this.awayPercent.getText().toString() + " "
 					+ this.homePercent.getText().toString());
-			
+
 		}
 	}
 
@@ -501,7 +504,8 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 	@Override
 	public void onChronometerTick(Chronometer chronometer) {
 		// TODO Auto-generated method stub
-		updatePosession();
+		if (homePosession.isEnabled() || awayPosession.isEnabled() )
+			updatePosession();
 	}
 
 	@Override
@@ -545,7 +549,8 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 
 						setValues();
 						currentGame.setName(input.getText().toString());
-						UserStatistics.saveGame(currentGame,currentGame.getName(), StatisticsActivity.this);
+						UserStatistics.saveGame(currentGame,
+								currentGame.getName(), StatisticsActivity.this);
 						UserStatistics.load();
 
 						// hide keyboard after use
@@ -599,17 +604,17 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 
 	}
 
-//	private void updateSelected() {
-//		if (homePosession.isSelected())
-//			homePosession.setBackgroundResource(R.drawable.rounded_corner_btn);
-//		else
-//			homePosession.setBackgroundColor(Color.argb(43, 0, 0, 0));
-//
-//		if (awayPosession.isSelected())
-//			awayPosession.setBackgroundResource(R.drawable.rounded_corner_btn);
-//
-//		else
-//			awayPosession.setBackgroundColor(Color.argb(43, 0, 0, 0));
-//
-//	}
+	// private void updateSelected() {
+	// if (homePosession.isSelected())
+	// homePosession.setBackgroundResource(R.drawable.rounded_corner_btn);
+	// else
+	// homePosession.setBackgroundColor(Color.argb(43, 0, 0, 0));
+	//
+	// if (awayPosession.isSelected())
+	// awayPosession.setBackgroundResource(R.drawable.rounded_corner_btn);
+	//
+	// else
+	// awayPosession.setBackgroundColor(Color.argb(43, 0, 0, 0));
+	//
+	// }
 }
