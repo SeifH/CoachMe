@@ -193,11 +193,10 @@ public class UserDrawings {
 			
 			//sort names alphabetically
 			startTime = System.nanoTime();
-			Collections.sort(fileNames);
+			Collections.sort(fileNames, String.CASE_INSENSITIVE_ORDER);
 			endTime = System.nanoTime();
 			
 			Log.e("time comparison", "" + (endTime - startTime));
-
 			
 		}
 		

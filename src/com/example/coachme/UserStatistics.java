@@ -10,14 +10,33 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Bitmap;
 import android.os.Environment;
 import android.util.Log;
 
 public class UserStatistics {
 
 	private static ArrayList<Games> games = new ArrayList<Games>();
+	private static Context context;
+	private static String name;
+	private static Games currentGame;
 
-	public static void saveGame(Games game) {
+	public static void saveGame(Games game, String n, Context contxt) {
+		
+		setName(n);
+		context = contxt;
+		currentGame = game;
+		
+		//checks if an image with same name already exists
+		if (fileExists(n)) {
+			overwriteDrawingPrompt();
+			Log.e("msg", "exists");
+			return;
+		}
+
 
 		try {
 			File root = new File(Environment.getExternalStorageDirectory()
@@ -45,14 +64,6 @@ public class UserStatistics {
 			out.flush();
 			out.close();
 
-//			BufferedReader in;
-//			try {
-//				in = new BufferedReader(new FileReader(new File (root,"userStats.txt")));
-//				String line;
-//				while ((line = in.readLine()) != null) {
-//					Log.e("mm", line);
-//				}
-//				in.close();
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -62,14 +73,6 @@ public class UserStatistics {
 				e.printStackTrace();
 
 			}
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		} catch (IOException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
-
-		
 
 	}
 
@@ -111,9 +114,11 @@ public class UserStatistics {
 
 				games.add(new Games(n, hPossession, hShots, hGoals, hYellow,
 						hRed, aPossession, aShots, aGoals, aYellow, aRed));
+				
 
-				Log.e("msg", "loaded");
 			}
+			reader.close();
+
 			
 			Collections.sort(games);
 
@@ -136,4 +141,114 @@ public class UserStatistics {
 	public static ArrayList<Games> getGames() {
 		return games;
 	}
+	
+	public static void setName (String n){
+		name = n;
+	}
+	public static String getName (){
+		return name;
+	}
+	
+	/**
+	 * Asks user if they want to overwrite a file with the same name
+	 */
+	private static void overwriteDrawingPrompt() {
+		
+		AlertDialog.Builder saveDialog = new AlertDialog.Builder(context);
+		saveDialog.setTitle("File Already Exist");
+		saveDialog.setMessage("Do you want to overwrite the existing file?");
+
+		saveDialog.setPositiveButton("Yes",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which)
+
+					{
+						//user wants to overwrite file
+						dialog.cancel();
+						
+						//delete existing file
+						for(int i = 0; i < games.size(); i++){
+					        if(games.get(i).getName().equals(getName())){
+					        	//delete file
+					        	 games.remove(i);
+					        	 overwriteFiles();
+					        	break;
+					        }
+					    }
+						
+						for(int i = 0; i < games.size(); i++){
+					        Log.e("name", games.get(i).getName());					    }
+						
+						//save file
+						saveGame(currentGame, getName(), context);
+						load();
+					}
+
+				});
+		saveDialog.setNegativeButton("Cancel",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						//user does not want to overwrite file
+						dialog.cancel();
+					}
+				});
+		saveDialog.show();
+		
+	}
+	
+	public static boolean fileExists (String n){
+		for(int i = 0; i < games.size(); i++){
+	        if(games.get(i).getName().equals(n)){
+		       return true;
+	        }
+	    }
+		
+		return false;
+	}
+	
+	private static void overwriteFiles (){
+				
+			try {
+				File root = new File(Environment.getExternalStorageDirectory()
+						+ "/Android/data/com.example.coachme/");
+				if (!root.exists())
+					root.mkdirs();
+
+				File file = new File(root, "userStats.txt");
+
+				FileWriter out = new FileWriter(file, false);
+
+				for (int i = 0; i <games.size(); i++){
+					
+				out.write(games.get(i).getName());
+
+				out.write("\n" + String.valueOf(games.get(i).getHomePossession()));
+				out.write("\n" + String.valueOf(games.get(i).getAwayPossession()));
+				out.write("\n" + String.valueOf(games.get(i).getHomeGoals()));
+				out.write("\n" + String.valueOf(games.get(i).getAwayGoals()));
+				out.write("\n" + String.valueOf(games.get(i).getHomeShots()));
+				out.write("\n" + String.valueOf(games.get(i).getAwayShots()));
+				out.write("\n" + String.valueOf(games.get(i).getHomeRed()));
+				out.write("\n" + String.valueOf(games.get(i).getAwayRed()));
+				out.write("\n" + String.valueOf(games.get(i).getHomeYellow()));
+				out.write("\n" + String.valueOf(games.get(i).getAwayYellow())+ "\n");
+				}
+
+				out.flush();
+				out.close();
+
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+
+				}
+			
+
+	}
+	
+
 }

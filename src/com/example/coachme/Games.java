@@ -124,13 +124,7 @@ public class Games implements Comparable<Games>{
 	 */
 	@Override
 	public int compareTo(Games o) {
-		return getName().compareTo(o.getName());
+		return getName().compareToIgnoreCase(o.getName());
 		
-//		if (getName() > o.getName())
-//			return 1;
-//		else if ((getName() < o.getName()))
-//			return -1;
-//		else
-//			return 0;
 	}
 }
