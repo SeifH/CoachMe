@@ -54,6 +54,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:adjustViewBounds="true"
@@ -72,14 +73,15 @@
 
             <Button
                 android:id="@+id/formations"
-                
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="70dp"
                 android:layout_marginRight="70dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/rounded_corner_btn"
                 android:gravity="center"
-                android:text="@string/main_formations" />
+                android:text="@string/main_formations" 
+                android:textSize="30sp"/>
         </TableRow>
 
         <TableRow
@@ -96,9 +98,11 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="70dp"
                 android:layout_marginRight="70dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/rounded_corner_btn"
                 android:gravity="center"
-                android:text="@string/main_directory" />
+                android:text="@string/main_directory" 
+                android:textSize="30sp"/>
         </TableRow>
 
         <TableRow
@@ -115,9 +119,11 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="70dp"
                 android:layout_marginRight="70dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/rounded_corner_btn"
                 android:gravity="center"
-                android:text="@string/main_statistics" />
+                android:text="@string/main_statistics"
+                android:textSize="30sp" />
         </TableRow>
     </TableLayout>
 
