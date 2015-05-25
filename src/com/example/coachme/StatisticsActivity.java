@@ -330,7 +330,7 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 				pause.setVisibility(View.VISIBLE);
 				
 				homePosession.setEnabled(true);
-				homePosession.setEnabled(true);
+				awayPosession.setEnabled(true);
 			} else if (b.getId() == R.id.statsDrawerBtn) {
 				// UserDrawings.loadFileNames();
 				// statsNamesMenu = UserDrawings.getFileNames();
