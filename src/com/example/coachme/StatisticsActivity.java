@@ -98,10 +98,12 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 
 		homePosession = (Button) findViewById(R.id.home);
 		homePosession.setSelected(false);
+		homePosession.setEnabled(false);
 		homePosession.setOnClickListener(this);
 
 		awayPosession = (Button) findViewById(R.id.away);
 		awayPosession.setSelected(false);
+		awayPosession.setEnabled(false);
 		awayPosession.setOnClickListener(this);
 
 		homeRed = (Button) findViewById(R.id.home_redcard);
@@ -269,6 +271,11 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 
 				homePosession.setSelected(false);
 				awayPosession.setSelected(false);
+				
+				homePosession.setEnabled(false);
+				awayPosession.setEnabled(false);
+				
+			posessionSide = -1;
 			//	updateSelected();
 				resetValues();
 
@@ -321,6 +328,9 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 				timer.start();
 				play.setVisibility(View.INVISIBLE);
 				pause.setVisibility(View.VISIBLE);
+				
+				homePosession.setEnabled(true);
+				homePosession.setEnabled(true);
 			} else if (b.getId() == R.id.statsDrawerBtn) {
 				// UserDrawings.loadFileNames();
 				// statsNamesMenu = UserDrawings.getFileNames();
