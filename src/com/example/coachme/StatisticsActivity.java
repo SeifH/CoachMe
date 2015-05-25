@@ -65,6 +65,9 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 
 	private Games currentGame;
 
+	// private final int HIGHLIGHTED_COLOR = 0x70FFFFFF;
+	// private final int NON_HIGHLIGHTED_COLOR = 0xB7B7B7;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -94,9 +97,11 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 		drawerBtn.setOnClickListener(this);
 
 		homePosession = (Button) findViewById(R.id.home);
+		homePosession.setSelected(false);
 		homePosession.setOnClickListener(this);
 
 		awayPosession = (Button) findViewById(R.id.away);
+		awayPosession.setSelected(false);
 		awayPosession.setOnClickListener(this);
 
 		homeRed = (Button) findViewById(R.id.home_redcard);
@@ -262,13 +267,23 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 				awayRed.setText("0");
 				awayYellow.setText("0");
 
+				homePosession.setSelected(false);
+				awayPosession.setSelected(false);
+			//	updateSelected();
 				resetValues();
 
 			} else if (b.getId() == R.id.home) {
 				posessionSide = HOME_SIDE;
+				homePosession.setSelected(true);
+				awayPosession.setSelected(false);
+				//updateSelected();
 
 			} else if (b.getId() == R.id.away) {
 				posessionSide = AWAY_SIDE;
+				awayPosession.setSelected(true);
+				homePosession.setSelected(false);
+				//updateSelected();
+
 			}
 
 		} else if (v.getTag().equals("imageButton")) {
@@ -309,11 +324,11 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 			} else if (b.getId() == R.id.statsDrawerBtn) {
 				// UserDrawings.loadFileNames();
 				// statsNamesMenu = UserDrawings.getFileNames();
-				
+
 				setGameNames();
-				
-				 adapter = new ArrayAdapter<String>(this,
-				 android.R.layout.simple_list_item_1, statsNamesMenu);
+
+				adapter = new ArrayAdapter<String>(this,
+						android.R.layout.simple_list_item_1, statsNamesMenu);
 				savedList.setAdapter(adapter);
 
 				savedDrawer.openDrawer(Gravity.RIGHT);
@@ -357,23 +372,30 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 	}
 
 	private void setValues() {
-		
-			
-		currentGame.setHomePossession(Integer.valueOf(homePercent.getText().toString()
+
+		currentGame.setHomePossession(Integer.valueOf(homePercent.getText()
+				.toString()
 				.substring(0, homePercent.getText().toString().indexOf("%"))));
 
-		currentGame.setAwayPossession(Integer.valueOf(awayPercent.getText().toString()
+		currentGame.setAwayPossession(Integer.valueOf(awayPercent.getText()
+				.toString()
 				.substring(0, awayPercent.getText().toString().indexOf("%"))));
-		
-		currentGame.setHomeShots(Integer.valueOf(homeShots.getText().toString()));
-		currentGame.setAwayShots(Integer.valueOf(awayShots.getText().toString()));
-		currentGame.setHomeGoals(Integer.valueOf(homeGoals.getText().toString()));
-		currentGame.setAwayGoals(Integer.valueOf(awayGoals.getText().toString()));
-		
+
+		currentGame.setHomeShots(Integer
+				.valueOf(homeShots.getText().toString()));
+		currentGame.setAwayShots(Integer
+				.valueOf(awayShots.getText().toString()));
+		currentGame.setHomeGoals(Integer
+				.valueOf(homeGoals.getText().toString()));
+		currentGame.setAwayGoals(Integer
+				.valueOf(awayGoals.getText().toString()));
+
 		currentGame.setHomeRed(Integer.valueOf(homeRed.getText().toString()));
-		currentGame.setHomeYellow(Integer.valueOf(homeYellow.getText().toString()));
+		currentGame.setHomeYellow(Integer.valueOf(homeYellow.getText()
+				.toString()));
 		currentGame.setAwayRed(Integer.valueOf(awayRed.getText().toString()));
-		currentGame.setHomeYellow(Integer.valueOf(awayYellow.getText().toString()));
+		currentGame.setHomeYellow(Integer.valueOf(awayYellow.getText()
+				.toString()));
 
 	}
 
@@ -449,7 +471,7 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 
 			System.out.println(this.awayPercent.getText().toString() + " "
 					+ this.homePercent.getText().toString());
-
+			
 		}
 	}
 
@@ -484,7 +506,7 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 		fragmentManager.beginTransaction().replace(R.id.TableLayout01, detail)
 				.commit();
 	}
-	
+
 	private void saveStats() {
 		AlertDialog.Builder saveDialog = new AlertDialog.Builder(this);
 		saveDialog.setTitle("Save Formation");
@@ -513,7 +535,7 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 
 						setValues();
 						currentGame.setName(input.getText().toString());
-						UserStatistics.saveGame(currentGame);
+						UserStatistics.saveGame(currentGame,currentGame.getName(), StatisticsActivity.this);
 						UserStatistics.load();
 
 						// hide keyboard after use
@@ -564,6 +586,20 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 
 			}
 		});
+
 	}
 
+//	private void updateSelected() {
+//		if (homePosession.isSelected())
+//			homePosession.setBackgroundResource(R.drawable.rounded_corner_btn);
+//		else
+//			homePosession.setBackgroundColor(Color.argb(43, 0, 0, 0));
+//
+//		if (awayPosession.isSelected())
+//			awayPosession.setBackgroundResource(R.drawable.rounded_corner_btn);
+//
+//		else
+//			awayPosession.setBackgroundColor(Color.argb(43, 0, 0, 0));
+//
+//	}
 }
