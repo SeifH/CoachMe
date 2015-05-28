@@ -1,8 +1,6 @@
 package com.example.coachme;
 
-
 import java.util.ArrayList;
-
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -57,7 +55,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 /**
- * This class extends the Activity for the Formations and controls the features in the Formations Screen
+ * This class extends the Activity for the Formations and controls the features
+ * in the Formations Screen
  * 
  * @author Seif Hassan and Olivia Perryman
  * @since Saturday, March 28 2015
@@ -66,18 +65,18 @@ import android.widget.ListView;
 public class FormationsActivity extends Activity implements OnClickListener,
 		OnItemClickListener, OnDragListener {
 
-	//set up drawing view 
+	// set up drawing view
 	private DrawingView drawView;
-	
-	//set up buttons
+
+	// set up buttons
 	private ImageButton draw, eraser, refresh, ball, bPlayer, rPlayer, save,
 			drawerBtn, deleteFile;
-	
-	private ImageView  removeIcon;
-	
+
+	private ImageView removeIcon;
+
 	private Button savedReturn;
-	
-	//set up TextView for saved drawer
+
+	// set up TextView for saved drawer
 	private TextView listHeader;
 
 	// keep track of number of drags for each button
@@ -101,7 +100,8 @@ public class FormationsActivity extends Activity implements OnClickListener,
 	/**
 	 * onCreate sets up Activity and its components
 	 * 
-	 * @param savedInstanceState - Bundle
+	 * @param savedInstanceState
+	 *            - Bundle
 	 * 
 	 */
 	@Override
@@ -113,77 +113,77 @@ public class FormationsActivity extends Activity implements OnClickListener,
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-		//setup user interface layout for this Activity
+		// setup user interface layout for this Activity
 		setContentView(R.layout.formations);
 
-		//set initial drag and drop numbers
+		// set initial drag and drop numbers
 		ballDragNum = 0;
 		rPlayerDragNum = 0;
 		bPlayerDragNum = 0;
 		helpNum = 0;
 
-		//create drawing view
+		// create drawing view
 		drawView = (DrawingView) findViewById(R.id.drawing);
- 
-		//Initialize Image Buttons 
-		
-		//saved drawer button
+
+		// Initialize Image Buttons
+
+		// saved drawer button
 		drawerBtn = (ImageButton) findViewById(R.id.drawerBtn);
 		drawerBtn.setOnClickListener(this);
 
-		//erase button
+		// erase button
 		eraser = (ImageButton) findViewById(R.id.erase);
 		eraser.setOnClickListener(this);
 
-		//draw button
+		// draw button
 		draw = (ImageButton) findViewById(R.id.draw);
 		draw.setOnClickListener(this);
 
-		//new button
+		// new button
 		refresh = (ImageButton) findViewById(R.id.refresh);
 		refresh.setOnClickListener(this);
 
-		//save button
+		// save button
 		save = (ImageButton) findViewById(R.id.save);
 		save.setOnClickListener(this);
 
-		//delete img button
+		// delete img button
 		deleteFile = (ImageButton) findViewById(R.id.removeBtn);
 		deleteFile.setOnClickListener(this);
 
-		//return to drawing button
+		// return to drawing button
 		savedReturn = (Button) findViewById(R.id.drawingReturnBtn);
 		savedReturn.setOnClickListener(this);
 
-		//ball icon
+		// ball icon
 		ball = (ImageButton) findViewById(R.id.ball);
 		// set the tag
 		ball.setTag(BALL_TAG);
 		ball.setOnTouchListener(new TouchListener());
 
-		//black player icon
+		// black player icon
 		bPlayer = (ImageButton) findViewById(R.id.bPlayer);
 		// set the tag
 		bPlayer.setTag(BLACK_PLAYER_TAG);
 		bPlayer.setOnTouchListener(new TouchListener());
 
-		//red player icon
+		// red player icon
 		rPlayer = (ImageButton) findViewById(R.id.rPlayer);
 		// set the tag
 		rPlayer.setTag(RED_PLAYER_TAG);
 		rPlayer.setOnTouchListener(new TouchListener());
-		
-		//remove an icon
+
+		// remove an icon
 		removeIcon = (ImageView) findViewById(R.id.removeIcon);
 
-		//assign drag listener to layouts that will handle drag and drops
+		// assign drag listener to layouts that will handle drag and drops
 		findViewById(R.id.DrawingHeader01).setOnDragListener(this);
 		findViewById(R.id.FrameLayout1).setOnDragListener(this);
 
 		imageDuplicates = new ArrayList<ImageButton>();
 		imageDisable = new ArrayList<ImageButton>();
 
-		//set up text view to contain list
+		// set up text view to contain list
 		listHeader = new TextView(this);
 		listHeader.setText("Saved Formations");
 		listHeader.setGravity(Gravity.CENTER);
@@ -194,26 +194,26 @@ public class FormationsActivity extends Activity implements OnClickListener,
 
 		formationNamesMenu = new ArrayList<String>();
 
-		//initialize drawer layout
+		// initialize drawer layout
 		savedDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-		
-		//initialize list view
+
+		// initialize list view
 		savedList = (ListView) findViewById(R.id.right_drawer);
-		//set title header for list view
+		// set title header for list view
 		savedList.addHeaderView(listHeader, null, false);
 
-		//set the adaptor for the list view
+		// set the adaptor for the list view
 		adapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1, formationNamesMenu);
 		savedList.setAdapter(adapter);
-		
-		//set drawable that will be used as selected highlight
+
+		// set drawable that will be used as selected highlight
 		savedList.setSelector(android.R.color.holo_blue_dark);
-		
-		//disable interaction with other drawers
+
+		// disable interaction with other drawers
 		savedDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-		
-		//set the list's click listener
+
+		// set the list's click listener
 		savedList.setOnItemClickListener(this);
 
 	}
@@ -223,32 +223,32 @@ public class FormationsActivity extends Activity implements OnClickListener,
 	 */
 	public void onItemClick(AdapterView<?> arg0, View view, int position,
 			long id) {
-		
-		//get selected item
+
+		// get selected item
 		String sel_item = savedList.getItemAtPosition(position).toString();
 
-		//reset and disable drawing view
+		// reset and disable drawing view
 		resetDrawingField();
 		drawView.disableDrawing();
 
-		//retrieve img of saved drawing
+		// retrieve img of saved drawing
 		BitmapDrawable ob = new BitmapDrawable(getResources(),
 				UserDrawings.loadFromFile(sel_item));
 		ImageView layout = (ImageView) findViewById(R.id.drawing_field);
 		layout.setImageDrawable(ob);
 
-		//switch header layout from drawing capability to just viewing img
+		// switch header layout from drawing capability to just viewing img
 		RelativeLayout headerLayout = (RelativeLayout) findViewById(R.id.DrawingHeader01);
 		headerLayout.setVisibility(view.INVISIBLE);
 
 		headerLayout = (RelativeLayout) findViewById(R.id.SaveHeader01);
 		headerLayout.setVisibility(view.VISIBLE);
 
-		//set title of header layout
+		// set title of header layout
 		TextView savedTitle = (TextView) findViewById(R.id.nameHeader);
 		savedTitle.setText(sel_item);
 
-		//close the drawer
+		// close the drawer
 		savedDrawer.closeDrawers();
 
 		Bundle args = new Bundle();
@@ -260,9 +260,9 @@ public class FormationsActivity extends Activity implements OnClickListener,
 				.commit();
 
 	}
-	
+
 	/**
-	 *Defines click listener for buttons 
+	 * Defines click listener for buttons
 	 */
 	@Override
 	public void onClick(View view) {
@@ -279,7 +279,7 @@ public class FormationsActivity extends Activity implements OnClickListener,
 
 		} else if (view.getId() == R.id.refresh) {
 
-			//refresh the drawing field
+			// refresh the drawing field
 			AlertDialog.Builder newDialog = new AlertDialog.Builder(this);
 			newDialog.setTitle("New Formation");
 			newDialog
@@ -287,7 +287,7 @@ public class FormationsActivity extends Activity implements OnClickListener,
 			newDialog.setPositiveButton("Yes",
 					new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int which) {
-							//reset drawing field
+							// reset drawing field
 							resetDrawingField();
 							dialog.dismiss();
 						}
@@ -295,19 +295,19 @@ public class FormationsActivity extends Activity implements OnClickListener,
 			newDialog.setNegativeButton("Cancel",
 					new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int which) {
-							//cancel refresh
+							// cancel refresh
 							dialog.cancel();
 						}
 					});
 			newDialog.show();
 
 		} else if (view.getId() == R.id.drawerBtn) {
-			//open saved drawer
-			
-			//load file names
+			// open saved drawer
+
+			// load file names
 			UserDrawings.loadFileNames();
-			
-			//set adapter for list view
+
+			// set adapter for list view
 			formationNamesMenu = UserDrawings.getFileNames();
 			adapter = new ArrayAdapter<String>(this,
 					android.R.layout.simple_list_item_1, formationNamesMenu);
@@ -315,7 +315,7 @@ public class FormationsActivity extends Activity implements OnClickListener,
 
 			savedDrawer.openDrawer(Gravity.RIGHT);
 		} else if (view.getId() == R.id.removeBtn) {
-			//delete saved file
+			// delete saved file
 
 			AlertDialog.Builder newDialog = new AlertDialog.Builder(this);
 			newDialog.setTitle("Delete File");
@@ -325,18 +325,18 @@ public class FormationsActivity extends Activity implements OnClickListener,
 					new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int which) {
 
-							//initialize TextView to switch the header
+							// initialize TextView to switch the header
 							TextView savedTitle = (TextView) findViewById(R.id.nameHeader);
 
-							//delete file
+							// delete file
 							UserDrawings.deleteFile(savedTitle.getText()
 									.toString());
 
-							//enable and reset drawing
+							// enable and reset drawing
 							drawView.enableDrawing();
 							resetDrawingField();
 
-							//switch header layout back to drawing capability
+							// switch header layout back to drawing capability
 							RelativeLayout headerLayout = (RelativeLayout) findViewById(R.id.DrawingHeader01);
 							headerLayout.setVisibility(View.VISIBLE);
 
@@ -354,11 +354,11 @@ public class FormationsActivity extends Activity implements OnClickListener,
 			newDialog.show();
 
 		} else if (view.getId() == R.id.drawingReturnBtn) {
-			//eneable and reset drawing view
+			// eneable and reset drawing view
 			drawView.enableDrawing();
 			resetDrawingField();
 
-			//switch header layout back to drawing capability
+			// switch header layout back to drawing capability
 			RelativeLayout headerLayout = (RelativeLayout) findViewById(R.id.DrawingHeader01);
 			headerLayout.setVisibility(view.VISIBLE);
 
@@ -367,7 +367,7 @@ public class FormationsActivity extends Activity implements OnClickListener,
 		}
 
 	}
-	
+
 	/**
 	 * Defines drag listener for icons
 	 */
@@ -383,9 +383,9 @@ public class FormationsActivity extends Activity implements OnClickListener,
 		// signal for the start of a drag and drop operation.
 		case DragEvent.ACTION_DRAG_STARTED:
 
-			//make the remove icon button available
+			// make the remove icon button available
 			removeIcon.setVisibility(removeIcon.VISIBLE);
-			
+
 			break;
 
 		// the drag point has entered the bounding box of the View
@@ -422,7 +422,19 @@ public class FormationsActivity extends Activity implements OnClickListener,
 						getApplicationContext());
 				newImgButton.setImageDrawable(oldImgButton.getDrawable());
 				newImgButton.setOnTouchListener(new TouchListener());
-				newImgButton.setTag("Duplicate");
+
+				// give each duplicate its own tag
+				if (oldImgButton.getTag().equals(BLACK_PLAYER_TAG))
+					newImgButton.setTag("DuplicateBlack");
+				else if (oldImgButton.getTag().equals(RED_PLAYER_TAG)) {
+					newImgButton.setTag("DuplicateRed");
+					;
+					newImgButton.setY(y_cord - (view.getHeight() / 2) + 10);
+				} else if (oldImgButton.getTag().equals(BALL_TAG)) {
+					newImgButton.setTag("DuplicateBall");
+
+				}
+				// newImgButton.setTag("Duplicate");
 				newImgButton.getBackground().setAlpha(0);
 
 				containView.addView(newImgButton);
@@ -434,14 +446,14 @@ public class FormationsActivity extends Activity implements OnClickListener,
 				float height = dimensions.height();
 				float width = dimensions.width();
 				FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-						new LayoutParams((int)width, (int)height));
+						new LayoutParams((int) width, (int) height));
 				newImgButton.setLayoutParams(params);
 
 				// set the coordinates of the new Image Button
 				newImgButton.setX(x_cord - (view.getWidth() / 2));
 				newImgButton.setY(y_cord - (view.getHeight() / 2));
 
-				//for initial drop, adjust coord. from switching layouts
+				// for initial drop, adjust coord. from switching layouts
 				if (oldImgButton.getTag().equals(BLACK_PLAYER_TAG))
 					newImgButton.setY(y_cord - (view.getHeight() / 2) + 10);
 				else if (oldImgButton.getTag().equals(RED_PLAYER_TAG)) {
@@ -455,10 +467,14 @@ public class FormationsActivity extends Activity implements OnClickListener,
 				view.setVisibility(View.VISIBLE);
 
 				// Check if drag and drop does not require a copy
-				if (oldImgButton.getTag().toString().equals("Duplicate")) {
+				if (oldImgButton.getTag().toString().equals("DuplicateBlack")
+						|| oldImgButton.getTag().toString()
+								.equals("DuplicateRed")
+						|| oldImgButton.getTag().toString()
+								.equals("DuplicateBall")) {
 					oldImgButton.setVisibility(View.INVISIBLE);
-					
-					//else increment drop number to respective icon
+
+					// else increment drop number to respective icon
 				} else if (oldImgButton.getTag().toString().equals(BALL_TAG)) {
 					ballDragNum++;
 					finalDrop(oldImgButton);
@@ -480,13 +496,38 @@ public class FormationsActivity extends Activity implements OnClickListener,
 
 				newImgButton.setAlpha(255);
 
+				// make the remove icon button invisible
+				removeIcon.setVisibility(removeIcon.INVISIBLE);
+
+			} else if (v == findViewById(R.id.removeIcon)) {
+
+				// make the remove icon button invisible
+				removeIcon.setVisibility(removeIcon.INVISIBLE);
+
+				// user wants to remove img
+				// Reassign View to ViewGroup
+				View view = (View) event.getLocalState();
+				FrameLayout containView = (FrameLayout) v;
+
+				if (view.getTag().equals("DuplicateRed")) {
+
+					rPlayerDragNum--;
+
+				} else if (view.getTag().equals("DuplicateBlack")) {
+					bPlayerDragNum--;
+
+				} else if (view.getTag().equals("DuplicateBall")) {
+					ballDragNum--;
+
+				}
+
 			} else {
-				//user dropped img outside field
+				// user dropped img outside field
 				View view = (View) event.getLocalState();
 				view.setVisibility(View.VISIBLE);
 				Context context = getApplicationContext();
-				
-				//alert user of improper drop
+
+				// alert user of improper drop
 				Toast.makeText(context, "You can't drop the image here",
 						Toast.LENGTH_LONG).show();
 				break;
@@ -495,7 +536,7 @@ public class FormationsActivity extends Activity implements OnClickListener,
 
 		// the drag and drop operation has concluded.
 		case DragEvent.ACTION_DRAG_ENDED:
-		break;
+			break;
 
 		default:
 			break;
@@ -515,7 +556,10 @@ public class FormationsActivity extends Activity implements OnClickListener,
 
 			if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
 				// TODO Auto-generated method stub
-				if (!btn.getTag().equals("Duplicate") && helpNum == 0) {
+				if (!btn.getTag().equals("DuplicateRed")
+						|| !btn.getTag().equals("DuplicateBlack")
+						|| !btn.getTag().equals("DuplicateBall")
+						&& helpNum == 0) {
 					Toast toast = Toast.makeText(getApplicationContext(),
 							"Drag onto field", Toast.LENGTH_SHORT);
 					toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 0);
@@ -540,7 +584,7 @@ public class FormationsActivity extends Activity implements OnClickListener,
 
 				// Start the drag shadow builder
 				view.startDrag(data, // data to be dragged.
-						
+
 						shadowBuilder, // drag shadow
 						view, // local data about the drag and drop operation
 						0 // no needed flags
@@ -552,26 +596,27 @@ public class FormationsActivity extends Activity implements OnClickListener,
 			}
 		}
 	}
-	
+
 	/**
 	 * Creates new drawing view for user
 	 */
 	private void resetDrawingField() {
 
-		//reload field img
+		// reload field img
 		ImageView field = (ImageView) findViewById(R.id.drawing_field);
 		field.setImageResource(R.drawable.field);
 
-		//clear the field and set initial selection to marker
+		// clear the field and set initial selection to marker
 		drawView.clearCanvas();
 		drawView.setErase(false);
 
-		//remove any icons from field
+		// remove any icons from field
 		for (ImageButton btn : imageDuplicates) {
 			btn.setVisibility(View.INVISIBLE);
 		}
 
-		//if any icons is disable (i.e reached max num  of drops), enable it to allow for drops again
+		// if any icons is disable (i.e reached max num of drops), enable it to
+		// allow for drops again
 		for (ImageButton btn : imageDisable) {
 			btn.setEnabled(true);
 			float alpha = 1f;
@@ -580,27 +625,30 @@ public class FormationsActivity extends Activity implements OnClickListener,
 			btn.startAnimation(alphaUp);
 		}
 
-		//clear ArrayList for drag and drops
+		// clear ArrayList for drag and drops
 		imageDisable.clear();
 		imageDuplicates.clear();
 
-		//rest value for number of drag and drops for each icon
+		// rest value for number of drag and drops for each icon
 		ballDragNum = 0;
 		rPlayerDragNum = 0;
 		bPlayerDragNum = 0;
 	}
 
 	/**
-	 * User reached max number of drops for specific icon, so disable current ImageButton
-	 * @param ImgButton - icon that reached max number of drops
+	 * User reached max number of drops for specific icon, so disable current
+	 * ImageButton
+	 * 
+	 * @param ImgButton
+	 *            - icon that reached max number of drops
 	 */
 	private void finalDrop(ImageButton ImgButton) {
 
-		//disable Image Button
+		// disable Image Button
 		ImgButton.setEnabled(false);
 		imageDisable.add(ImgButton);
 
-		//add transparency to tell user it is disabled
+		// add transparency to tell user it is disabled
 		float alpha = 0.15f;
 		AlphaAnimation alphaUp = new AlphaAnimation(alpha, alpha);
 		alphaUp.setFillAfter(true);
@@ -611,7 +659,7 @@ public class FormationsActivity extends Activity implements OnClickListener,
 	 * Saves the current drawing view
 	 */
 	private void saveDrawing() {
-		//ask user if  they want to save drawing
+		// ask user if they want to save drawing
 		AlertDialog.Builder saveDialog = new AlertDialog.Builder(this);
 		saveDialog.setTitle("Save Formation");
 		saveDialog.setMessage("Save formation to device?");
@@ -621,7 +669,7 @@ public class FormationsActivity extends Activity implements OnClickListener,
 		input.setHint("Name");
 		input.setTextSize(20);
 
-		//set max length for name of drawing
+		// set max length for name of drawing
 		InputFilter[] FilterArray = new InputFilter[1];
 		FilterArray[0] = new InputFilter.LengthFilter(25);
 		input.setFilters(FilterArray);
@@ -638,12 +686,12 @@ public class FormationsActivity extends Activity implements OnClickListener,
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						// user wants to save drawing
-						
+
 						FrameLayout saveView = (FrameLayout) findViewById(R.id.FrameLayout1);
 						saveView.setDrawingCacheEnabled(true);
 						saveView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
 
-						//save drawing
+						// save drawing
 						Bitmap bitmap = saveView.getDrawingCache();
 						UserDrawings.saveDrawings(FormationsActivity.this,
 								bitmap, input.getText().toString());
@@ -660,8 +708,8 @@ public class FormationsActivity extends Activity implements OnClickListener,
 				new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						//user does not want to save drawing
-						
+						// user does not want to save drawing
+
 						// hide keyboard after use
 						InputMethodManager key = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 						key.hideSoftInputFromWindow(input.getWindowToken(),
@@ -676,7 +724,8 @@ public class FormationsActivity extends Activity implements OnClickListener,
 				.getButton(AlertDialog.BUTTON_POSITIVE);
 		button.setEnabled(false);
 
-		//disable "ok" button is user had not inputed a name of atleast one char
+		// disable "ok" button is user had not inputed a name of atleast one
+		// char
 		input.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count,
