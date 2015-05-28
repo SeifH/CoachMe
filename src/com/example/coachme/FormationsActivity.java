@@ -72,6 +72,9 @@ public class FormationsActivity extends Activity implements OnClickListener,
 	//set up buttons
 	private ImageButton draw, eraser, refresh, ball, bPlayer, rPlayer, save,
 			drawerBtn, deleteFile;
+	
+	private ImageView  removeIcon;
+	
 	private Button savedReturn;
 	
 	//set up TextView for saved drawer
@@ -169,6 +172,9 @@ public class FormationsActivity extends Activity implements OnClickListener,
 		// set the tag
 		rPlayer.setTag(RED_PLAYER_TAG);
 		rPlayer.setOnTouchListener(new TouchListener());
+		
+		//remove an icon
+		removeIcon = (ImageView) findViewById(R.id.removeIcon);
 
 		//assign drag listener to layouts that will handle drag and drops
 		findViewById(R.id.DrawingHeader01).setOnDragListener(this);
@@ -377,6 +383,9 @@ public class FormationsActivity extends Activity implements OnClickListener,
 		// signal for the start of a drag and drop operation.
 		case DragEvent.ACTION_DRAG_STARTED:
 
+			//make the remove icon button available
+			removeIcon.setVisibility(removeIcon.VISIBLE);
+			
 			break;
 
 		// the drag point has entered the bounding box of the View

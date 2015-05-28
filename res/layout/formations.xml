@@ -72,13 +72,25 @@
                     android:contentDescription="@string/r_player"
                     android:src="@drawable/r_player" />
 
+                 <ImageView
+                    android:id="@+id/removeIcon"
+                    android:layout_width= "wrap_content" 
+                    android:layout_height= "fill_parent"
+                    android:layout_toLeftOf="@+id/refresh"
+                    android:layout_marginRight="185dp"
+                    android:scaleType="center"
+                    android:background="@null"
+                    android:contentDescription="@string/remove_icon"
+                    android:src="@drawable/remove"
+                    android:visibility="invisible" />
+                
                 <ImageButton
                     android:id="@+id/refresh"
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
                     android:layout_toLeftOf="@+id/draw"
                     android:contentDescription="@string/refresh"
-                    android:src="@drawable/ic_action_new_picture" />
+                    android:src="@drawable/ic_action_discard" />
 
                 <ImageButton
                     android:id="@+id/draw"
