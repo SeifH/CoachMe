@@ -574,7 +574,7 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 						UserStatistics.deleteGame(name);
 					}
 				});
-		builder.setNegativeButton("Cancel",
+		builder.setNegativeButton("Close",
 				new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {

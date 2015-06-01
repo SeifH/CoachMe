@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/stats_drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-        android:id="@+id/stats_drawer_layout"
-    
     android:background="#FFCCCCCC"
     tools:context=".StatisticsActivity" >
 
@@ -60,8 +59,8 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="10dp"
                     android:background="@null"
-                    android:tag="imageButton"
-                    android:src="@drawable/ic_drawer" />
+                    android:src="@drawable/ic_drawer"
+                    android:tag="imageButton" />
             </RelativeLayout>
         </TableRow>
 
@@ -192,17 +191,19 @@
                 <TextView
                     android:id="@+id/shots"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:layout_centerInParent="true"
                     android:layout_marginLeft="85dp"
                     android:layout_marginRight="85dp"
+                    android:gravity="center"
                     android:text="@string/stats_shots"
                     android:textColor="#000000" />
 
                 <Button
                     android:id="@+id/homeShotsMinus"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginRight="35dp"
                     android:layout_toLeftOf="@+id/shots"
                     android:background="@drawable/rounded_corner_btn"
                     android:elevation="5dp"
@@ -215,10 +216,10 @@
 
                 <Button
                     android:id="@+id/homeShotsPlus"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
                     android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="45dp"
+                    android:layout_marginLeft="90dp"
                     android:background="@drawable/rounded_corner_btn"
                     android:elevation="5dp"
                     android:gravity="center"
@@ -243,10 +244,10 @@
 
                 <Button
                     android:id="@+id/awayShotsMinus"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="45dp"
+                    android:layout_marginRight="90dp"
                     android:background="@drawable/rounded_corner_btn"
                     android:elevation="5dp"
                     android:gravity="center"
@@ -258,9 +259,10 @@
 
                 <Button
                     android:id="@+id/awayShotsPlus"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
                     android:layout_toRightOf="@+id/shots"
+                    android:layout_marginLeft="35dp"
                     android:background="@drawable/rounded_corner_btn"
                     android:elevation="5dp"
                     android:gravity="center"
@@ -298,8 +300,9 @@
                 <TextView
                     android:id="@+id/goals"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:layout_centerInParent="true"
+                    android:gravity="center"
                     android:layout_marginLeft="85dp"
                     android:layout_marginRight="85dp"
                     android:text="@string/stats_goals"
@@ -307,8 +310,9 @@
 
                 <Button
                     android:id="@+id/homeGoalsMinus"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginRight="35dp"
                     android:layout_toLeftOf="@+id/goals"
                     android:background="@drawable/rounded_corner_btn"
                     android:elevation="5dp"
@@ -320,10 +324,10 @@
 
                 <Button
                     android:id="@+id/homeGoalsPlus"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
                     android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="45dp"
+                    android:layout_marginLeft="90dp"
                     android:background="@drawable/rounded_corner_btn"
                     android:elevation="5dp"
                     android:gravity="center"
@@ -348,10 +352,10 @@
 
                 <Button
                     android:id="@+id/awayGoalsMinus"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="45dp"
+                    android:layout_marginRight="90dp"
                     android:background="@drawable/rounded_corner_btn"
                     android:elevation="5dp"
                     android:includeFontPadding="false"
@@ -362,9 +366,10 @@
 
                 <Button
                     android:id="@+id/awayGoalsPlus"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
                     android:layout_toRightOf="@+id/goals"
+                    android:layout_marginLeft="35dp"
                     android:background="@drawable/rounded_corner_btn"
                     android:elevation="5dp"
                     android:gravity="center"
@@ -414,6 +419,7 @@
                     android:layout_width="44dp"
                     android:layout_height="66dp"
                     android:layout_toLeftOf="@+id/penalties"
+                    android:layout_marginRight="35dp"
                     android:background="@drawable/redcard_btn"
                     android:elevation="5dp"
                     android:includeFontPadding="false"
@@ -426,7 +432,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="50dp"
+                    android:layout_marginLeft="90dp"
                     android:background="@null"
                     android:elevation="5dp"
                     android:src="@drawable/refresh"
@@ -438,6 +444,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:layout_marginLeft="50dp"
                     android:layout_toRightOf="@+id/penalties"
                     android:background="@null"
                     android:elevation="5dp"
@@ -450,7 +457,7 @@
                     android:layout_width="44dp"
                     android:layout_height="66dp"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="50dp"
+                    android:layout_marginRight="90dp"
                     android:background="@drawable/redcard_btn"
                     android:elevation="5dp"
                     android:includeFontPadding="false"
