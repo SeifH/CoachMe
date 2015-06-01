@@ -133,16 +133,16 @@ public class DirectoryActivity extends Activity implements OnClickListener {
 		// String filename = "contacts";
 		// String string = "\nHello world!";
 		// clear the file
-//		 String string = "";
-//		 FileOutputStream outputStream;
-//		
-//		 try {
-//		 outputStream = openFileOutput("contacts", Context.MODE_PRIVATE);
-//		 outputStream.write(string.getBytes());
-//		 outputStream.close();
-//		 } catch (Exception e) {
-//		 e.printStackTrace();
-//		 }
+		// String string = "";
+		// FileOutputStream outputStream;
+		//
+		// try {
+		// outputStream = openFileOutput("contacts", Context.MODE_PRIVATE);
+		// outputStream.write(string.getBytes());
+		// outputStream.close();
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
 
 		readFile(contacts);
 	}
@@ -170,15 +170,20 @@ public class DirectoryActivity extends Activity implements OnClickListener {
 		playersList = new ArrayList<Player>();
 		// fill the arraylist
 		playersList = readFiletoArray(contacts);
-		Collections.sort(playersList);
 
 		if (playersList != null) {
+			// sort alphabetically
+			Collections.sort(playersList);
+
 			// convert to array
+
 			playersArray = new Player[playersList.size()];
 			playersArray = playersList.toArray(playersArray);
 
 			CustomAdapter adapter = new CustomAdapter(this, playersArray);
 			lv.setAdapter(adapter);
+		} else {
+			lv.setAdapter(null);
 		}
 
 	}
@@ -215,6 +220,7 @@ public class DirectoryActivity extends Activity implements OnClickListener {
 			// You'll need to add proper error handling here
 		}
 		return null;
+
 	}
 
 	private String readFile(File f) {
@@ -288,7 +294,8 @@ public class DirectoryActivity extends Activity implements OnClickListener {
 
 			final EditText inputEmail = new EditText(this);
 			inputEmail.setHint("Player's email");
-			inputEmail.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+			inputEmail
+					.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
 			layout.addView(inputEmail);
 
 			alert.setView(layout);
@@ -381,92 +388,92 @@ public class DirectoryActivity extends Activity implements OnClickListener {
 			sendEmail(selectedPlayers);
 
 		} else if (b.getId() == R.id.delete) {
-			
-			//warning message
+
+			// warning message
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
 			builder.setTitle("Delete");
 			builder.setMessage("Are you sure you want to delete the selected players?");
 
-			builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-				
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					// TODO Auto-generated method stub
-					
-					//get the players that are not selected
-					ArrayList<Player> notSelectedPlayers = new ArrayList<Player>();
+			builder.setPositiveButton("Yes",
+					new DialogInterface.OnClickListener() {
 
-					for (int i = 0; i < playersList.size(); i++) {
-						if (playersList.get(i).isSelected() == false) {
-							notSelectedPlayers.add(playersList.get(i));
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							// TODO Auto-generated method stub
+
+							// get the players that are not selected
+							ArrayList<Player> notSelectedPlayers = new ArrayList<Player>();
+
+							for (int i = 0; i < playersList.size(); i++) {
+								if (playersList.get(i).isSelected() == false) {
+									notSelectedPlayers.add(playersList.get(i));
+								}
+							}
+
+							// clear the file
+							String string = "";
+							FileOutputStream outputStream;
+
+							try {
+								outputStream = openFileOutput("contacts",
+										Context.MODE_PRIVATE);
+								outputStream.write(string.getBytes());
+								outputStream.close();
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+
+							// write the remaining players to the file
+							for (int i = 0; i < notSelectedPlayers.size(); i++) {
+								playerName = "\n"
+										+ notSelectedPlayers.get(i).getName();
+								playerEmail = "\n"
+										+ notSelectedPlayers.get(i).getEmail();
+
+								// System.out.println("name"+playerName);
+								// System.out.println("Email"+playerEmail);
+
+								try {
+									outputStream = openFileOutput("contacts",
+											Context.MODE_APPEND);
+									outputStream.write(playerName.getBytes());
+									outputStream.close();
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
+								try {
+									outputStream = openFileOutput("contacts",
+											Context.MODE_APPEND);
+									outputStream.write(playerEmail.getBytes());
+									outputStream.close();
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
+								// show the new list on UI
+								fillList();
+
+							}
+
 						}
-					}
 
-					// clear the file
-					String string = "";
-					FileOutputStream outputStream;
+					});
 
-					try {
-						outputStream = openFileOutput("contacts", Context.MODE_PRIVATE);
-						outputStream.write(string.getBytes());
-						outputStream.close();
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					
-					//write the remaining players to the file
-					for (int i = 0; i < notSelectedPlayers.size(); i++) {
-						playerName = "\n"+notSelectedPlayers.get(i).getName();
-						playerEmail = "\n"+notSelectedPlayers.get(i).getEmail();
-						
-//						System.out.println("name"+playerName);
-//						System.out.println("Email"+playerEmail);
+			builder.setNegativeButton("No",
+					new DialogInterface.OnClickListener() {
 
-						try {
-							outputStream = openFileOutput("contacts",
-									Context.MODE_APPEND);
-							outputStream.write(playerName.getBytes());
-							outputStream.close();
-						} catch (Exception e) {
-							e.printStackTrace();
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							// TODO Auto-generated method stub
+							// do nothing
 						}
-						try {
-							outputStream = openFileOutput("contacts",
-									Context.MODE_APPEND);
-							outputStream.write(playerEmail.getBytes());
-							outputStream.close();
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-						//show the new list on UI
-						fillList();
-
-					}
-					
-				}
-
-			});
-			
-			builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-				
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					// TODO Auto-generated method stub
-					//do nothing
-				}
-			});
-			
-			
-				
+					});
 
 			AlertDialog dialog = builder.create();
 
 			dialog.show();
-			
-		}
 
-			
+		}
 
 	}
 
