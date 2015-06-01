@@ -26,7 +26,6 @@
                 android:tag="image"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginRight="380dp"
                 android:background="@null"
                 android:gravity="center"
                 android:scaleType="fitStart"
@@ -37,7 +36,6 @@
                 android:tag="image"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginRight="0dp"
                 android:background="@null"
                 android:gravity="center"
                 android:scaleType="fitEnd"
@@ -59,7 +57,7 @@
                 android:layout_marginRight="30dp"
                 android:adjustViewBounds="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/title" />
+                android:src="@drawable/title_big" />
         </TableRow>
 
         <TableRow
@@ -81,7 +79,8 @@
                 android:background="@drawable/rounded_corner_btn"
                 android:gravity="center"
                 android:text="@string/main_formations" 
-                android:textSize="30sp"/>
+                android:textSize="30sp"
+                android:textAllCaps="true"/>
         </TableRow>
 
         <TableRow
@@ -102,7 +101,8 @@
                 android:background="@drawable/rounded_corner_btn"
                 android:gravity="center"
                 android:text="@string/main_directory" 
-                android:textSize="30sp"/>
+                android:textSize="30sp"
+                android:textAllCaps="true"/>
         </TableRow>
 
         <TableRow
@@ -123,7 +123,8 @@
                 android:background="@drawable/rounded_corner_btn"
                 android:gravity="center"
                 android:text="@string/main_statistics"
-                android:textSize="30sp" />
+                android:textSize="30sp" 
+                android:textAllCaps="true"/>
         </TableRow>
     </TableLayout>
 

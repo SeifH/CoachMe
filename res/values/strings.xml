@@ -21,6 +21,7 @@
     <string name="r_player">Red Player</string>
     <string name="ball">Ball</string>
     <string name="back">Back</string>
+    <string name="remove_icon">Remove Icon</string>
     
     
     <string name="stats_newGame">New Game</string>
