@@ -126,7 +126,7 @@ public class DirectoryActivity extends Activity implements OnClickListener {
 			}
 		});
 
-		fillList();
+	//	fillList();
 
 		// readFile(contacts);
 

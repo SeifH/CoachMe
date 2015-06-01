@@ -56,7 +56,7 @@ public class UserStatistics {
 			out.write("\n" + String.valueOf(game.getAwayGoals()));
 			out.write("\n" + String.valueOf(game.getHomeShots()));
 			out.write("\n" + String.valueOf(game.getAwayShots()));
-			out.write( "\n" + String.valueOf(game.getHomeRed()));
+			out.write("\n" + String.valueOf(game.getHomeRed()));
 			out.write("\n" + String.valueOf(game.getAwayRed()));
 			out.write("\n" + String.valueOf(game.getHomeYellow()));
 			out.write("\n" + String.valueOf(game.getAwayYellow())+ "\n");
@@ -248,6 +248,31 @@ public class UserStatistics {
 				}
 			
 
+	}
+	
+	public static Games getGame (String n){
+		for (int i = 0; i < games.size(); i ++){
+			if (games.get(i).getName().trim().equals(n.trim())){
+
+				return games.get(i);
+
+			}
+		}
+		
+		return null;
+		
+	}
+	
+	public static void deleteGame (String n){
+		for (int i = 0; i < games.size(); i ++){
+			if (games.get(i).getName().trim().equals(n.trim())){
+				games.remove(i);
+			}
+		}
+		overwriteFiles();
+		load();
+		
+		
 	}
 	
 

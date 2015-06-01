@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
@@ -36,6 +37,7 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.Chronometer.OnChronometerTickListener;
 import android.widget.ImageButton;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 public class StatisticsActivity extends Activity implements OnClickListener,
@@ -407,7 +409,7 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 		currentGame.setHomeYellow(Integer.valueOf(homeYellow.getText()
 				.toString()));
 		currentGame.setAwayRed(Integer.valueOf(awayRed.getText().toString()));
-		currentGame.setHomeYellow(Integer.valueOf(awayYellow.getText()
+		currentGame.setAwayYellow(Integer.valueOf(awayYellow.getText()
 				.toString()));
 
 	}
@@ -504,7 +506,7 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 	@Override
 	public void onChronometerTick(Chronometer chronometer) {
 		// TODO Auto-generated method stub
-		if (homePosession.isEnabled() || awayPosession.isEnabled() )
+		if (homePosession.isEnabled() || awayPosession.isEnabled())
 			updatePosession();
 	}
 
@@ -512,13 +514,78 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		// TODO Auto-generated method stub
-		Bundle args = new Bundle();
-		args.putString("Menu", statsNamesMenu.get(position - 1));
-		Fragment detail = new DrawerFragment();
-		detail.setArguments(args);
-		FragmentManager fragmentManager = getFragmentManager();
-		fragmentManager.beginTransaction().replace(R.id.TableLayout01, detail)
-				.commit();
+
+		// get selected item
+		String sel_item = savedList.getItemAtPosition(position).toString();
+
+		// show game
+		showSavedGame(sel_item);
+
+		// close the drawer
+		savedDrawer.closeDrawers();
+
+	}
+
+	private void showSavedGame(String n) {
+		
+		final String name = n;
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		// ...Irrelevant code for customizing the buttons and title
+		LayoutInflater inflater = this.getLayoutInflater();
+		View dialogView = inflater.inflate(R.layout.statistics2, null);
+		builder.setView(dialogView);
+		
+
+
+		Games game = new Games();
+		game = UserStatistics.getGame(n);
+		TextView txtVw = (TextView) dialogView.findViewById(R.id.homeSavedPossession);
+
+		txtVw.setText(game.getHomePossession() + "%");
+		txtVw = (TextView) dialogView.findViewById(R.id.awaySavedPossession);
+		txtVw.setText(game.getAwayPossession() + "%");
+		txtVw = (TextView) dialogView.findViewById(R.id.homeSavedShots);
+		txtVw.setText(String.valueOf(game.getHomeShots()));
+		txtVw = (TextView) dialogView.findViewById(R.id.awaySavedShots);
+		txtVw.setText(String.valueOf(game.getAwayShots()));
+		txtVw = (TextView) dialogView.findViewById(R.id.homeSavedGoals);
+		txtVw.setText(String.valueOf(game.getHomeGoals()));
+		txtVw = (TextView) dialogView.findViewById(R.id.awaySavedGoals);
+		txtVw.setText(String.valueOf(game.getAwayGoals()));
+		txtVw = (TextView) dialogView.findViewById(R.id.homeSavedYellow);
+		txtVw.setText(String.valueOf(game.getHomeYellow()));
+		txtVw = (TextView) dialogView.findViewById(R.id.awaySavedYellow);
+		txtVw.setText(String.valueOf(game.getAwayYellow()));
+		txtVw = (TextView) dialogView.findViewById(R.id.homeSavedRed);
+		txtVw.setText(String.valueOf(game.getHomeRed()));
+		txtVw = (TextView) dialogView.findViewById(R.id.awaySavedRed);
+		txtVw.setText(String.valueOf(game.getAwayRed()));
+
+
+		builder.setTitle(n);
+
+		
+		// Set up the buttons
+		builder.setPositiveButton("Delete",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						UserStatistics.deleteGame(name);
+					}
+				});
+		builder.setNegativeButton("Cancel",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+
+					}
+				});
+
+		AlertDialog alertDialog = builder.create();
+		alertDialog.setCanceledOnTouchOutside(true);
+		builder.show();
+
 	}
 
 	private void saveStats() {
@@ -604,17 +671,4 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 
 	}
 
-	// private void updateSelected() {
-	// if (homePosession.isSelected())
-	// homePosession.setBackgroundResource(R.drawable.rounded_corner_btn);
-	// else
-	// homePosession.setBackgroundColor(Color.argb(43, 0, 0, 0));
-	//
-	// if (awayPosession.isSelected())
-	// awayPosession.setBackgroundResource(R.drawable.rounded_corner_btn);
-	//
-	// else
-	// awayPosession.setBackgroundColor(Color.argb(43, 0, 0, 0));
-	//
-	// }
 }
