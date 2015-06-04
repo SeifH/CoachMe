@@ -1,80 +1,44 @@
 package com.example.coachme;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.ClipDescription;
+import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore.Files;
+import android.provider.ContactsContract.Data;
+import android.text.Editable;
 import android.text.InputType;
-import android.util.Log;
+import android.text.TextWatcher;
 import android.util.SparseBooleanArray;
-import android.view.Display;
-import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
-import android.view.MenuItem;
-import android.view.ViewGroup;
+import android.view.Gravity;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.View;
-import android.widget.AbsListView;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.CheckedTextView;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.RelativeLayout.LayoutParams;
-import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
-import android.widget.CompoundButton;
-import android.widget.CheckBox;
-import android.content.ClipData;
-import android.graphics.Color;
-import android.graphics.Path;
-import android.graphics.Point;
-import android.graphics.Rect;
-import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.view.DragEvent;
-import android.view.MotionEvent;
-import android.view.View.DragShadowBuilder;
-import android.view.View.OnDragListener;
-import android.view.View.OnTouchListener;
-import android.view.animation.AlphaAnimation;
 
-public class DirectoryActivity extends Activity implements OnClickListener {
+public class DirectoryActivity extends Activity implements OnClickListener,
+		OnItemClickListener {
 
 	private Button newPlayer, sendEmail, delete;
-	private File contacts;
-	private String playerName, playerEmail, path, subject, message;
-	private ListView lv;
-	private ArrayList<Player> playersList;
-	private Player[] playersArray;
-	private CheckBox cb;
-	private ArrayAdapter<Player> listAdapter;
+	private static ArrayList<Player> players = new ArrayList<Player>();
+	ListView listview;
+	ArrayAdapter<String> listAdapter;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -87,6 +51,8 @@ public class DirectoryActivity extends Activity implements OnClickListener {
 
 		setContentView(R.layout.directory);
 
+		players = UserDirectory.getPlayer();
+
 		newPlayer = (Button) findViewById(R.id.newPlayer);
 		newPlayer.setOnClickListener(this);
 
@@ -96,182 +62,23 @@ public class DirectoryActivity extends Activity implements OnClickListener {
 		delete = (Button) findViewById(R.id.delete);
 		delete.setOnClickListener(this);
 
-		// String path = this.getFilesDir().getAbsolutePath();
-		contacts = new File(this.getFilesDir(), "contacts");
+		// Display mode of the ListView
 
-		// cb = (CheckBox) findViewById(R.id.checkBox);
-		// cb.setOnCheckedChangeListener(this);
+		listview = (ListView) findViewById(R.id.listView);
+		listview.setChoiceMode(listview.CHOICE_MODE_MULTIPLE);
 
-		lv = (ListView) findViewById(R.id.listView);
-		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+		listAdapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_list_item_checked,
+				UserDirectory.getNames());
+		listview.setAdapter(listAdapter);
 
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				// TODO Auto-generated method stub
-
-				Player player = listAdapter.getItem(position);
-				player.toggleChecked();
-				PlayerViewHolder viewHolder = (PlayerViewHolder) view.getTag();
-
-				viewHolder.getCheckbox().setChecked(player.isSelected());
-
-				// lv.setItemChecked(position, true);
-				// playersList.get(position).setSelected(true);
-				// playersArray[position].setSelected(true);
-				// When clicked, set selected to true
-				// Player player = (Player) parent.getItemAtPosition(position);
-				// player.setSelected(true);
-
-			}
-		});
-
-	//	fillList();
-
-		// readFile(contacts);
-
-		// String filename = "contacts";
-		// String string = "\nHello world!";
-		// clear the file
-		// String string = "";
-		// FileOutputStream outputStream;
-		//
-		// try {
-		// outputStream = openFileOutput("contacts", Context.MODE_PRIVATE);
-		// outputStream.write(string.getBytes());
-		// outputStream.close();
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// }
-
-		readFile(contacts);
-	}
-
-	public void onCheckboxClicked(View view) {
-		// boolean checked = ((CheckBox) view).isChecked();
-		//
-		// switch (view.getId()) {
-		// case R.id.checkBox:
-		// if (checked) {
-		// System.out.println("view: " + view);
-		// // System.out.println("String:" + view.toString());
-		// System.out.println("Tag: " + view.getTag());
-		// // Player p = (Player) view.getTag();
-		// // p.setSelected(true);
-		// } else {
-		// // Player p = (Player) view.getTag();
-		// // p.setSelected(false);
-		// }
-		// break;
-		// }
-	}
-
-	private void fillList() {
-		playersList = new ArrayList<Player>();
-		// fill the arraylist
-		playersList = readFiletoArray(contacts);
-
-		if (playersList != null) {
-			// sort alphabetically
-			Collections.sort(playersList);
-
-			// convert to array
-
-			playersArray = new Player[playersList.size()];
-			playersArray = playersList.toArray(playersArray);
-
-			CustomAdapter adapter = new CustomAdapter(this, playersArray);
-			lv.setAdapter(adapter);
-		} else {
-			lv.setAdapter(null);
-		}
+		// text filtering
+		listview.setTextFilterEnabled(true);
 
 	}
 
-	private ArrayList<Player> readFiletoArray(File f) {
+	public void onListItemClick(ListView parent, View v, int position, long id) {
 
-		ArrayList<Player> newPlayersList = new ArrayList<Player>();
-		String name = "";
-		String email = "";
-
-		try {
-			BufferedReader br = new BufferedReader(new FileReader(f));
-			String line;
-			// the first line was blank
-			line = br.readLine();
-
-			while ((line = br.readLine()) != null) {
-				// first line has name
-				name = line;
-				// next line has email
-				line = br.readLine();
-				email = line;
-
-				System.out.println("name: " + name);
-				System.out.println("Email: " + email);
-
-				newPlayersList.add(new Player(name, email, false));
-			}
-			br.close();
-
-			return newPlayersList;
-
-		} catch (IOException e) {
-			// You'll need to add proper error handling here
-		}
-		return null;
-
-	}
-
-	private String readFile(File f) {
-		StringBuilder text = new StringBuilder();
-
-		try {
-			BufferedReader br = new BufferedReader(new FileReader(f));
-			String line;
-
-			while ((line = br.readLine()) != null) {
-				text.append(line);
-				text.append('\n');
-				// System.out.println(line);
-			}
-			br.close();
-			System.out.println(text);
-			return text.toString();
-
-		} catch (IOException e) {
-			// You'll need to add proper error handling here
-		}
-		return null;
-
-		// private void readFile(File f) {
-		//
-		// // String fileName = "core-sample/src/main/resources/data.txt";
-		//
-		// try {
-		// List<String> lines = Files.readAllLines(Paths.get(path),
-		// Charset.defaultCharset());
-		// for (String line : lines) {
-		// System.out.println(line);
-		// }
-		// } catch (IOException e) {
-		// e.printStackTrace();
-		// }
-		//
-		// }
-
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
@@ -280,204 +87,217 @@ public class DirectoryActivity extends Activity implements OnClickListener {
 
 		if (b.getId() == R.id.newPlayer) {
 
-			AlertDialog.Builder alert = new AlertDialog.Builder(this);
-
-			alert.setTitle("New Player");
-
-			LinearLayout layout = new LinearLayout(this);
-			layout.setOrientation(LinearLayout.VERTICAL);
-
-			final EditText inputName = new EditText(this);
-			inputName.setHint("Player's name");
-			inputName.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-			layout.addView(inputName);
-
-			final EditText inputEmail = new EditText(this);
-			inputEmail.setHint("Player's email");
-			inputEmail
-					.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-			layout.addView(inputEmail);
-
-			alert.setView(layout);
-
-			// alert.setMessage("Player's information: ");
-			//
-			// //edit text for user input
-			// final EditText input = new EditText(this);
-			// alert.setView(input);
-
-			alert.setPositiveButton("Okay",
-					new DialogInterface.OnClickListener() {
-
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							playerName = "\n" + inputName.getText().toString();
-							playerEmail = "\n"
-									+ inputEmail.getText().toString();
-
-							FileOutputStream outputStream;
-
-							try {
-								outputStream = openFileOutput("contacts",
-										Context.MODE_APPEND);
-								outputStream.write(playerName.getBytes());
-								outputStream.close();
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
-							try {
-								outputStream = openFileOutput("contacts",
-										Context.MODE_APPEND);
-								outputStream.write(playerEmail.getBytes());
-								outputStream.close();
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
-
-							fillList();
-							readFile(contacts);
-
-						}
-
-					});
-
-			alert.setNegativeButton("Cancel",
-					new DialogInterface.OnClickListener() {
-
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							// cancelled
-
-						}
-					});
-
-			alert.show();
+			addNewPlayer();
 
 		} else if (b.getId() == R.id.sendEmail) {
 
-			ArrayList<Player> selectedPlayers = new ArrayList<Player>();
-
-			// SparseBooleanArray checked = lv.getCheckedItemPositions();
-			// for (int i = 0; i< lv.getAdapter().getCount();i++)
-			// {
-			// if (checked.get(i))
-			// {
-			// selectedPlayers.add(playersList.get(i));
-			// }
-			// }
-
-			for (int i = 0; i < playersList.size(); i++) {
-				if (playersList.get(i).isSelected()) {
-					selectedPlayers.add(playersList.get(i));
-				}
+			if (listview.getCheckedItemCount() <= 0) {
+				Toast toast = Toast.makeText(getApplicationContext(),
+						"No Players Selected", Toast.LENGTH_SHORT);
+				toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 0);
+				toast.show();
+				return;
 			}
 
-			// for (int i = 0; i < lv.getCount(); i++) {
-			// if (lv.getChildAt(i).isChecked()) {
-			// selectedPlayers.add(playersList.get(i));
-			// }
-			// }
+			ArrayList<Player> selectedPlayers = new ArrayList<Player>();
 
-			// System.out.println("Selected: " + selectedPlayers.toString());
-			//
-			// for(int i = 0; i< selectedPlayers.size(); i++)
-			// {
-			// System.out.println(selectedPlayers.get(i).getName());
-			// }
+			SparseBooleanArray checked = listview.getCheckedItemPositions();
+			for (int i = 0; i < listview.getCount(); i++)
+				if (checked.get(i)) {
+					selectedPlayers.add(new Player(players.get(i).getName(),
+							players.get(i).getEmail(), false));
+				}
 
 			sendEmail(selectedPlayers);
 
 		} else if (b.getId() == R.id.delete) {
 
-			// warning message
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			if (listview.getCheckedItemCount() <= 0) {
+				Toast toast = Toast.makeText(getApplicationContext(),
+						"No Players Selected", Toast.LENGTH_SHORT);
+				toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 0);
+				toast.show();
+				return;
+			}
 
-			builder.setTitle("Delete");
-			builder.setMessage("Are you sure you want to delete the selected players?");
-
-			builder.setPositiveButton("Yes",
-					new DialogInterface.OnClickListener() {
-
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							// TODO Auto-generated method stub
-
-							// get the players that are not selected
-							ArrayList<Player> notSelectedPlayers = new ArrayList<Player>();
-
-							for (int i = 0; i < playersList.size(); i++) {
-								if (playersList.get(i).isSelected() == false) {
-									notSelectedPlayers.add(playersList.get(i));
-								}
-							}
-
-							// clear the file
-							String string = "";
-							FileOutputStream outputStream;
-
-							try {
-								outputStream = openFileOutput("contacts",
-										Context.MODE_PRIVATE);
-								outputStream.write(string.getBytes());
-								outputStream.close();
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
-
-							// write the remaining players to the file
-							for (int i = 0; i < notSelectedPlayers.size(); i++) {
-								playerName = "\n"
-										+ notSelectedPlayers.get(i).getName();
-								playerEmail = "\n"
-										+ notSelectedPlayers.get(i).getEmail();
-
-								// System.out.println("name"+playerName);
-								// System.out.println("Email"+playerEmail);
-
-								try {
-									outputStream = openFileOutput("contacts",
-											Context.MODE_APPEND);
-									outputStream.write(playerName.getBytes());
-									outputStream.close();
-								} catch (Exception e) {
-									e.printStackTrace();
-								}
-								try {
-									outputStream = openFileOutput("contacts",
-											Context.MODE_APPEND);
-									outputStream.write(playerEmail.getBytes());
-									outputStream.close();
-								} catch (Exception e) {
-									e.printStackTrace();
-								}
-								// show the new list on UI
-								fillList();
-
-							}
-
-						}
-
-					});
-
-			builder.setNegativeButton("No",
-					new DialogInterface.OnClickListener() {
-
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							// TODO Auto-generated method stub
-							// do nothing
-						}
-					});
-
-			AlertDialog dialog = builder.create();
-
-			dialog.show();
+			deletePlayer();
 
 		}
 
 	}
 
-	public void sendEmail(ArrayList<Player> list) {
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void deletePlayer() {
+		// warning message
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+		builder.setTitle("Delete");
+		builder.setMessage("Are you sure you want to delete the selected players?");
+
+		builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// TODO Auto-generated method stub
+				ArrayList<Player> selectedPlayers = new ArrayList<Player>();
+
+				SparseBooleanArray checked = listview.getCheckedItemPositions();
+				for (int i = 0; i < listview.getCount(); i++)
+					if (checked.get(i)) {
+						selectedPlayers.add(new Player(
+								players.get(i).getName(), players.get(i)
+										.getEmail(), false));
+					}
+
+				for (int i = 0; i < selectedPlayers.size(); i++) {
+					UserDirectory.deletePlayer(
+							selectedPlayers.get(i).getName(), selectedPlayers
+									.get(i).getEmail());
+				}
+
+				updateData();
+
+			}
+
+		});
+
+		builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// TODO Auto-generated method stub
+				// do nothing
+			}
+		});
+
+		AlertDialog dialog = builder.create();
+
+		dialog.show();
+	}
+
+	private void addNewPlayer() {
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+		alert.setTitle("New Player");
+
+		LinearLayout layout = new LinearLayout(this);
+		layout.setOrientation(LinearLayout.VERTICAL);
+
+		final EditText inputName = new EditText(this);
+		inputName.setHint("Player's name");
+		inputName.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+		layout.addView(inputName);
+
+		final EditText inputEmail = new EditText(this);
+		inputEmail.setHint("Player's email");
+		inputEmail.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+		layout.addView(inputEmail);
+
+		alert.setView(layout);
+
+		alert.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				String playerName = inputName.getText().toString();
+				String playerEmail = inputEmail.getText().toString();
+				UserDirectory.savePlayer(playerName, playerEmail);
+
+				updateData();
+			}
+
+		});
+
+		alert.setNegativeButton("Cancel",
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// cancelled
+
+					}
+				});
+
+		final AlertDialog alertDialog = alert.show();
+		alertDialog.setCanceledOnTouchOutside(true);
+		final Button button = alertDialog
+				.getButton(AlertDialog.BUTTON_POSITIVE);
+		button.setEnabled(false);
+
+		// disable "ok" button is user had not inputed a name of atleast one
+		// char
+		inputName.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+				// validation condition that name has minimum length of 1 char
+				if (inputName.getText().length() > 0
+						&& !inputName.getText().toString().trim().equals("")
+						&& inputEmail.getText().length() > 0
+						&& !inputEmail.getText().toString().trim().equals("")) {
+					button.setEnabled(true);
+				} else {
+					button.setEnabled(false);
+				}
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		inputEmail.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+				// validation condition that name has minimum length of 1 char
+				if (inputEmail.getText().length() > 0
+						&& !inputEmail.getText().toString().trim().equals("")
+						&& inputName.getText().length() > 0
+						&& !inputName.getText().toString().trim().equals("")) {
+					button.setEnabled(true);
+				} else {
+					button.setEnabled(false);
+				}
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+	}
+
+	private void updateData() {
+		UserDirectory.load();
+		players = UserDirectory.getPlayer();
+
+		listAdapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_list_item_multiple_choice,
+				UserDirectory.getNames());
+		listview.setAdapter(listAdapter);
+	}
+
+	private void sendEmail(ArrayList<Player> list) {
 
 		Player p;
 		final String[] emails = new String[list.size()];
@@ -487,7 +307,6 @@ public class DirectoryActivity extends Activity implements OnClickListener {
 			p = (Player) list.get(i);
 			System.out.println(p.getName() + "\n" + p.getEmail());
 			emails[i] = p.getEmail();
-			// System.out.println(emails[i]);
 		}
 
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
@@ -507,18 +326,12 @@ public class DirectoryActivity extends Activity implements OnClickListener {
 
 		alert.setView(layout);
 
-		// alert.setMessage("Player's information: ");
-		//
-		// //edit text for user input
-		// final EditText input = new EditText(this);
-		// alert.setView(input);
-
 		alert.setPositiveButton("Send", new DialogInterface.OnClickListener() {
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				subject = inputSubject.getText().toString();
-				message = inputMessage.getText().toString();
+				String subject = inputSubject.getText().toString();
+				String message = inputMessage.getText().toString();
 
 				Intent i = new Intent(Intent.ACTION_SEND);
 				i.setType("message/rfc822");
@@ -554,28 +367,4 @@ public class DirectoryActivity extends Activity implements OnClickListener {
 
 	}
 
-	// @Override
-	// public void onCheckedChanged(CompoundButton buttonView, boolean
-	// isChecked) {
-	// // TODO Auto-generated method stub
-	//
-	// CheckBox b = (CheckBox)buttonView;
-	//
-	// if(isChecked)
-	// {
-	// b.setChecked(true);
-	// Player p = (Player) b.getTag();
-	// p.setSelected(true);
-	//
-	// System.out.println(p.getName());
-	// }
-	// else
-	// {
-	// b.setChecked(false);
-	// Player p = (Player) b.getTag();
-	// p.setSelected(false);
-	// }
-	//
-	// }
-	//
 }

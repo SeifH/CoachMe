@@ -46,7 +46,7 @@ public class Player implements Comparable<Player>{
 	@Override
 	public int compareTo(Player another) {
 		
-		return this.getName().compareTo(another.getName());
+		return this.getName().compareToIgnoreCase(another.getName());
 		
 	}
 

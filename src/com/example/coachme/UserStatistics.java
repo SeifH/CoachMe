@@ -32,7 +32,7 @@ public class UserStatistics {
 		
 		//checks if an image with same name already exists
 		if (fileExists(n)) {
-			overwriteDrawingPrompt();
+			overwriteGamePrompt();
 			Log.e("msg", "exists");
 			return;
 		}
@@ -152,7 +152,7 @@ public class UserStatistics {
 	/**
 	 * Asks user if they want to overwrite a file with the same name
 	 */
-	private static void overwriteDrawingPrompt() {
+	private static void overwriteGamePrompt() {
 		
 		AlertDialog.Builder saveDialog = new AlertDialog.Builder(context);
 		saveDialog.setTitle("File Already Exist");

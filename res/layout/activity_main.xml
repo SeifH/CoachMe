@@ -12,9 +12,10 @@
 
     <TableLayout
         android:id="@+id/TableLayout01"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:stretchColumns="0" >
+        android:stretchColumns="0"
+       >
 
         <TableRow
             android:id="@+id/tableRow1"
@@ -24,21 +25,21 @@
             <ImageButton
                 android:id="@+id/settings"
                 android:tag="image"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity ="left"
                 android:background="@null"
                 android:gravity="center"
-                android:scaleType="fitStart"
                 android:src="@drawable/ic_action_settings" />
 
             <ImageButton
                 android:id="@+id/help"
                 android:tag="image"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
                 android:background="@null"
                 android:gravity="center"
-                android:scaleType="fitEnd"
                 android:src="@drawable/ic_action_help" />
         </TableRow>
 
@@ -55,6 +56,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
+                android:layout_span="2"
                 android:adjustViewBounds="true"
                 android:scaleType="fitXY"
                 android:src="@drawable/title_big" />
@@ -78,6 +80,7 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/rounded_corner_btn"
                 android:gravity="center"
+                android:layout_span="2"
                 android:text="@string/main_formations" 
                 android:textSize="30sp"
                 android:textAllCaps="true"/>
@@ -98,6 +101,7 @@
                 android:layout_marginLeft="70dp"
                 android:layout_marginRight="70dp"
                 android:layout_marginTop="20dp"
+                android:layout_span="2"
                 android:background="@drawable/rounded_corner_btn"
                 android:gravity="center"
                 android:text="@string/main_directory" 
@@ -119,6 +123,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="70dp"
                 android:layout_marginRight="70dp"
+                android:layout_span="2"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/rounded_corner_btn"
                 android:gravity="center"

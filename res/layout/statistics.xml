@@ -18,8 +18,8 @@
             android:id="@+id/tableRow1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginBottom="40dp"
+            android:layout_marginTop="10dp"
             android:layout_weight="0.3"
             android:gravity="center_horizontal" >
 
@@ -29,12 +29,11 @@
                     android:id="@+id/newGame"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/save"
-                    android:layout_alignTop="@+id/save"
                     android:layout_centerInParent="true"
+                    android:layout_marginTop="15dp"
                     android:background="@drawable/rounded_corner_btn"
                     android:elevation="5dp"
-                    android:padding="4dp"
+                    android:padding="5dp"
                     android:text="@string/stats_newGame"
                     android:textSize="25sp" />
 
@@ -43,7 +42,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginTop="14dp"
+                    android:layout_marginTop="15dp"
                     android:layout_toRightOf="@+id/newGame"
                     android:background="#605f5f"
                     android:contentDescription="@string/save"
@@ -57,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="0dp"
                     android:background="@null"
                     android:src="@drawable/ic_drawer"
                     android:tag="imageButton" />
@@ -68,7 +67,7 @@
             android:id="@+id/tableRow2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="25dp"
             android:layout_weight="0.3"
             android:gravity="center_horizontal" >
 
@@ -261,8 +260,8 @@
                     android:id="@+id/awayShotsPlus"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:layout_toRightOf="@+id/shots"
                     android:layout_marginLeft="35dp"
+                    android:layout_toRightOf="@+id/shots"
                     android:background="@drawable/rounded_corner_btn"
                     android:elevation="5dp"
                     android:gravity="center"
@@ -302,9 +301,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:layout_centerInParent="true"
-                    android:gravity="center"
                     android:layout_marginLeft="85dp"
                     android:layout_marginRight="85dp"
+                    android:gravity="center"
                     android:text="@string/stats_goals"
                     android:textColor="#000000" />
 
@@ -368,8 +367,8 @@
                     android:id="@+id/awayGoalsPlus"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:layout_toRightOf="@+id/goals"
                     android:layout_marginLeft="35dp"
+                    android:layout_toRightOf="@+id/goals"
                     android:background="@drawable/rounded_corner_btn"
                     android:elevation="5dp"
                     android:gravity="center"
@@ -418,8 +417,8 @@
                     android:id="@+id/home_redcard"
                     android:layout_width="44dp"
                     android:layout_height="66dp"
-                    android:layout_toLeftOf="@+id/penalties"
                     android:layout_marginRight="35dp"
+                    android:layout_toLeftOf="@+id/penalties"
                     android:background="@drawable/redcard_btn"
                     android:elevation="5dp"
                     android:includeFontPadding="false"

@@ -5,9 +5,9 @@
     android:layout_height="fill_parent"
     android:background="#FFCCCCCC"
     android:orientation="horizontal"
-    tools:context=".DirectoryActivity" >
+    tools:context=".DirectoryActivity2" >
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,10 +15,11 @@
 
         <TextView
             android:id="@+id/directory_title"
-            android:layout_width="40dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="140dp"
-            android:layout_weight="1"
+            android:layout_gravity = "center"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="15dp"
             android:gravity="center"
             android:text="Player Directory"
             android:textAlignment="center"
@@ -29,18 +30,20 @@
             android:id="@+id/newPlayer"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginRight="140dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="15dp"
             android:background="@drawable/round_btn2"
+            android:gravity="center"
+            android:includeFontPadding="false"
             android:text="+"
             android:textAlignment="center"
-            android:includeFontPadding="false"
-            android:gravity="center"
             android:textColor="#ff0000"
             android:textSize="34dp" />
 
         <!-- @string/plus -->
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <ListView
         android:id="@+id/listView"
@@ -64,16 +67,18 @@
             android:background="@drawable/round_btn"
             android:text="Send Email"
             android:textColor="#ff0000" />
+
         <Button
             android:id="@+id/delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/round_btn"
             android:layout_marginLeft="50dp"
+            android:background="@drawable/round_btn"
             android:text="Delete"
             android:textColor="#000000" />
 
         <!-- @string/send_email -->
 
     </LinearLayout>
+
 </TableLayout>
