@@ -11,12 +11,14 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.text.Layout;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View.OnClickListener;
+import android.view.ViewManager;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.View;
@@ -179,6 +181,7 @@ public class FormationsActivity extends Activity implements OnClickListener,
 		// assign drag listener to layouts that will handle drag and drops
 		findViewById(R.id.DrawingHeader01).setOnDragListener(this);
 		findViewById(R.id.FrameLayout1).setOnDragListener(this);
+		removeIcon.setOnDragListener(this);
 
 		imageDuplicates = new ArrayList<ImageButton>();
 		imageDisable = new ArrayList<ImageButton>();
@@ -507,17 +510,43 @@ public class FormationsActivity extends Activity implements OnClickListener,
 				// user wants to remove img
 				// Reassign View to ViewGroup
 				View view = (View) event.getLocalState();
-				FrameLayout containView = (FrameLayout) v;
+			
+				((FrameLayout)view.getParent()).removeView(view);
 
 				if (view.getTag().equals("DuplicateRed")) {
 
 					rPlayerDragNum--;
+					
+					
+					ImageButton btn = rPlayer;
+					// enable button in case its disabled
+					btn.setEnabled(true);
+					float alpha = 1f;
+					AlphaAnimation alphaUp = new AlphaAnimation(alpha, alpha);
+					alphaUp.setFillAfter(true);
+					btn.startAnimation(alphaUp);
 
 				} else if (view.getTag().equals("DuplicateBlack")) {
 					bPlayerDragNum--;
-
+					
+					ImageButton btn = bPlayer;
+					// enable button in case its disabled
+					btn.setEnabled(true);
+					float alpha = 1f;
+					AlphaAnimation alphaUp = new AlphaAnimation(alpha, alpha);
+					alphaUp.setFillAfter(true);
+					btn.startAnimation(alphaUp);
+					
 				} else if (view.getTag().equals("DuplicateBall")) {
 					ballDragNum--;
+					
+					ImageButton btn = ball;
+					// enable button in case its disabled
+					btn.setEnabled(true);
+					float alpha = 1f;
+					AlphaAnimation alphaUp = new AlphaAnimation(alpha, alpha);
+					alphaUp.setFillAfter(true);
+					btn.startAnimation(alphaUp);
 
 				}
 
