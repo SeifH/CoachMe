@@ -10,20 +10,22 @@
     <RelativeLayout
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp" >
+        android:layout_height="wrap_content" >
 
         <TextView
             android:id="@+id/directory_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity = "center"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="15dp"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
             android:gravity="center"
             android:text="Player Directory"
             android:textAlignment="center"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="32sp" />
+
         <!-- @string/directory_title -->
 
         <Button
@@ -31,9 +33,10 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/round_btn2"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rounded_corner_btn"
+            android:elevation="5dp"
             android:gravity="center"
             android:includeFontPadding="false"
             android:text="+"
@@ -49,7 +52,10 @@
         android:id="@+id/listView"
         android:layout_width="wrap_content"
         android:layout_height="400dp"
-        android:layout_margin="20dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="10dp"
         android:background="#ffffff" >
     </ListView>
 
@@ -57,25 +63,34 @@
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.3"
-        android:gravity="center_horizontal" >
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >
 
         <Button
             android:id="@+id/sendEmail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/round_btn"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="12dp"
+            android:background="@drawable/rounded_corner_btn"
+            android:elevation="5dp"
             android:text="Send Email"
             android:textColor="#ff0000" />
 
         <Button
             android:id="@+id/delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
-            android:background="@drawable/round_btn"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="12dp"
+            android:background="@drawable/rounded_corner_btn"
+            android:elevation="5dp"
             android:text="Delete"
             android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/directoryText"
+            android:layout_width= "0dp"
+            android:layout_height="70dp"
+            android:background="@null" />
 
         <!-- @string/send_email -->
 
