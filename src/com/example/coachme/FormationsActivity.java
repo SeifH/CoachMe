@@ -1,7 +1,6 @@
 package com.example.coachme;
 
 import java.util.ArrayList;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ClipDescription;
@@ -425,13 +424,13 @@ public class FormationsActivity extends Activity implements OnClickListener,
 						getApplicationContext());
 				newImgButton.setImageDrawable(oldImgButton.getDrawable());
 				newImgButton.setOnTouchListener(new TouchListener());
+				newImgButton.setTag(oldImgButton.getTag());
 
 				// give each duplicate its own tag
 				if (oldImgButton.getTag().equals(BLACK_PLAYER_TAG))
 					newImgButton.setTag("DuplicateBlack");
 				else if (oldImgButton.getTag().equals(RED_PLAYER_TAG)) {
 					newImgButton.setTag("DuplicateRed");
-					;
 					newImgButton.setY(y_cord - (view.getHeight() / 2) + 10);
 				} else if (oldImgButton.getTag().equals(BALL_TAG)) {
 					newImgButton.setTag("DuplicateBall");
@@ -511,12 +510,12 @@ public class FormationsActivity extends Activity implements OnClickListener,
 				// Reassign View to ViewGroup
 				View view = (View) event.getLocalState();
 			
-				((FrameLayout)view.getParent()).removeView(view);
+				
 
 				if (view.getTag().equals("DuplicateRed")) {
 
 					rPlayerDragNum--;
-					
+					((FrameLayout)view.getParent()).removeView(view);
 					
 					ImageButton btn = rPlayer;
 					// enable button in case its disabled
@@ -528,6 +527,7 @@ public class FormationsActivity extends Activity implements OnClickListener,
 
 				} else if (view.getTag().equals("DuplicateBlack")) {
 					bPlayerDragNum--;
+					((FrameLayout)view.getParent()).removeView(view);
 					
 					ImageButton btn = bPlayer;
 					// enable button in case its disabled
@@ -539,6 +539,7 @@ public class FormationsActivity extends Activity implements OnClickListener,
 					
 				} else if (view.getTag().equals("DuplicateBall")) {
 					ballDragNum--;
+					((FrameLayout)view.getParent()).removeView(view);
 					
 					ImageButton btn = ball;
 					// enable button in case its disabled
@@ -585,13 +586,13 @@ public class FormationsActivity extends Activity implements OnClickListener,
 
 			if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
 				// TODO Auto-generated method stub
+				System.out.println("Tag:" + btn.getTag());
 				if (!btn.getTag().equals("DuplicateRed")
-						|| !btn.getTag().equals("DuplicateBlack")
-						|| !btn.getTag().equals("DuplicateBall")
+						&& !btn.getTag().equals("DuplicateBlack")
+						&& !btn.getTag().equals("DuplicateBall")
 						&& helpNum == 0) {
 					Toast toast = Toast.makeText(getApplicationContext(),
 							"Drag onto field", Toast.LENGTH_SHORT);
-					toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 0);
 					toast.show();
 					helpNum++;
 
