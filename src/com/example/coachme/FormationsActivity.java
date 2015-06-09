@@ -115,7 +115,7 @@ public class FormationsActivity extends Activity implements OnClickListener,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		// setup user interface layout for this Activity
-		setContentView(R.layout.formations);
+		setContentView(R.layout.activity_formations);
 
 		// set initial drag and drop numbers
 		ballDragNum = 0;

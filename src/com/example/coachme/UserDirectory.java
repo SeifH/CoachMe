@@ -99,6 +99,7 @@ public class UserDirectory {
 	}
 
 	public static ArrayList<Player> getPlayer() {
+		load ();
 		return players;
 	}
 	

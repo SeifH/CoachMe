@@ -42,7 +42,7 @@ public class DirectoryActivity extends Activity implements OnClickListener,
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-		setContentView(R.layout.directory);
+		setContentView(R.layout.activity_directory);
 
 		players = UserDirectory.getPlayer();
 
@@ -324,7 +324,7 @@ public class DirectoryActivity extends Activity implements OnClickListener,
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				String subject = inputSubject.getText().toString();
-				String message = inputMessage.getText().toString();
+				String message = inputMessage.getText().toString() + "\n\nSent from CoachME";
 
 				Intent i = new Intent(Intent.ACTION_SEND);
 				i.setType("message/rfc822");

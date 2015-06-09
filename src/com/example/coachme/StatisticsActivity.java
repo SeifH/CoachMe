@@ -79,7 +79,7 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-		setContentView(R.layout.statistics);
+		setContentView(R.layout.acitivity_statistics);
 
 		lastPosession = 0;
 		homeSec = 0;
@@ -533,7 +533,7 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		// ...Irrelevant code for customizing the buttons and title
 		LayoutInflater inflater = this.getLayoutInflater();
-		View dialogView = inflater.inflate(R.layout.statistics2, null);
+		View dialogView = inflater.inflate(R.layout.statistics_saved, null);
 		builder.setView(dialogView);
 		
 
