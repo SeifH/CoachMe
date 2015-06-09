@@ -22,9 +22,9 @@ public class MainActivity extends Activity implements OnClickListener {
 
 	private Button formationsButton, directoryButton, statisticsButton;
 	private ImageButton helpButton, settingsButton;
-	
-	
+
 	private final String BUTTON_TAG = "tag";
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -78,7 +78,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		
+
 		if (v.getTag().equals("image")) {
 
 			ImageButton b = (ImageButton) v;
@@ -104,25 +104,24 @@ public class MainActivity extends Activity implements OnClickListener {
 				AlertDialog dialog = builder.create();
 
 				dialog.show();
-			}else if(b.getId() == R.id.help)
-			{
+			} else if (b.getId() == R.id.help) {
 				AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
 				builder.setTitle("Help");
 				builder.setMessage("Formations\nThe formations option allows you to create"
 						+ " different formations and game strategies by dragging and dropping"
 						+ " players. You have a marker to draw on the board, an eraser to fix "
-						+ "mistakes and the ability to save formations. The new formation butto"
+						+ "mistakes and the ability to save formations. The garbage butto"
 						+ "n will clear the field.\n\nPlayer Directory\nThe player directory al"
 						+ "lows you to keep track of your players contact information and the a"
-						+ "bility to email your players. Add Players using the “+” button. Sele"
-						+ "ct the players desired and click “Send Email” to write the subject "
-						+ "and message of the email to send.\n\nGame Statistics\nThis feature al"
+						+ "bility to email your players. Add Players using the '+' button. Sele"
+						+ "ct the players desired and click 'Send Email' to write the subject "
+						+ "and message of the email to send. Clicking 'Delete' will remove the selected players from the list.\n\nGame Statistics\nThis feature al"
 						+ "lows you to keep track of stats during games. Maintain a record of yo"
 						+ "ur team’s goals, shots, penalties and possession for each game they pl"
-						+ "ay. Press Start to begin the timer which you can then pause and resume"
+						+ "ay. Press play to begin the timer which you can then pause and resume"
 						+ ". The plus increases values and the minus decreases them. Click on the "
-						+ "red or yellow cards to keep track of penalties.");
+						+ "red or yellow cards to keep track of penalties. Pressing 'Save' will allow you to name the game and open it later and 'New Game' will clear the data.");
 
 				builder.setPositiveButton("Close",
 						new DialogInterface.OnClickListener() {
@@ -139,7 +138,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
 				dialog.show();
 			}
-			
+
 		} else {
 			Button b = (Button) v;
 

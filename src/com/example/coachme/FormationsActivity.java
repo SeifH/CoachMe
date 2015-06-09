@@ -1,7 +1,6 @@
 package com.example.coachme;
 
 import java.util.ArrayList;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ClipDescription;
@@ -11,12 +10,14 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.text.Layout;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View.OnClickListener;
+import android.view.ViewManager;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.View;
@@ -179,6 +180,7 @@ public class FormationsActivity extends Activity implements OnClickListener,
 		// assign drag listener to layouts that will handle drag and drops
 		findViewById(R.id.DrawingHeader01).setOnDragListener(this);
 		findViewById(R.id.FrameLayout1).setOnDragListener(this);
+		removeIcon.setOnDragListener(this);
 
 		imageDuplicates = new ArrayList<ImageButton>();
 		imageDisable = new ArrayList<ImageButton>();
@@ -422,13 +424,13 @@ public class FormationsActivity extends Activity implements OnClickListener,
 						getApplicationContext());
 				newImgButton.setImageDrawable(oldImgButton.getDrawable());
 				newImgButton.setOnTouchListener(new TouchListener());
+				newImgButton.setTag(oldImgButton.getTag());
 
 				// give each duplicate its own tag
 				if (oldImgButton.getTag().equals(BLACK_PLAYER_TAG))
 					newImgButton.setTag("DuplicateBlack");
 				else if (oldImgButton.getTag().equals(RED_PLAYER_TAG)) {
 					newImgButton.setTag("DuplicateRed");
-					;
 					newImgButton.setY(y_cord - (view.getHeight() / 2) + 10);
 				} else if (oldImgButton.getTag().equals(BALL_TAG)) {
 					newImgButton.setTag("DuplicateBall");
@@ -507,17 +509,45 @@ public class FormationsActivity extends Activity implements OnClickListener,
 				// user wants to remove img
 				// Reassign View to ViewGroup
 				View view = (View) event.getLocalState();
-				FrameLayout containView = (FrameLayout) v;
+			
+				
 
 				if (view.getTag().equals("DuplicateRed")) {
 
 					rPlayerDragNum--;
+					((FrameLayout)view.getParent()).removeView(view);
+					
+					ImageButton btn = rPlayer;
+					// enable button in case its disabled
+					btn.setEnabled(true);
+					float alpha = 1f;
+					AlphaAnimation alphaUp = new AlphaAnimation(alpha, alpha);
+					alphaUp.setFillAfter(true);
+					btn.startAnimation(alphaUp);
 
 				} else if (view.getTag().equals("DuplicateBlack")) {
 					bPlayerDragNum--;
-
+					((FrameLayout)view.getParent()).removeView(view);
+					
+					ImageButton btn = bPlayer;
+					// enable button in case its disabled
+					btn.setEnabled(true);
+					float alpha = 1f;
+					AlphaAnimation alphaUp = new AlphaAnimation(alpha, alpha);
+					alphaUp.setFillAfter(true);
+					btn.startAnimation(alphaUp);
+					
 				} else if (view.getTag().equals("DuplicateBall")) {
 					ballDragNum--;
+					((FrameLayout)view.getParent()).removeView(view);
+					
+					ImageButton btn = ball;
+					// enable button in case its disabled
+					btn.setEnabled(true);
+					float alpha = 1f;
+					AlphaAnimation alphaUp = new AlphaAnimation(alpha, alpha);
+					alphaUp.setFillAfter(true);
+					btn.startAnimation(alphaUp);
 
 				}
 
@@ -556,13 +586,13 @@ public class FormationsActivity extends Activity implements OnClickListener,
 
 			if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
 				// TODO Auto-generated method stub
+				System.out.println("Tag:" + btn.getTag());
 				if (!btn.getTag().equals("DuplicateRed")
-						|| !btn.getTag().equals("DuplicateBlack")
-						|| !btn.getTag().equals("DuplicateBall")
+						&& !btn.getTag().equals("DuplicateBlack")
+						&& !btn.getTag().equals("DuplicateBall")
 						&& helpNum == 0) {
 					Toast toast = Toast.makeText(getApplicationContext(),
 							"Drag onto field", Toast.LENGTH_SHORT);
-					toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 0);
 					toast.show();
 					helpNum++;
 
