@@ -146,6 +146,16 @@ public class DirectoryActivity extends Activity implements OnClickListener,
 								players.get(i).getName(), players.get(i)
 										.getEmail(), false));
 					}
+				
+				if (selectedPlayers.size()  ==0)
+				{
+					Toast toast = Toast.makeText(getApplicationContext(),
+							"No Players Selected", Toast.LENGTH_SHORT);
+
+					toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 0);
+					toast.show();
+					return;
+				}
 
 				for (int i = 0; i < selectedPlayers.size(); i++) {
 					UserDirectory.deletePlayer(
@@ -302,6 +312,16 @@ public class DirectoryActivity extends Activity implements OnClickListener,
 			emails[i] = p.getEmail();
 		}
 
+		if (emails.length  ==0)
+		{
+			Toast toast = Toast.makeText(getApplicationContext(),
+					"No Players Selected", Toast.LENGTH_SHORT);
+
+			toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 0);
+			toast.show();
+			return;
+		}
+		
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
 		alert.setTitle("Send Email");
