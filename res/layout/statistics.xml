@@ -127,7 +127,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:text="@string/stats_posession"
-                    android:textColor="#000000" />
+                    android:textColor="#000000" 
+                     android:textSize = "20sp"/>
 
                 <Button
                     android:id="@+id/home"
@@ -196,7 +197,8 @@
                     android:layout_marginRight="85dp"
                     android:gravity="center"
                     android:text="@string/stats_shots"
-                    android:textColor="#000000" />
+                    android:textColor="#000000" 
+                    android:textSize = "20sp"/>
 
                 <Button
                     android:id="@+id/homeShotsMinus"
@@ -305,7 +307,8 @@
                     android:layout_marginRight="85dp"
                     android:gravity="center"
                     android:text="@string/stats_goals"
-                    android:textColor="#000000" />
+                    android:textColor="#000000"
+                     android:textSize = "20sp" />
 
                 <Button
                     android:id="@+id/homeGoalsMinus"
@@ -411,7 +414,8 @@
                     android:layout_marginLeft="76dp"
                     android:layout_marginRight="76dp"
                     android:text="@string/stats_penalties"
-                    android:textColor="#000000" />
+                    android:textColor="#000000"
+                     android:textSize = "20sp" />
 
                 <Button
                     android:id="@+id/home_redcard"
@@ -443,7 +447,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="50dp"
+                    android:layout_marginLeft="39dp"
                     android:layout_toRightOf="@+id/penalties"
                     android:background="@null"
                     android:elevation="5dp"
@@ -468,9 +472,12 @@
                     android:layout_width="44dp"
                     android:layout_height="66dp"
                     android:layout_alignParentTop="true"
-                    android:layout_marginRight="94dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="63dp"
+                    android:layout_marginRight="53dp"
                     android:layout_toLeftOf="@+id/away_redcard"
-                    android:background="@drawable/yellowcard_btn"
+                    android:layout_toRightOf="@+id/away_refresh"
+                    android:background="#ffff00"
                     android:elevation="5dp"
                     android:includeFontPadding="false"
                     android:inputType="number"
@@ -481,9 +488,12 @@
                     android:layout_width="44dp"
                     android:layout_height="66dp"
                     android:layout_alignParentTop="true"
-                    android:layout_marginRight="98dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="64dp"
+                    android:layout_marginRight="54dp"
                     android:layout_toLeftOf="@+id/home_redcard"
-                    android:background="@drawable/yellowcard_btn"
+                    android:layout_toRightOf="@+id/home_refresh"
+                    android:background="#ffff00"
                     android:elevation="5dp"
                     android:includeFontPadding="false"
                     android:inputType="number"
