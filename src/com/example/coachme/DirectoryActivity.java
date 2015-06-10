@@ -24,15 +24,31 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
-
+/**
+ * This class extends the Activity for the Directory and controls the features
+ * in the Player Directory Screen
+ * 
+ * @author Seif Hassan and Olivia Perryman
+ * @since March 28, 2015
+ *
+ */
 public class DirectoryActivity extends Activity implements OnClickListener,
 		OnItemClickListener {
 
+	//set up buttons
 	private Button newPlayer, sendEmail, delete;
+	//set up list of players
 	private static ArrayList<Player> players = new ArrayList<Player>();
 	ListView listview;
 	ArrayAdapter<String> listAdapter;
 
+	/**
+	 * onCreate sets up Activity and its components
+	 * 
+	 * @param savedInstanceState
+	 *            - Bundle
+	 * 
+	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,17 +57,21 @@ public class DirectoryActivity extends Activity implements OnClickListener,
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+		//setup user interface layout for this Activity
 		setContentView(R.layout.activity_directory);
 
+		//get saved list of players from last use of app
 		players = UserDirectory.getPlayer();
 
+		//set up button to add a  player
 		newPlayer = (Button) findViewById(R.id.newPlayer);
 		newPlayer.setOnClickListener(this);
 
+		//set up button to send an email
 		sendEmail = (Button) findViewById(R.id.sendEmail);
 		sendEmail.setOnClickListener(this);
 
+		//set up button to delete a player
 		delete = (Button) findViewById(R.id.delete);
 		delete.setOnClickListener(this);
 
@@ -146,6 +166,16 @@ public class DirectoryActivity extends Activity implements OnClickListener,
 								players.get(i).getName(), players.get(i)
 										.getEmail(), false));
 					}
+				
+				if (selectedPlayers.size()  ==0)
+				{
+					Toast toast = Toast.makeText(getApplicationContext(),
+							"No Players Selected", Toast.LENGTH_SHORT);
+
+					toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 0);
+					toast.show();
+					return;
+				}
 
 				for (int i = 0; i < selectedPlayers.size(); i++) {
 					UserDirectory.deletePlayer(
@@ -302,6 +332,16 @@ public class DirectoryActivity extends Activity implements OnClickListener,
 			emails[i] = p.getEmail();
 		}
 
+		if (emails.length  ==0)
+		{
+			Toast toast = Toast.makeText(getApplicationContext(),
+					"No Players Selected", Toast.LENGTH_SHORT);
+
+			toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 0);
+			toast.show();
+			return;
+		}
+		
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
 		alert.setTitle("Send Email");
