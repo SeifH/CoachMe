@@ -22,7 +22,7 @@ import android.widget.ImageButton;
  * This is the main activity and home screen of the application
  * 
  * @author Seif Hassan and Olivia Perryman
- * @since March 18, 2015
+ * @since March 28, 2015
  *
  */
 public class MainActivity extends Activity implements OnClickListener {
