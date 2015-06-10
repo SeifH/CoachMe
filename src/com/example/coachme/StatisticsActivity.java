@@ -39,23 +39,36 @@ import android.widget.Chronometer.OnChronometerTickListener;
 import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TextView;
-
+/**
+ *  This class extends the Activity for the Statistics and controls the features
+ * in the Statistics Screen
+ * 
+ * @author Seif Hassan and Olivia Perryman
+ * @since Saturday, March 28 2015
+ *
+ */
 public class StatisticsActivity extends Activity implements OnClickListener,
 		OnChronometerTickListener, OnItemClickListener {
 
+	//set up buttons
 	private Button newGameButton, homePosession, awayPosession, homeRed,
 			awayShotsMinus, homeGoalsMinus, awayGoalsMinus, homeYellow,
 			awayRed, awayYellow, awayGoalsPlus, homeShotsPlus, homeGoalsPlus,
 			homeShotsMinus, awayShotsPlus;
 	private ImageButton save, pause, awayRefresh, homeRefresh, play, drawerBtn;
+	//set up timer
 	private Chronometer timer;
+	//set up counters
 	private TextView homeShots, awayShots, homeGoals, awayGoals, homePercent,
 			awayPercent, listHeader;
+	
+	//keep track of time passed for each possession
 	private long lastPause;
 	private int lastPosession; // seconds passed at last possession
 	private int homeSec, awaySec; // total number of seconds with possession
 	private int posessionSide;
 
+	//keep track of which side is clicked
 	private final int HOME_SIDE = 0;
 	private final int AWAY_SIDE = 1;
 
@@ -70,6 +83,12 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 	// private final int HIGHLIGHTED_COLOR = 0x70FFFFFF;
 	// private final int NON_HIGHLIGHTED_COLOR = 0xB7B7B7;
 
+	/**
+	 * onCreate sets up Activity and its components
+	 * 
+	 * @param savedInstanceState
+	 *            - Bundle
+	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -79,6 +98,7 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+		// setup user interface layout for this Activity
 		setContentView(R.layout.acitivity_statistics);
 
 		lastPosession = 0;
