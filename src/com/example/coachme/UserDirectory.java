@@ -26,7 +26,7 @@ public class UserDirectory {
 	private static ArrayList<Player> players = new ArrayList<Player>();
 
 	/**
-	 * Stores a new player in the text file
+	 * Stores a new player into the text file
 	 * 
 	 * @param Player
 	 *            's name (String)
