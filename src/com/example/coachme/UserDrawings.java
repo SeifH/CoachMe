@@ -195,9 +195,7 @@ public class UserDrawings {
 			startTime = System.nanoTime();
 			Collections.sort(fileNames, String.CASE_INSENSITIVE_ORDER);
 			endTime = System.nanoTime();
-			
-			Log.e("time comparison", "" + (endTime - startTime));
-			
+						
 		}
 		
 		
@@ -304,21 +302,4 @@ public class UserDrawings {
 		
 	}
 
-	// REMOVE LATER//
-	public static void deleteAllFiles() {
-
-		File file = new File(getSavePath().getAbsolutePath());
-		File[] fileList = file.listFiles();
-		if (fileList != null) {// load all file name
-			for (File f : fileList) {
-
-				String path = getFilePath(f.getName());
-
-				File file2 = new File(path);
-
-				file2.delete();
-			}
-		}
-	}
-
-}
+}//end class
