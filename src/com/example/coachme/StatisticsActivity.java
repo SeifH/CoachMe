@@ -101,23 +101,29 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 		// setup user interface layout for this Activity
 		setContentView(R.layout.acitivity_statistics);
 
+		//keep track of time passed
 		lastPosession = 0;
 		homeSec = 0;
 		awaySec = 0;
 		posessionSide = -1;
 
+		//keep track of saved games
 		currentGame = new Games();
 		UserStatistics.load();
 
+		//set up button to clear vlaues
 		newGameButton = (Button) findViewById(R.id.newGame);
 		newGameButton.setOnClickListener(this);
 
+		//set up save button
 		save = (ImageButton) findViewById(R.id.saveStats);
 		save.setOnClickListener(this);
 
+		//set up drawer
 		drawerBtn = (ImageButton) findViewById(R.id.statsDrawerBtn);
 		drawerBtn.setOnClickListener(this);
 
+		//set up all value changing buttons
 		homePosession = (Button) findViewById(R.id.home);
 		homePosession.setSelected(false);
 		homePosession.setEnabled(false);
@@ -170,6 +176,7 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 		homeRefresh = (ImageButton) findViewById(R.id.home_refresh);
 		homeRefresh.setOnClickListener(this);
 
+		//set up all views to show values
 		homePercent = (TextView) findViewById(R.id.home_percent);
 		awayPercent = (TextView) findViewById(R.id.away_percent);
 
@@ -178,17 +185,22 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 		homeGoals = (TextView) findViewById(R.id.numHomeGoals);
 		awayGoals = (TextView) findViewById(R.id.numAwayGoals);
 
+		//set up timer
 		timer = (Chronometer) findViewById(R.id.timer);
 		timer.setOnChronometerTickListener(this);
+		//make timer start at zero
 		timer.setBase(SystemClock.elapsedRealtime());
+		//keep track of pausing
 		lastPause = SystemClock.elapsedRealtime();
 
+		//set up buttons to control timer
 		pause = (ImageButton) findViewById(R.id.pause);
 		pause.setOnClickListener(this);
 
 		play = (ImageButton) findViewById(R.id.play);
 		play.setOnClickListener(this);
 
+		//set up drawer 
 		listHeader = new TextView(this);
 		listHeader.setText("Saved Games");
 		listHeader.setGravity(Gravity.CENTER);
@@ -203,6 +215,7 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 		savedList = (ListView) findViewById(R.id.stats_right_drawer);
 		savedList.addHeaderView(listHeader, null, false);
 
+		//fill the list in the drawer last use of app
 		adapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1, statsNamesMenu);
 
@@ -213,6 +226,11 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 
 	}
 
+	/**
+	 * Handle action bar item clicks here
+	 * 
+	 * @param item
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will
@@ -225,6 +243,11 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 		return super.onOptionsItemSelected(item);
 	}
 
+	/**
+	 * Called whenever a button is clicked
+	 * 
+	 * @param the view that is clicked
+	 */
 	@Override
 	public void onClick(View v) {
 
