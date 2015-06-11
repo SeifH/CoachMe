@@ -12,102 +12,151 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 
+/**
+ * Creates a custom drawing view for the drawing functionality
+ * 
+ * @author Seif Hassan & Olivia Perryman
+ * @since Tuesday, April 28 2015
+ */
 public class DrawingView extends View {
 
 	// drawing path
 	private Path drawPath;
 	// drawing and canvas paint
 	private Paint drawPaint, canvasPaint;
-	// initial color
+	// marker paint color
 	private int paintColor = 0xFF660000;
-	// canvas
+	// drawing canvas
 	private Canvas drawCanvas;
 	// canvas bitmap
 	private Bitmap canvasBitmap;
+	// switches between eraser and marker
 	private boolean erase = false;
 
+	// constants for stroke width of marker and eraser
 	private final int MARKER_STROKE_WIDTH = 10;
 	private final int ERASER_STROKE_WIDTH = 25;
 
-	public void setErase(boolean isErase) {
-		// set erase true or false
-		erase = isErase;
-		if (erase)
-			drawPaint
-					.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-		else
-			drawPaint.setXfermode(null);
-
-		if (isErase == true) {
-			drawPaint.setStrokeWidth(ERASER_STROKE_WIDTH); 
-		} else
-			drawPaint.setStrokeWidth(MARKER_STROKE_WIDTH);
-	}
-
+	/**
+	 * Constructor
+	 * @param context
+	 * @param attrs
+	 */
 	public DrawingView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		setupDrawing();
 
 	}
 
-	private void setupDrawing() {
-		// get drawing area setup for interaction
+	/**
+	 * Enables and disables the eraser functionality
+	 * 
+	 * @param isErase
+	 *            if the eraser is selected
+	 */
+	public void setErase(boolean isErase) {
+		// set erase true or false
+		erase = isErase;
 
+		// checks if eraser is selected
+		if (erase) {
+			// eraser selected
+
+			// create xfermode to paint
+			drawPaint
+					.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+		} else {
+			// eraser not selected, clear any previous xfermode
+			drawPaint.setXfermode(null);
+		}
+
+		// check is eraser is selected
+		if (isErase == true) {
+			// set the stroke width of the eraser
+			drawPaint.setStrokeWidth(ERASER_STROKE_WIDTH);
+		} else {
+			// change to stroke width of the marker
+			drawPaint.setStrokeWidth(MARKER_STROKE_WIDTH);
+		}
+	}
+
+	/**
+	 * Setup custom drawing view
+	 */
+	private void setupDrawing() {
+		
+		// get drawing area setup for interaction
 		drawPath = new Path();
 		drawPaint = new Paint();
 
 		// set paint colour
 		drawPaint.setColor(paintColor);
-		// setproperties
+		
+		// set properties
 		drawPaint.setAntiAlias(true);
 		drawPaint.setStrokeWidth(MARKER_STROKE_WIDTH);
 		drawPaint.setStyle(Paint.Style.STROKE);
 		drawPaint.setStrokeJoin(Paint.Join.ROUND);
 		drawPaint.setStrokeCap(Paint.Cap.ROUND);
 
-		// set up drawing
+		// set up drawing, initiate canvas
 		canvasPaint = new Paint(Paint.DITHER_FLAG);
 
 	}
 
+	/**
+	 * Clears the canvas of any drawing
+	 */
 	public void clearCanvas() {
+		//clear canvas and invalidate
 		drawCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
 		invalidate();
 	}
 
-	// make custom view function as a drawing view
+	/**
+	 * Called when view is assigned a size
+	 */
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-		// view given size
+		// drawing view is given size
 		super.onSizeChanged(w, h, oldw, oldh);
 
+		//initiate drawing canvas and bitmaps with given parameters
 		canvasBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
 		drawCanvas = new Canvas(canvasBitmap);
 	}
 
-	// allowclass to function as a custom drawing view
+	/**
+	 * This method allows the class to function as a drawing
+	 */
 	@Override
 	protected void onDraw(Canvas canvas) {
+		//draw the canvas bitmap and the path
 		canvas.drawBitmap(canvasBitmap, 0, 0, canvasPaint);
 		canvas.drawPath(drawPath, drawPaint);
 	}
 
-	// facilitate drawing
-	// get user touches to create drawing
+	/**
+	 * Get the user's touches to draw the path
+	 */
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		// detect user touch
+		//get coordinates of user touch
 		float touchX = event.getX();
 		float touchY = event.getY();
 
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
+			//user pressed on screen
 			drawPath.moveTo(touchX, touchY);
 			break;
 		case MotionEvent.ACTION_MOVE:
+			//user moved touch
 			drawPath.lineTo(touchX, touchY);
 			break;
 		case MotionEvent.ACTION_UP:
+			//user released touch, draw path
 			drawCanvas.drawPath(drawPath, drawPaint);
 			drawPath.reset();
 			break;
@@ -121,13 +170,21 @@ public class DrawingView extends View {
 		return true;
 
 	}
-	
-	public void disableDrawing (){
+
+	/**
+	 * Prevents the user from drawing on the canvas
+	 */
+	public void disableDrawing() {
+		//makes paint color invisible
 		drawPaint.setColor(Color.TRANSPARENT);
 	}
-	
-	public void enableDrawing (){
+
+	/**
+	 * Allows the user to draw in the canvas
+	 */
+	public void enableDrawing() {
+		//sets the paint color
 		drawPaint.setColor(paintColor);
 	}
 
-}
+}//end class
