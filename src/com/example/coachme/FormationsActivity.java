@@ -280,7 +280,8 @@ public class FormationsActivity extends Activity implements OnClickListener,
 			drawView.setErase(true);
 
 		} else if (view.getId() == R.id.refresh) {
-
+			
+			
 			// refresh the drawing field
 			AlertDialog.Builder newDialog = new AlertDialog.Builder(this);
 			newDialog.setTitle("New Formation");
@@ -372,6 +373,10 @@ public class FormationsActivity extends Activity implements OnClickListener,
 
 	/**
 	 * Defines drag listener for icons
+	 * 
+	 * Adapted from tutorial:
+	 * http://code.tutsplus.com/tutorials/android-sdk-implementing-
+	 * drag-and-drop-functionality--mobile-14402
 	 */
 	@Override
 	public boolean onDrag(View v, DragEvent event) {
@@ -629,6 +634,10 @@ public class FormationsActivity extends Activity implements OnClickListener,
 
 	/**
 	 * Creates new drawing view for user
+	 * 
+	 * code adapted from tutorial:
+	 * http://code.tutsplus.com/tutorials/android-sdk-create-
+	 * a-drawing-app-essential-functionality--mobile-19328
 	 */
 	private void resetDrawingField() {
 
