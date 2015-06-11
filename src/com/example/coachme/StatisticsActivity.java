@@ -257,6 +257,7 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 		{
 			Button b = (Button) v;
 
+			//respond to clicks by either increasing or decreasing the view that keeps track of the value
 			if (b.getId() == R.id.home_redcard) {
 
 				increaseCardNum(b);
@@ -294,15 +295,21 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 
 				decreaseNum(awayGoals);
 			} else if (b.getId() == R.id.newGame) {
+				//reset all values
+				
 				// timer.setBase(SystemClock.elapsedRealtime());
 				// timer.start();
 				// System.out.println("timer started");
+				
+				//stop the timer and rest to zero
 				timer.stop();
 				timer.setBase(SystemClock.elapsedRealtime());
 				lastPause = SystemClock.elapsedRealtime();
+				//show the play button and hide the pause.
 				pause.setVisibility(View.INVISIBLE);
 				play.setVisibility(View.VISIBLE);
 
+				//reset values
 				homeShots.setText("0");
 				awayShots.setText("0");
 				homeGoals.setText("0");
@@ -328,12 +335,14 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 				resetValues();
 
 			} else if (b.getId() == R.id.home) {
+				//change the colour of button to indicate which side has possession
 				posessionSide = HOME_SIDE;
 				homePosession.setSelected(true);
 				awayPosession.setSelected(false);
 				// updateSelected();
 
 			} else if (b.getId() == R.id.away) {
+				//change the colour of button to indicate which side has possession
 				posessionSide = AWAY_SIDE;
 				awayPosession.setSelected(true);
 				homePosession.setSelected(false);
@@ -348,6 +357,8 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 
 			if (b.getId() == R.id.away_refresh) {
 
+				//clear values for cards for away
+				
 				resetCardNum(awayRed);
 				resetCardNum(awayYellow);
 
@@ -356,6 +367,8 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 
 			} else if (b.getId() == R.id.home_refresh) {
 
+				//clear values for cards for home
+				
 				resetCardNum(homeRed);
 				resetCardNum(homeYellow);
 
@@ -364,25 +377,34 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 
 			} else if (b.getId() == R.id.pause) {
 
+				//record the time when paused
 				lastPause = SystemClock.elapsedRealtime();
+				//stop the timer counting
 				timer.stop();
+				//change visibility of play and pause
 				pause.setVisibility(View.INVISIBLE);
 				play.setVisibility(View.VISIBLE);
 
 			} else if (b.getId() == R.id.play) {
 
+				//start the timer where the last one left off
 				timer.setBase(timer.getBase() + SystemClock.elapsedRealtime()
 						- lastPause);
+				//start the timer
 				timer.start();
+				//change visibility of play and pause
 				play.setVisibility(View.INVISIBLE);
 				pause.setVisibility(View.VISIBLE);
 
+				//allow possession to continue
 				homePosession.setEnabled(true);
 				awayPosession.setEnabled(true);
 			} else if (b.getId() == R.id.statsDrawerBtn) {
 				// UserDrawings.loadFileNames();
 				// statsNamesMenu = UserDrawings.getFileNames();
 
+				
+				//show the list of saved games
 				setGameNames();
 
 				adapter = new ArrayAdapter<String>(this,
@@ -391,6 +413,7 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 
 				savedDrawer.openDrawer(Gravity.RIGHT);
 			} else if (b.getId() == R.id.saveStats) {
+				//save the game stats
 				saveStats();
 			}
 
@@ -398,6 +421,10 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 
 	}
 
+	/**
+	 * increases the number of card when button is clicked
+	 * @param b button pressed
+	 */
 	private void increaseCardNum(Button b) {
 		int n = Integer.parseInt(b.getText().toString());
 
@@ -406,22 +433,41 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 		b.setText(num);
 	}
 
+	/**
+	 * changes number on card to 0
+	 * @param b card
+	 */
 	private void resetCardNum(Button b) {
+		//change the text to 0
 		b.setText("0");
 	}
 
+	/**
+	 * increases the value of textview by one
+	 * @param t textview holding value
+	 */
 	private void increaseNum(TextView t) {
+		//change the text to an integer
 		int n = (Integer.parseInt(t.getText().toString()));
 
+		//change the view to represent the number plus one 
 		String num = String.valueOf(n + 1);
 
 		t.setText(num);
 	}
 
+	/**
+	 * decreases the value of textview by one
+	 * @param t textview holding value
+	 */
 	private void decreaseNum(TextView t) {
+		//change the text to an integer
+
 		int n = (Integer.parseInt(t.getText().toString()));
 
+		//check if the number is zero because can't be negative
 		if (n > 0) {
+			//if not negative, show the number minus one
 			String num = String.valueOf(n - 1);
 			t.setText(num);
 
@@ -429,8 +475,12 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 
 	}
 
+	/**
+	 * Save the values from the game to be retrieved later
+	 */
 	private void setValues() {
 
+		//change format of values
 		currentGame.setHomePossession(Integer.valueOf(homePercent.getText()
 				.toString()
 				.substring(0, homePercent.getText().toString().indexOf("%"))));
@@ -457,6 +507,9 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 
 	}
 
+	/**
+	 * clear all values for current game
+	 */
 	private void resetValues() {
 		currentGame.setHomeShots(0);
 		currentGame.setAwayShots(0);
@@ -470,24 +523,34 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 		currentGame.setAwayYellow(0);
 	}
 
+	/**
+	 * determine how many seconds have passed in the game to calculate percentages
+	 * @return
+	 */
 	private int secondsPassed() {
 
+		//get text from timer
 		String time = (String) timer.getText();
 		int secPassed = 0;
 		int hrs, mins, secs;
 
+		//check if time has just minutes and seconds, or hours too
+		//format is either MM:SS or HH:MM:SS
 		if (time.length() == 5) {
-			// System.out.println(timer.getText());
+			
+			//no hours have passed, store minutes and seconds
 			hrs = 0;
 			mins = Integer.parseInt(time.substring(0, 2));
 			secs = Integer.parseInt(time.substring(3, 5));
 		} else // an hour has passed
 		{
+			//store hours, minutes and seconds.
 			hrs = Integer.parseInt(time.substring(0, 2));
 			mins = Integer.parseInt(time.substring(3, 5));
 			secs = Integer.parseInt(time.substring(6, 8));
 		}
 
+		//convert to seconds
 		secPassed = secs + (60 * mins) + (3600 * hrs);
 		// System.out.println(secPassed);
 
@@ -495,6 +558,9 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 
 	}
 
+	/**
+	 * change the text views of possession to represent real time changes.
+	 */
 	private void updatePosession() {
 		// total time passed in seconds
 		int totalTime = secondsPassed();
@@ -504,6 +570,7 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 			int timeWithPossession = totalTime - lastPosession;
 			// System.out.println("Time with posession:"+ timeWithPossession);
 
+			//find total time with posession for each side
 			if (getPossesionSide() == HOME_SIDE)
 				homeSec += timeWithPossession;
 			else if (getPossesionSide() == AWAY_SIDE)
@@ -511,10 +578,7 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 			else
 				return;
 
-			Log.e("msg", getPossesionSide() + "");
-
-			System.out.println("total:" + totalTime);
-
+			//calculate percentages and multiply by 100
 			int homePercent = (int) Math
 					.round(((double) homeSec / (double) totalTime) * 100);
 			// System.out.println("homepercent:" + homePercent);
@@ -522,21 +586,27 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 					.round(((double) awaySec / (double) totalTime) * 100);
 			// System.out.println("awaypercent:" + awayPercent);
 
+			//store how much time has passed
 			lastPosession = totalTime;
 
+			//update text
 			this.homePercent.setText(homePercent + "%");
 			this.awayPercent.setText(awayPercent + "%");
-
-			System.out.println(this.awayPercent.getText().toString() + " "
-					+ this.homePercent.getText().toString());
 
 		}
 	}
 
+	/**
+	 * 
+	 * @return which side has possession
+	 */
 	private int getPossesionSide() {
 		return posessionSide;
 	}
 
+	/**
+	 * set up menu for saved games
+	 */
 	private void setGameNames() {
 		statsNamesMenu = new ArrayList<String>();
 
@@ -546,13 +616,21 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 
 	}
 
+	/**
+	 * Called when chronometer changes (every second)
+	 */
 	@Override
 	public void onChronometerTick(Chronometer chronometer) {
 		// TODO Auto-generated method stub
+		//update the values for posession in real-time
 		if (homePosession.isEnabled() || awayPosession.isEnabled())
 			updatePosession();
 	}
 
+	/**
+	 * Called when an item is clicked
+	 * @param parent, view, position, id
+	 */
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
@@ -569,18 +647,23 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 
 	}
 
+	/**
+	 * open a view to see saved game stats
+	 * @param n name of game
+	 */
 	private void showSavedGame(String n) {
 		
 		final String name = n;
 		
+		//show the saved game as a popup
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		// ...Irrelevant code for customizing the buttons and title
 		LayoutInflater inflater = this.getLayoutInflater();
 		View dialogView = inflater.inflate(R.layout.statistics_saved, null);
 		builder.setView(dialogView);
 		
 
 
+		//add values to the text view
 		Games game = new Games();
 		game = UserStatistics.getGame(n);
 		TextView txtVw = (TextView) dialogView.findViewById(R.id.homeSavedPossession);
@@ -613,6 +696,7 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 		builder.setPositiveButton("Delete",
 				new DialogInterface.OnClickListener() {
 					@Override
+					//remove the game from the list
 					public void onClick(DialogInterface dialog, int which) {
 						UserStatistics.deleteGame(name);
 					}
@@ -621,7 +705,7 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 				new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-
+						//do nothing
 					}
 				});
 
@@ -631,7 +715,11 @@ public class StatisticsActivity extends Activity implements OnClickListener,
 
 	}
 
+	/**
+	 * saves the current game
+	 */
 	private void saveStats() {
+		//ask user with a popup to name it
 		AlertDialog.Builder saveDialog = new AlertDialog.Builder(this);
 		saveDialog.setTitle("Save Formation");
 		saveDialog.setMessage("Save Game Statistics?");

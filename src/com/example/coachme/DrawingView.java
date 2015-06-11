@@ -15,6 +15,9 @@ import android.view.View;
 /**
  * Creates a custom drawing view for the drawing functionality
  * 
+ * Adapted from http://code.tutsplus.com/tutorials/android-sdk-create-
+ * a-drawing-app-essential-functionality--mobile-19328
+ * 
  * @author Seif Hassan & Olivia Perryman
  * @since Tuesday, April 28 2015
  */
