@@ -197,15 +197,18 @@ public class MainActivity extends Activity implements OnClickListener {
 			if (b.getId() == R.id.formations) {
 				// open formations screen
 				Intent intent = new Intent(this, FormationsActivity.class);
+				//starts FormationsActivity
 				startActivity(intent);
 			} else if (b.getId() == R.id.game_statistics) {
 				// open statistics screen
 				Intent intent = new Intent(this, StatisticsActivity.class);
+				//starts StatisticsActivity
 				startActivity(intent);
 
 			} else if (b.getId() == R.id.player_directory) {
 				// open player directory screen
 				Intent intent = new Intent(this, DirectoryActivity.class);
+				//starts DirecotryActitvity
 				startActivity(intent);
 			}
 

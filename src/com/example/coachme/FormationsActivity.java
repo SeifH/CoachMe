@@ -782,4 +782,4 @@ public class FormationsActivity extends Activity implements OnClickListener,
 		});
 	}
 
-}
+}//end class
